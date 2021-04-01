@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="button" value="btn" id="btn">
+    <p>present</p>
+
+    <script>
+        let btn = document.getElementById('btn');
+
+        let p = document.querySelector('p');
+
+        btn.addEventListener('click', () => {
+            p.innerHTML = 'modify later';
+        })
+    </script>
+
+    <!--  -->
+    <div>
+        human say: <input type="text" name="" id="inp1"> <br>
+        鹦鹉 say: <input type="text" name="" id="inp2">
+    </div>
+
+    <script>
+        let inp1 = document.querySelector('#inp1')
+        let inp2 = document.querySelector('#inp2')
+
+        inp1.addEventListener('input', () => {
+            // console.log(inp1.value);
+            inp2.value = inp1.value
+        })
+    </script>
+
+    <!-- all checked, all not checked -->
+    hobby:
+    <input type="checkbox" name="" class="hobby">组装
+    <input type="checkbox" name="" class="hobby">分离
+    <input type="checkbox" name="" class="hobby">融合
+    <br>
+    <input type="checkbox" name="" id="check_all">全选
+
+    <script>
+        var check_all = document.querySelector('#check_all')
+
+        let hobbys = document.querySelectorAll('.hobby');
+
+        check_all.addEventListener('change', function () {
+            let status = check_all.checked;
+            // console.log(status)
+
+            for (let i = 0; i < hobbys.length; i++) {
+                hobbys[i].checked = status;
+            }
+        })
+
+
+        for (let i = 0; i < hobbys.length; i++) {
+            hobbys[i].addEventListener('change', function () {
+                if (hobbys[i].checked == false) {
+                    check_all.checked = false
+                }
+            })
+        }
+    </script>
+
+    <hr>
+    <ul>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+    </ul>
+    <input type="button" value="bianse" id="bianse">
+    <script>
+        // get btn
+        let btn2 = document.getElementById('bianse');
+
+        // 给 btn2 绑定事件
+        btn2.addEventListener('click', function () {
+            // get all li tag
+            let lis = document.querySelectorAll('li')
+            // traverse all li
+            for (let i = 0; i < lis.length; i++) {
+                // console.log(lis[i])
+                // 奇数为red， 偶数为grey
+                if (i % 2 == 0) {
+                    lis[i].style.backgroundColor = 'red'
+                } else {
+                    lis[i].style.backgroundColor = 'gray'
+                }
+            }
+
+            // for (let i in lis) {
+            //     console.log(lis[i])
+            //      // 奇数为red， 偶数为grey
+            //      if (i % 2 == 0) {
+            //         lis[i].style.backgroundColor = 'red'
+            //     } else {
+            //         lis[i].style.backgroundColor = 'gray'
+            //     }
+            // }
+        })
+    </script>
+</body>
+
+</html>

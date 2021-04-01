@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="btn" onclick="fn();">
+    <input type="button" value="btn2" id="btn">
+    <input type="button" value="btn3" id="btn2">
+
+    <script>
+        // inline binding
+        function fn() {
+            alert(123);
+            console.log(456);
+        }
+
+        // es inside binding
+
+        document.querySelector('#btn').onclick = function(){
+            alert('es inside binding');
+            console.log('es inside binding, 嘿嘿');
+        }
+
+        function f2(){
+            alert('event listener binding');
+            console.log('event listener binding, hahhha')
+
+        }
+
+        // event listener mode
+        document.querySelector('#btn2').addEventListener('click', f2)
+
+        document.querySelector('#btn2').removeEventListener('click',f2)
+    </script>
+</body>
+</html>

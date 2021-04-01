@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package pcbook;
+
+/* 
+Deprecated use of 'go_package' option without a full import path in "proto/processer_message.proto", please specify:
+option go_package = "proto;pcbook";
+A future release of protoc-gen-go will require the import path be specified.
+*/
+// option go_package = ".";
+option go_package = ".;pcbook";
+
+import "memory_message.proto";
+
+message CPU {
+    string brand = 1;
+    string name = 2;
+    uint32 num_cores = 3;
+    uint32 num_threads = 4;
+    double min_ghz = 5;
+    double max_ghz = 6;
+}
+
+message GPU {
+    string brand = 1;
+    string name = 2;
+    double min_ghz = 3;
+    double max_ghz = 4;
+    // Memory ? 
+    Memory memory = 5;
+
+}

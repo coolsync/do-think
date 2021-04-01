@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Niu {
+            constructor(name, age, likename) {
+                this.name = name;
+                this.age = age;
+                this.likename = likename;
+            }
+            like() {
+                console.log(this.name + " like " + this.likename);
+            }
+        }
+
+        let n1 = new Niu("chen", 12, "草");
+
+        let n2 = new Niu("bob", 30, "机动车");
+
+        console.log(n1)
+        console.log(n2)
+
+        
+        // create constructor
+        function Emp(name, age, likename) {
+            this.name = name;
+            this.age = age;
+            this.likename = likename;
+        }
+
+        // create prototype
+        let empPrototype = {
+            like() {
+                console.log(this.name + " like " + this.likename);
+            },
+            work() {
+                console.log(this.name + " work at intelligent basic place" );
+            }
+        }
+        
+        // 设置constructor function prototype to obj protoytpe property
+        Emp.prototype = empPrototype;
+         
+        let e1 = new Emp("paul", 30, "phone")
+
+        let e2 = new Emp("mark", 32, "intelligent car")
+
+        console.log(e1)
+        console.log(e2)
+    </script>
+</body>
+
+</html>

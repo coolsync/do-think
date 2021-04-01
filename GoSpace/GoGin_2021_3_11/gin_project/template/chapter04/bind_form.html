@@ -1,0 +1,23 @@
+{{define "chapter04/bind_form.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    form -- bind page <br>
+    <form action="/do_bind_form" method="POST">
+        <input type="text" name="name" placeholder="please enter name"><br>
+        <input type="text" name="age" placeholder="please enter age"><br>
+        <input type="text" name="addr" placeholder="please enter addr"><br>
+        <input type="submit" name="submit"><br>
+    </form>
+</body>
+
+</html>
+{{end}}

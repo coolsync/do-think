@@ -1,0 +1,56 @@
+{{define "chapter04/bind_json.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    bind -- json page <br>
+    <form>
+        <input type="text" id="name" placeholder="please enter name"><br>
+        <input type="text" id="age" placeholder="please enter age"><br>
+        <input type="text" id="addr" placeholder="please enter addr"><br>
+        <input type="button" value="btn_add" id="btn_add"><br>
+    </form>
+
+    <script>
+        let btn_add = document.getElementById("btn_add");
+
+        btn_add.onclick = function () {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let addr = document.getElementById("addr").value;
+
+
+            $.ajax({
+                url: "/do_bind_json",
+                type: "POST",
+        
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    "name": name,
+                    "age": Number(age),
+                    "addr": addr,
+                }),
+
+                success: function (data) {
+                    alert(data["code"]);
+                    alert(data["msg"]);
+                },
+                fail: function (data) {
+                    alert("server error");
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
+{{end}}
