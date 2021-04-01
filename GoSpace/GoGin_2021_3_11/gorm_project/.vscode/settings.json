@@ -1,0 +1,7 @@
+{
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 15,
+    "editor.fontFamily": "JetBrains Mono NL Light,  'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "workbench.preferredLightColorTheme": "Default Dark+",
+    "editor.semanticHighlighting.enabled": true
+}
