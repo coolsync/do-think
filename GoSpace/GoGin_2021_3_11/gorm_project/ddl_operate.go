@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gorm_project/models"
 
-	"gorm.io/driver/mysql"
+	_ "gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -31,12 +31,17 @@ func main() {
 
 	// Has Table?
 	// b := db.Migrator().HasTable("users")
-	// b := db.Migrator().HasTable(&User{})
+	// b := db.Migrator().HasTable(&models.User{})
 	// fmt.Println(b)
 
 	// b2 := db.Migrator().HasTable("user")
 	// fmt.Println(b2)
 
-	db.AutoMigrate(&models.User{})
-	fmt.Println("OK")
+	// 统一加prefix, suffix
+
+	// 自动迁移
+	// db.AutoMigrate(&models.User{}, &models.UserInfo{}, &models.DBXXXUserInfo{})
+	db.AutoMigrate(&models.User{}, &models.GormModel{})
+
+	fmt.Println("DDL OK")
 }

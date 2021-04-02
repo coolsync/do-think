@@ -29,28 +29,27 @@ func main() {
 	var user models.User
 
 	// Query
-	// var user models.User
 	// db.First(&user, 1)	// 1 is id
 	// db.First(&user, "name=?", "bob")
 	// fmt.Println(user)
 
-	// Update
-
+	// // Update
 	// db.First(&user, 2)
-	// 1
+	// // 1
 	// user.Name = "paul"
 	// user.Age = 20
 	// db.Save(&user)
 
-	// 2
+	// // 2
 	// db.Model(&user).Update("addr", "pual-xxxx")
 	// db.Model(&user).Update("phone", "12345678")
 
-	// 3
+	// // 3
 	// db.Model(&user).Updates(models.User{Name: "jerry", Addr: "jerry-xxxx"})
 
 	// Delete
 	// db.Delete(&user, 2)
 	db.Where("name", "bob").Delete(&user)
+
 	fmt.Println("DML OK")
 }
