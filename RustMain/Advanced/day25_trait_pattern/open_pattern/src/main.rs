@@ -25,11 +25,13 @@
 //     println!("Hello, world!");
 // }
 
-// if let, has match, abort, back not run 
+// if let, has match, abort, back content, not run 
 // fn main() {
 //     let color: Option<&str> = None; // Mark
+//     // let color: Option<&str> = Some("a str");
 
 //     let is_ok = false;  
+
 //     let age: Result<u8, _> = "33".parse();
 
 //     if let Some(c) = color {
@@ -38,9 +40,9 @@
 //         println!("is ok");
 //     } else if let Ok(a) = age {
 //         if a > 30 {
-//             println!("mature man");
+//             println!("oh! mature man");
 //         } else {
-//             println!("young man");
+//             println!("oh! young man");
 //         }
 //     } else {
 //         println!("in else");
@@ -72,7 +74,7 @@
 //此处的模式是(index, value)
 
 // let
-// let PATTERN = EXPRESSION
+// let TUPLE_PATTERN = EXPRESSION
 // fn main() {
 // // (1, 2, 3) auto match (x, y, z), 1 bind to x, 2 bind to y,1 bind to z
 //     let (x, y, z) = (1, 2, 3);

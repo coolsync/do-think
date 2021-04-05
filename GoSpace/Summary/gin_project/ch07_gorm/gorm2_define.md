@@ -94,3 +94,115 @@ type UserInfo struct {
 - default `default:'galeone'` 默认值
 
 多个属性值之间用分号分隔(英文的;):`gorm:"size:64;not null"`
+
+
+
+
+
+
+
+# 模型定义三
+
+## 一、一对一
+
+1.属于
+
+```go
+     // UserProfile属于User，外键是在UserProfile模型，外键字段为：UId
+
+
+     type User struct {
+        Id int
+        Name string
+        Age int
+        Addr string
+
+    }
+
+
+    type UserProfile struct {
+        Id int
+        Pic string
+        CPic string
+        Phone string
+        User User `gorm:"ForeignKey:UId;AssociationForeignKey:Id"`  // 关联关系
+        //UserID int  // 默认关联字段为Id
+        UId int // uid
+    }
+
+    注：
+
+    // 外键默认使用UserID，如果不指定外键，则使用默认的外键字段,
+    // 默认关联ID，通过AssociationForeignKey指定关联字段
+```
+
+2.包含
+
+```go
+     // UserProfile 包含一个 User, 外键在User模型，外键字段为:PId
+
+    type User struct {
+        Id int
+        Name string
+        Age int
+        Addr string
+        PId int
+
+    }
+
+
+    type UserProfile struct {
+        Id int
+        Pic string
+        CPic string
+        Phone string
+        User User `gorm:"foreignKey:PId;AssociationForeignKey:Id"`  // 关联关系
+
+    }
+```
+
+属于：关系和外键在同一方，有关系的那一方属于另外一个模型
+
+包含：关系和外键不在同一方，有关系的那一方包含另外一个有外键的模型
+
+## 二、一对多
+
+```go
+    type User2 struct {
+        Id int
+        Name string
+        Age int
+        Addr string
+        Articles []Article `gorm:"foreignKey:UId;references:Id"`
+    }
+
+    type Article struct {
+        Id int
+        Title string
+        Content string
+        Desc string
+        // 外键
+        UId int
+    }
+```
+
+## 三、多对多
+
+```go
+    type Article2 struct {
+        AId int `gorm:"primary_key:true"`
+        Title string
+        Content string
+        Desc string
+        Tags []Tag `gorm:"many2many:Article2s2Tags"`  // ;foreignKey:AId;references:TId
+
+    }
+
+    type Tag struct {
+        TId int `gorm:"primary_key:true"`
+        Name string
+        Desc string
+    }
+```
+
+创建/更新时不会保存关联：`gorm:"save_associations:false"`

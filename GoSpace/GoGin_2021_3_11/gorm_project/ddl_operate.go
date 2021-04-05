@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gorm_project/models"
+	"gorm_project/models/relate_tables"
 
-	_ "gorm.io/driver/mysql"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -41,7 +41,22 @@ func main() {
 
 	// 自动迁移
 	// db.AutoMigrate(&models.User{}, &models.UserInfo{}, &models.DBXXXUserInfo{})
-	db.AutoMigrate(&models.User{}, &models.GormModel{})
+	// db.AutoMigrate(&models.User{}, &models.GormModel{})
+
+	// db.AutoMigrate(&models.User{}, &models.Article{})
+	// db.AutoMigrate(&relate_tables.User{}, &relate_tables.Company{})
+
+	// one to one
+	// db.AutoMigrate(&relate_tables.User{}, &relate_tables.UserProfile{})
+
+	// one to many
+	// db.AutoMigrate(&relate_tables.User2{}, &relate_tables.Article{})
+
+	// many to many
+	// db.AutoMigrate(&relate_tables.User3{}, &relate_tables.Language{})
+	// db.AutoMigrate(&relate_tables.User3{}, &relate_tables.Profile{})
+	db.AutoMigrate(&relate_tables.Article2{}, &relate_tables.Tag{})
 
 	fmt.Println("DDL OK")
 }
+

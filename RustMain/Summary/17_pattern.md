@@ -325,3 +325,187 @@ fn main() {
 
 
 
+```rust
+// 6、忽略模式中的值
+
+// fn aa(_: i32, y: i32) {
+//     println!("y: {}", y)
+// }
+
+// trait A {
+//     fn bb(x: i32, y: i32);
+// }
+
+// struct B {}
+
+// impl A for B {
+//     fn bb(_: i32, y: i32) {
+//         println!("y: {}", y)
+//     }
+// }
+
+// fn main() {
+//     aa(1, 2);
+//     let numbers = (1, 2, 3, 4);
+
+//     match numbers {
+//         (one, _, three, _) => {
+//             println!("one: {}, three: {}", one, three);
+//         }
+//     }
+//     println!("Hello, world!");
+// }
+
+fn main() {
+    let _x = 1; 
+    let _y = 2;
+
+    let s = Some(String::from("hello"));
+
+    // if let Some(_c) = s {   // 只忽略变量， 依然会发生所有权转移
+    // // if let Some(c) = s {
+    //     println!("found a string");
+    // }
+
+    // println!("s: {:?}", s);
+
+    if let Some(_) = s {   // 忽略变量， 不会发生所有权转移
+        println!("found a string");
+    }
+
+    println!("s: {:?}", s);
+}
+```
+
+
+
+
+
+# day27
+
+
+
+## pattern 8 [Ignoring Remaining Parts of a Value with `..`](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#ignoring-remaining-parts-of-a-value-with-)
+
+
+
+```rust
+fn main() {
+    let numbers = (1, 2, 3, 4, 5, 6, 7);
+    match numbers {
+        (first, .., last) => println!("first: {}, last: {}", first, last),
+    }
+
+    // error: `..` can only be used once per tuple pattern
+    // match numbers {
+    //     (.., second, ..) => println!("second: {}", second),
+    // }
+    
+    println!("Hello, world!");
+}
+```
+
+
+
+
+
+## pattern 9 [Extra Conditionals with Match Guards](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards)
+
+
+
+```rust
+//7、匹配守卫提供额外的条件
+//匹配守卫是一个指定于match分之模式之后的额外的if条件，必须满足才能选择此分支
+
+// fn main() {
+//     let num = Some(4);
+//     match num {
+//         Some(x) if x > 5 => println!("> 5"),
+//         Some(x) => println!("x: {}", x),
+//         // _ => println!("other"),
+//         None => (),
+//     }
+
+//     println!("Hello, world!");
+// }
+
+fn main() {
+    let num = Some(4);
+    let y = 10; // position 1
+
+    match num {
+        Some(x) if x == y => println!("num == x"),  // this y is y of position 1
+        Some(x) => println!("x: {}", x),
+        None => (),
+    }
+
+    let x = 4;
+    let y = false;
+
+    match x {
+        4|5|6 if y => println!("1"),    //4|5|6 if y,  a: 4|5|(6 if y), b: ((4|5|6) if y)(等价于此种)
+        _ => println!("2"),
+    }
+}
+```
+
+
+
+
+
+## pattern 10 [`@` Bindings](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#-bindings)
+
+```rust
+//@运算符允许我们在创建一个存放值的变量的同时，测试这个变量的值是否匹配模式。
+
+enum Message {
+    Hello { id: i32 },
+}
+
+fn main() {
+    let msg = Message::Hello { id: 25 };
+
+    match msg {
+        Message::Hello { id: id_val @ 0..=9 } => println!("id_val: {}", id_val),
+
+        Message::Hello { id: 10..=20 } => println!("large"),
+
+        Message::Hello { id } => println!("id: {}", id),
+    }
+    println!("Hello, world!");
+}
+
+// fn main() {
+//     let x = 5;
+
+//     match x {
+//         x @ 0..=9 => println!("x: {}", x),
+//         _ => println!("other"),
+//     }
+
+//     let y = Some(5);
+
+//     match y {
+//         Some(y_val @ 0..=9) => println!("y_val: {}", y_val),
+//         _ => println!("ohter")
+//     }
+// }
+```
+
+
+
+
+
+## [Summary](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#summary) 	[总结](https://kaisery.github.io/trpl-zh-cn/ch18-03-pattern-syntax.html#总结)
+
+
+
+Rust’s patterns are very useful in that they help distinguish between different kinds of data. When used in `match` expressions, Rust ensures your patterns cover every possible value, or your program won’t compile. Patterns in `let` statements and function parameters make those constructs more useful, enabling the destructuring of values into smaller parts at the same time as assigning to variables. We can create simple or complex patterns to suit our needs.
+
+Next, for the penultimate chapter of the book, we’ll look at some advanced aspects of a variety of Rust’s features.
+
+
+
+模式是 Rust 中一个很有用的功能，它帮助我们区分不同类型的数据。当用于 `match` 语句时，Rust 确保模式会包含每一个可能的值，否则程序将不能编译。`let` 语句和函数参数的模式使得这些结构更强大，可以在将值解构为更小部分的同时为变量赋值。可以创建简单或复杂的模式来满足我们的要求。
+
+接下来，在本书倒数第二章中，我们将介绍一些 Rust 众多功能中较为高级的部分。

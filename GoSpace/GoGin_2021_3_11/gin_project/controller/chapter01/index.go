@@ -1,9 +1,17 @@
 package chapter01
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
 
 func Hello(c *gin.Context) {
 
-	name := "hallen"
-	c.HTML(200, "chapter01/index.html", name)
+	name := "bob"
+	c.HTML(http.StatusOK, "chapter01/index.html", name)
+
+	// res := c.Query("www")
+	// fmt.Println("res:", res)
+	// c.String(http.StatusOK, res)
 }

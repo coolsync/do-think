@@ -1,23 +1,23 @@
 // 6、忽略模式中的值
 
-// fn foo(_: i32, y: i32) {
+// fn aa(_: i32, y: i32) {
 //     println!("y: {}", y)
 // }
 
 // trait A {
-//     fn bar(x: i32, y: i32);
+//     fn bb(x: i32, y: i32);
 // }
 
 // struct B {}
 
 // impl A for B {
-//     fn bar(_: i32, y: i32) {
+//     fn bb(_: i32, y: i32) {
 //         println!("y: {}", y)
 //     }
 // }
 
 // fn main() {
-//     foo(1, 2);
+//     aa(1, 2);
 //     let numbers = (1, 2, 3, 4);
 
 //     match numbers {
