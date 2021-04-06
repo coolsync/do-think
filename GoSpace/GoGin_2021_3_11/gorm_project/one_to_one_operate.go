@@ -82,6 +82,7 @@ func main() {
 	db.Model(&user_profile4.User).Updates(relate_tables.User{Name: "bob2", Age: 20, Addr: "guanddong2"})
 
 	// Delete Operation
+	// 先查询关联， 再删除操作
 	var user_profile5 relate_tables.UserProfile
 	db.Preload("User").Find(&user_profile5, 1)
 	P("++++++++++++ delete operate")
