@@ -28,7 +28,7 @@ func main() {
 	}
 
 	// // one to one
-	// db.AutoMigrate(&relate_tables.UserProfile{}, &relate_tables.User{})
+	db.AutoMigrate(&relate_tables.UserProfile{}, &relate_tables.User{})
 
 	// Insert a recode
 
@@ -83,10 +83,10 @@ func main() {
 
 	// Delete Operation
 	// 先查询关联， 再删除操作
-	var user_profile5 relate_tables.UserProfile
-	db.Preload("User").Find(&user_profile5, 1)
-	P("++++++++++++ delete operate")
-	P(user_profile5)
+	// var user_profile5 relate_tables.UserProfile
+	// db.Preload("User").Find(&user_profile5, 1)
+	// P("++++++++++++ delete operate")
+	// P(user_profile5)
 
-	db.Debug().Delete(&user_profile5.User)
+	// db.Debug().Delete(&user_profile5.User)
 }
