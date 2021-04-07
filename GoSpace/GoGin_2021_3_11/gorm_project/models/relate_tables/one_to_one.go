@@ -16,3 +16,7 @@ type UserProfile struct {
 	Phone string
 	User  User `gorm:"foreignKey:PID;references:ID"`
 }
+
+// delete table, 
+// 1 del users
+// 2 del user_profiles 
