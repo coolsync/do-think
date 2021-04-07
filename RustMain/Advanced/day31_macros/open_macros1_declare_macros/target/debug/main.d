@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day31_macros/open_macros1_declare_macros/target/debug/main: /home/dart/DoThinking/RustMain/Advanced/day31_macros/open_macros1_declare_macros/mac/src/lib.rs /home/dart/DoThinking/RustMain/Advanced/day31_macros/open_macros1_declare_macros/main/src/main.rs

@@ -32,20 +32,20 @@ func main() {
 
 	// Insert a recode
 
-	// user_profile := relate_tables.UserProfile {
-	// 	Pic:   "1.jpg",
-	// 	CPic:  "2.jpg",
-	// 	Phone: "12345678909",
-	// 	User: relate_tables.User{
-	// 		Name: "bob",
-	// 		Age:  30,
-	// 		Addr: "guangdong shengzheng",
-	// 	},
-	// }
-	// db.Create(&user_profile)
+	user_profile := relate_tables.UserProfile {
+		Pic:   "1.jpg",
+		CPic:  "2.jpg",
+		Phone: "12345678909",
+		User: relate_tables.User{
+			Name: "bob",
+			Age:  30,
+			Addr: "guangdong shengzheng",
+		},
+	}
+	db.Create(&user_profile)
 
 	// 1 Association Query
-	var user_profile relate_tables.UserProfile
+	// var user_profile relate_tables.UserProfile
 
 	db.Debug().First(&user_profile, 1)
 	db.Debug().Model(&user_profile).Association("User").Find(&user_profile.User)

@@ -26,15 +26,24 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+<<<<<<< HEAD
+=======
+	// db.AutoMigrate(&relate_tables.UserProfile{}, &relate_tables.User{})
+>>>>>>> temp
 
 	// First
 	// 1
 	var user relate_tables.User
+<<<<<<< HEAD
 	db.First(&user) // 默认使用id查询
+=======
+	db.First(&user) // 按照 default id query
+>>>>>>> temp
 	p(user)
 
 	// 2
 	var user2 relate_tables.User
+<<<<<<< HEAD
 	db.First(&user2, "name = ?", "bob2")
 	p(user2)
 
@@ -96,5 +105,51 @@ func main() {
 
 	var user8 relate_tables.User
 	db.Where("name LIKE ?", "%o%").Find(&user8) // only query a recode
+=======
+	db.Debug().First(&user2, "name = ?", "bob")
+	// SELECT * FROM `users` WHERE name = 'bob' ORDER BY `users`.`id` LIMIT 1
+	p(user2)
+
+	// 3 Where
+	var user3 relate_tables.User
+	tx1 := db.Debug().Where("name = ?", "bob").First(&user3)
+	// SELECT * FROM `users` WHERE name = 'bob' ORDER BY `users`.`id` LIMIT 1
+	p(user3)
+	p(tx1.RowsAffected) // 返回找到的记录数
+	p(tx1.Error)        // Return Err info
+	p(user3.ID)         // 返回的 primary key
+
+	// FirstOrCreate
+	// 未找到 user，则根据给定条件创建一条新纪录
+	var user4 relate_tables.User
+
+	user5 := relate_tables.User{
+		Name: "paul",
+		Age:  20,
+		Addr: "guangdong guangzhou",
+	}
+
+	tx2 := db.FirstOrCreate(&user4, user5)
+	p("user4: ", user4)
+	p(tx2.RowsAffected)
+
+	// Last
+	// 获取最后一条记录（主键降序）
+	var user6 relate_tables.User
+	db.Debug().Last(&user6) // SELECT * FROM `users` ORDER BY `users`.`id` DESC LIMIT 1
+	p("user6: ", user6)
+
+	// Take
+	// 获取一条记录，没有指定排序字段
+	var user7 relate_tables.User
+	db.Debug().Take(&user7, 2) // SELECT * FROM `users` WHERE `users`.`id` = 2 LIMIT 1
+	p("user7: ", user7)
+
+	// Find
+	// 多个记录
+	var user8 []relate_tables.User
+	id_arr := []int{1, 2, 3}
+	db.Debug().Find(&user8, id_arr) // SELECT * FROM `users` WHERE `users`.`id` IN (1,2,3)
+>>>>>>> temp
 	p("user8: ", user8)
 }
