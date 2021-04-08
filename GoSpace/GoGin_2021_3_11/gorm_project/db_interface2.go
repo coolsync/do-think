@@ -186,10 +186,37 @@ func main() {
 	var group_data []GroupData
 	var user21 []relate_tables.User
 	// db.Debug().Model(&user21).Select("age, count(*) as count").Group("age").Find(&group_data)
-	// db.Debug().Model(&user21).Select("age, addr, count(*) as count").Group("age").Having("addr = ?", "guangdong shengzheng").Find(&group_data)
-
 	db.Model(&user21).Select("age, count(*) as count").Group("age").Having("age = ?", 30).Find(&group_data)
 
-	// p(user21)
-	p(group_data)
+	// Distinct: 除重
+	// Selecting distinct values from the model
+	// SELECT DISTINCT name, age FROM `users` ORDER BY name, age desc
+
+	var user22 []relate_tables.User
+	db.Debug().Distinct("name, age").Order("name, age desc").Find(&user22)
+	p("user22: ", user22)
+
+	// Joins
+	// select * from users right join user_profiles on users.p_id = user_profiles.id;
+	// SELECT `users`.`id`,`users`.`name`,`users`.`age`,`users`.`addr`,`users`.`p_id` FROM `users` right join user_profiles on users.p_id = user_profiles.id
+	type UserJoins struct {
+		ID    int
+		Name  string
+		Age   int
+		Addr  string
+		PID   int
+		Pic   string
+		CPic  string
+		Phone string
+	}
+	var user_joins []UserJoins
+	// var user23 []relate_tables.User
+
+	// db.Debug().Model(&user23).Select("users.*, user_profiles.*").Joins("right join user_profiles on users.p_id = user_profiles.id").Scan(&user_joins)
+
+	db.Debug().Table("users").Select("users.id, users.p_id, user_profiles.pic").Joins("right join user_profiles on users.p_id = user_profiles.id").Scan(&user_joins)
+
+	fmt.Printf("%#v", user_joins)
+	// p(user_joins)
+
 }
