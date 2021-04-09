@@ -12,13 +12,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+
+	_ "ginproject/data_source"
+	_ "ginproject/logs_source"
 )
 
 func main() {
-	// router := gin.Default()
-	router := gin.New()
+	router := gin.Default()
+	// router := gin.New()
+	// router.Use(gin.Logger(), gin.Recovery())
 
-	router.Use(gin.Logger(), gin.Recovery())
+	// // gin 自带 logger
+	// f, _ := os.Create("./gin_log")
+	// gin.DefaultWriter = io.MultiWriter(f)
 
 	// Global Middleware
 	// router.Use(chapter05.MiddleWare1)
