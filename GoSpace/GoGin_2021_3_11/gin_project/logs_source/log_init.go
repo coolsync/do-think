@@ -48,5 +48,7 @@ func init() {
 	Log.SetLevel(level_mapping[log_conf.LogLevel])
 
 	// 格式化 log
-	Log.SetFormatter(&logrus.TextFormatter{})
+	// Log.SetFormatter(&logrus.TextFormatter{TimestampFormat: "2006-01-02 15:04:05"})
+	Log.SetFormatter(&logrus.JSONFormatter{TimestampFormat: "2006-01-02 15:04:05"})
+
 }
