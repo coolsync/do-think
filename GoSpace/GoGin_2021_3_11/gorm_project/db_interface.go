@@ -11,13 +11,10 @@ import (
 var p = fmt.Println
 
 func main() {
-	/*
-		 // 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
-		dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-	*/
+	//  // 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
+	// dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	dsn := "root:afvRdOxt%2px@tcp(localhost:3306)/gorm_project?charset=utf8mb4&parseTime=True&loc=Local"
 
@@ -59,7 +56,8 @@ func main() {
 		Addr: "guangdong guangzhou",
 	}
 
-	tx2 := db.FirstOrCreate(&user4, user5)
+	// SELECT * FROM `users` WHERE `users`.`name` = 'paul' AND `users`.`age` = 20 AND `users`.`addr` = 'guangdong guangzhou' ORDER BY `users`.`id` LIMIT 1
+	tx2 := db.Debug().FirstOrCreate(&user4, user5)
 	p("user4: ", user4)
 	p(tx2.RowsAffected)
 

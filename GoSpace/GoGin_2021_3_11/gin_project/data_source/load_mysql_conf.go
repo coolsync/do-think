@@ -12,19 +12,20 @@ import (
 //     "user_name": "root",
 //     "password": "afvRdOxt%2px",
 //     "data_base": "gin_project"
+//	   "log_mode": "info"
 // }
 
 type MysqlConf struct {
-	Host string `json:"host"`
-	Port string `json:"port"`
+	Host     string `json:"host"`
+	Port     string `json:"port"`
 	UserName string `json:"user_name"`
 	Password string `json:"password"`
 	DataBase string `json:"data_base"`
-	LogMode string `json:"log_mode"`
+	LogMode  string `json:"log_mode"`
 }
 
 func LoadMysqlConf() *MysqlConf {
-	var mysql_conf MysqlConf
+	var mysql_conf *MysqlConf
 
 	// get bytes
 	bs, err := os.ReadFile("./conf/mysql_conf.json")
@@ -38,5 +39,5 @@ func LoadMysqlConf() *MysqlConf {
 		return nil
 	}
 
-	return &mysql_conf
+	return mysql_conf
 }

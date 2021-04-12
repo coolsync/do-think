@@ -1,0 +1,1 @@
+document.write("hello, void ts")

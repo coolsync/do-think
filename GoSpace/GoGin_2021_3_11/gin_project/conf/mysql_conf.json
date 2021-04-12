@@ -4,5 +4,5 @@
     "user_name": "root",
     "password": "afvRdOxt%2px",
     "data_base": "gin_project",
-    "log_mode": "4"
+    "log_mode": "info"
 }
