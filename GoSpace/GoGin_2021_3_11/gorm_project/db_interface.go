@@ -28,7 +28,7 @@ func main() {
 	// First
 	// 1
 	var user relate_tables.User
-	db.First(&user) // 按照 default id query
+	db.First(&user) // 默认使用id查询
 	p(user)
 
 	// 2
