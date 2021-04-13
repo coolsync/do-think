@@ -42,9 +42,9 @@ func DBInter2() {
 	var user7 []relate_tables.User
 	// db.Debug().Where("age > (?)", db.Table("users").Select("AVG(age)")).Find(&user7) // SELECT * FROM `users` WHERE age > (SELECT AVG(age) FROM `users`)
 
-	db.Debug().Select("AVG(age)").Where("name LIKE ?", "b%").Table("users")
+	subQuery := db.Debug().Table("users").Select("AVG(age)").Where("name LIKE ?", "b%")
 
-	// db.Select("avg(age) as avgage").Group("name").Having("avg(age) > (?)", subQuery).Find(&user7)
+	db.Select("avg(age) as avgage").Group("name").Having("avg(age) > (?)", subQuery).Find(&user7)
 	p("user7: ", user7)
 
 }
