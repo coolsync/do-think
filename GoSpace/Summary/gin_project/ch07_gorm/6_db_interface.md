@@ -61,21 +61,21 @@
 ## Take
 
 ```go
-	// 获取一条记录，没有指定排序字段
-	var user7 relate_tables.User
-	db.Debug().Take(&user7, 2) // SELECT * FROM `users` WHERE `users`.`id` = 2 LIMIT 1
-	p("user7: ", user7)
+// 获取一条记录，没有指定排序字段
+var user7 relate_tables.User
+db.Debug().Take(&user7, 2) // SELECT * FROM `users` WHERE `users`.`id` = 2 LIMIT 1
+p("user7: ", user7)
 ```
 
 ## **Find**
 
 ```go
-	// Find
-	// 多个记录
-	var user8 []relate_tables.User
-	id_arr := []int{1, 2, 3}
-	db.Debug().Find(&user8, id_arr) // SELECT * FROM `users` WHERE `users`.`id` IN (1,2,3)
-	p("user8: ", user8)
+// Find
+// 多个记录
+var user8 []relate_tables.User
+id_arr := []int{1, 2, 3}
+db.Debug().Find(&user8, id_arr) // SELECT * FROM `users` WHERE `users`.`id` IN (1,2,3)
+p("user8: ", user8)
 
 
 result := db.Find(&users)
@@ -102,37 +102,37 @@ db.Where("name LIKE ?", "%ha%").Find(&users)
 
 ```go
 // 根据条件查询得到满足条件的第一条记录
-	var user []relate_tables.User
-	db.Debug().Where("name", "bob").First(&user)
-	// SELECT * FROM `users` WHERE `name` = 'bob' ORDER BY `users`.`id` LIMIT 1
-	p(user)
+var user []relate_tables.User
+db.Debug().Where("name", "bob").First(&user)
+// SELECT * FROM `users` WHERE `name` = 'bob' ORDER BY `users`.`id` LIMIT 1
+p(user)
 
-	// 根据条件查询得到满足条件的所有记录
-	var user2 []relate_tables.User
-	db.Debug().Where("name", "bob").Find(&user2) //  SELECT * FROM `users` WHERE `name` = 'bob'
-	p(user2)
+// 根据条件查询得到满足条件的所有记录
+var user2 []relate_tables.User
+db.Debug().Where("name", "bob").Find(&user2) //  SELECT * FROM `users` WHERE `name` = 'bob'
+p(user2)
 
-	// like模糊查询
-	var user3 []relate_tables.User
-	db.Debug().Where("name like ?", "p%").Find(&user3) // SELECT * FROM `users` WHERE name like 'p%'
-	p(user3)
+// like模糊查询
+var user3 []relate_tables.User
+db.Debug().Where("name like ?", "p%").Find(&user3) // SELECT * FROM `users` WHERE name like 'p%'
+p(user3)
 
-	var user4 []relate_tables.User
-	db.Debug().Where("age < ?", 30).Find(&user4) //  SELECT * FROM `users` WHERE age < 30
-	p(user4)
+var user4 []relate_tables.User
+db.Debug().Where("age < ?", 30).Find(&user4) //  SELECT * FROM `users` WHERE age < 30
+p(user4)
 
-	// 	条件：
-	var user5 []relate_tables.User
-	db.Debug().Where("name = ? AND age >= ?", "bob2", 20).Find(&user5)
-	// SELECT * FROM `users` WHERE name = 'bob2' AND age >= 20
-	p(user5)
+// 	条件：
+var user5 []relate_tables.User
+db.Debug().Where("name = ? AND age >= ?", "bob2", 20).Find(&user5)
+// SELECT * FROM `users` WHERE name = 'bob2' AND age >= 20
+p(user5)
 
-	// =
-	// LIKE
-	// IN：Where("name IN ?", []string{"bob2", "paul"})
-	// AND：Where("name = ? AND age >= ?", "jinzhu", "22")
-	// Time：Where("updated_at > ?", lastWeek)
-	// BETWEEN：Where("created_at BETWEEN ? AND ?", lastWeek, today)
+// =
+// LIKE
+// IN：Where("name IN ?", []string{"bob2", "paul"})
+// AND：Where("name = ? AND age >= ?", "jinzhu", "22")
+// Time：Where("updated_at > ?", lastWeek)
+// BETWEEN：Where("created_at BETWEEN ? AND ?", lastWeek, today)
 ```
 
 ## Select
@@ -150,6 +150,23 @@ db.Where("name LIKE ?", "%ha%").Find(&users)
 	db.Debug().Table("users").Select("COALESCE(age,?)", 30).Rows() //SELECT COALESCE(age,20) FROM `users`
 	p("user7: ", user7)
 ```
+
+```shell
+SubQuery子查询
+
+A subquery can be nested within a query, GORM can generate subquery when using a *gorm.DB object as param
+子查询可以嵌套在查询中，当使用* gorm.DB对象作为参数时，GORM可以生成子查询
+
+db.Where("amount > (?)", db.Table("orders").Select("AVG(amount)")).Find(&orders)
+// SELECT * FROM "orders" WHERE amount > (SELECT AVG(amount) FROM "orders");
+
+subQuery := db.Select("AVG(age)").Where("name LIKE ?", "name%").Table("users")
+
+db.Select("AVG(age) as avgage").Group("name").Having("AVG(age) > (?)", subQuery).Find(&results)
+// SELECT AVG(age) as avgage FROM `users` GROUP BY `name` HAVING AVG(age) > (SELECT AVG(age) FROM `users` WHERE name LIKE "name%")
+```
+
+
 
 ## Create
 

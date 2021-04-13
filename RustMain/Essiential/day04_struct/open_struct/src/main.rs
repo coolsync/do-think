@@ -1,13 +1,12 @@
 fn main() {
     //1 define struct
     #[derive(Debug)] // print before, add
-
     struct User {
         name: String,
         count: String, // 账户
         nonce: u64,    // balance
         active: bool,  // 是否在线
-    };
+    }
 
     //2 create struct instance
     let bob = User {
@@ -49,7 +48,6 @@ fn main() {
         nonce,
         active,
     };
-
     // 5 from other struct create instance
     let user2 = User {
         name: String::from("alice"),
@@ -60,16 +58,21 @@ fn main() {
     println!("user2 count = {}", user2.count);
 
     // 6 tuple struct// A unit struct
+    #[derive(Debug)]
     struct Point(char, i32, i32);
 
     let a = Point('1', 10, 20);
     let b = Point('2', 30, 5);
 
+    println!("{:#?}", a);
     println!("x = {}, y= {}", a.0, a.1);
+
+   
 
     // 7 没有任何 field 的 类单元 struct, A unit struct
     // Unit structs, which are field-less, are useful for generics.
-    struct A {};
+    struct A {}
 
     // 8 print struct filed info
 }
+

@@ -1,10 +1,10 @@
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 const isProd = process.env.NODE_ENV === 'production' // 是否生产环境
 
-function resolve (dir) {
+function resolve(dir) {
   return path.resolve(__dirname, '..', dir)
 }
 
@@ -42,10 +42,9 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js']
   },
 
-//   devtool: isProd ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
-
-    devtool: isProd ? '^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$'
-
+  // devtool: isProd ? '^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$'
+  // devtool: isProd ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
+  devtool: isProd ? 'cheap-module-source-map' : 'eval-cheap-module-source-map',
   devServer: {
     host: 'localhost', // 主机名
     stats: 'errors-only', // 打包日志输出输出错误信息

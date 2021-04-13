@@ -9,5 +9,9 @@ import (
 // var db = db_source.Db
 
 func main() {
-	db_interface.DBInter1()
+	// First, FirstOrCreate, Last, Take, Find
+	// db_interface.DBInter1()
+
+	// Where, 
+	db_interface.DBInter2()
 }
