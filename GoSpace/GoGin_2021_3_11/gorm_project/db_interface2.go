@@ -132,14 +132,12 @@ func main() {
 
 	// Or
 	var user16 []relate_tables.User
-	//SELECT * FROM `users` WHERE `name` = 'bob' OR `name` = 'paul'
-	db.Debug().Where("name", "bob").Or("name", "paul").Find(&user16)
+	db.Debug().Where("name", "bob").Or("name", "paul").Find(&user16) //SELECT * FROM `users` WHERE `name` = 'bob' OR `name` = 'paul'
 	p(user16)
 
 	// Order
 	var user17 []relate_tables.User
-	// SELECT * FROM `users` WHERE name LIKE 'b%' ORDER BY name asc
-	db.Debug().Where("name LIKE ?", "b%").Order("name desc").Find(&user17)
+	db.Debug().Where("name LIKE ?", "b%").Order("name desc").Find(&user17) // SELECT * FROM `users` WHERE name LIKE 'b%' ORDER BY name asc
 	p(user17)
 
 	// Limit和Offset
@@ -166,8 +164,7 @@ func main() {
 	// 获取模型的记录数
 	var user20 []relate_tables.User
 	var count int64
-	// db.Debug().Where("age", 30).Find(&user20).Count(&count)
-	// SELECT count(1) FROM `users` WHERE `age` = 30
+	// db.Debug().Where("age", 30).Find(&user20).Count(&count) // SELECT count(1) FROM `users` WHERE `age` = 30
 	db.Debug().Model(&user20).Where("age", 30).Count(&count)
 	// p(user20)
 	p(count)

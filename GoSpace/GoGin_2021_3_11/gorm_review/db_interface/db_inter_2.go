@@ -39,12 +39,12 @@ func DBInter2() {
 	// subQuery := db.Select("AVG(age)").Where("name LIKE ?", "name%").Table("users")
 	// db.Select("AVG(age) as avgage").Group("name").Having("AVG(age) > (?)", subQuery).Find(&results)
 
+	// Get 大于平均年龄的element
 	var user7 []relate_tables.User
-	// db.Debug().Where("age > (?)", db.Table("users").Select("AVG(age)")).Find(&user7) // SELECT * FROM `users` WHERE age > (SELECT AVG(age) FROM `users`)
-
-	subQuery := db.Debug().Table("users").Select("AVG(age)").Where("name LIKE ?", "b%")
-
-	db.Select("avg(age) as avgage").Group("name").Having("avg(age) > (?)", subQuery).Find(&user7)
+	db.Debug().Where("age > (?)", db.Table("users").Select("AVG(age)")).Find(&user7) // SELECT * FROM `users` WHERE age > (SELECT AVG(age) FROM `users`)
 	p("user7: ", user7)
 
+	// Create	a recode
+	var user8 relate_tables.User
+	p("user8: ", user8)
 }

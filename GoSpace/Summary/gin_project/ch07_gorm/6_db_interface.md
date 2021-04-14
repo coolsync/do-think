@@ -173,8 +173,15 @@ db.Select("AVG(age) as avgage").Group("name").Having("AVG(age) > (?)", subQuery)
 1.插入单条
 
 ```go
-user := models.User{Name:"李四",Age:18,Addr:"xxx",Pic:"/static/upload/pic111.jpg",Phone:"13411232312"}
-result := db.Create(&user)
+//Create
+//1.插入单条
+user8 := relate_tables.User{
+    Name:"jerry",
+    Age: 18,
+    Addr: "xxxx",
+}
+
+db.Create(&user8)
 
 user.ID             // 返回插入数据的主键
 result.Error        // 返回 error
@@ -183,24 +190,41 @@ result.RowsAffected // 返回插入记录的条数
 
 2.批量插入：暂不支持
 
-```
-user4 := []relate_tables.User{
-        {
-            Name:"hallen8",
-            Age:18,
-            Addr:"xxx",
-        },
-        {
-            Name:"hallen9",
-            Age:18,
-            Addr:"xxx",
-        },
-    }
-
-db.Create(&user4)    // 这种方式不支持
+```go
+// 2.批量插入
+user9 := []relate_tables.User {
+    {
+        Name:"jerry2",
+        Age: 18,
+        Addr: "xxxx",
+    },
+    {
+        Name:"jerry3",
+        Age: 18,
+        Addr: "xxxx",
+    },
+}
+db.Create(&user9)
 ```
 
 ## save
+
+```go
+user10 := relate_tables.User{
+    Name: "mark",
+    Age: 30,
+    Addr: "xxx",
+}
+db.Save(&user10)
+
+var user11 relate_tables.User
+db.Where("name", "mark").First(&user11)
+p(user11)
+user11.Name = "mark1"
+db.Save(&user11)
+```
+
+
 
 ```go
 var user model.User
@@ -215,11 +239,18 @@ db.Save(&user)
 ## update
 
 ```go
-var users []model.User
-db.Where("active = ?", true).find(&users).Update("name", "hello")
+var user12 relate_tables.User
+db.Where("name = ?", "mark1").First(&user12)
+p(user12)
+db.Model(&user12).Update("name", "mark2")
 
-
-db.Where("active = ?", true).find(&users).Updates(User{Name: "hello", Age: 18})
+var user13 relate_tables.User
+db.Where("name", "mark2").Find(&user13).Update("name", "mark3")
+db.Where("name", "mark3").Find(&user13).Updates(relate_tables.User{Name: "mark4", Age: 40})
+db.Where("name", "mark4").Find(&user13).Updates(map[string]interface{}{
+    "name": "mark5",
+    "age": "30",
+})
 
 
 // update也可以使用map：map[string]interface{}{"name": "hello", "age": 18}
@@ -230,7 +261,9 @@ db.Where("active = ?", true).find(&users).Updates(User{Name: "hello", Age: 18})
 ## delete
 
 ```go
-db.Delete(&user,1)
+var user14 relate_tables.User
+db.Where("name", "jerry3").Delete(&user14)
+p("user14:", user14)	// user14: {0  0  0}
 
 // 批量删除
 db.Where("age = ?", 20).Delete(&User{})
@@ -266,8 +299,11 @@ db.Where("age = ?", 20).Delete(&User{})
 
 ```go
 var user model.User
-
 db.Not(User{Name: "hallen", Age: 18}).First(&user)
+
+var user15 []relate_tables.User
+db.Debug().Not("name", "bob").Find(&user15) // SELECT * FROM `users` WHERE `name` <> 'bob'
+p(user15)
 
 // SELECT * FROM `users`  WHERE (`users`.`name` <> 'hallen6') AND (`users`.`age` <> 19);
 ```
@@ -276,10 +312,12 @@ db.Not(User{Name: "hallen", Age: 18}).First(&user)
 
 ```go
 var users []model.User
-
-
 db.Where("name = 'hallen'").Or(User{Name: "hallen2", Age: 18}).Find(&users)
 // SELECT * FROM users WHERE name = 'hallen' OR (name = 'jinzhu 2' AND age = 18);
+
+var user16 []relate_tables.User
+db.Debug().Where("name", "bob").Or("name", "paul").Find(&user16) //SELECT * FROM `users` WHERE `name` = 'bob' OR `name` = 'paul'
+p(user16)
 ```
 
 ## **Order**
@@ -288,10 +326,12 @@ db.Where("name = 'hallen'").Or(User{Name: "hallen2", Age: 18}).Find(&users)
 var users []model.User
 db.Order("age desc").Find(&users) // 注意这里的order要在find前面，否则不生效
 fmt.Println(users)
-
 // SELECT * FROM users ORDER BY age desc;
+// 默认为asc
 
-默认为asc
+var user17 []relate_tables.User
+db.Debug().Where("name LIKE ?", "b%").Order("name desc").Find(&user17) // SELECT * FROM `users` WHERE name LIKE 'b%' ORDER BY name asc
+p(user17)
 ```
 
 ## **Limit和Offset**
@@ -300,13 +340,13 @@ Limit 指定获取记录的最大数量 Offset 指定在开始返回记录之前
 
 ```go
 var users []model.User
+db.Limit(3).Find(&users)  // 三条 // SELECT * FROM users LIMIT 3;
+db.Limit(10).Offset(5).Find(&users) // 从5开始的10条数据 // SELECT * FROM users OFFSET 5 LIMIT 10;
 
-
-db.Limit(3).Find(&users)  // 三条
-// SELECT * FROM users LIMIT 3;
-
-db.Limit(10).Offset(5).Find(&users) // 从5开始的10条数据
-// SELECT * FROM users OFFSET 5 LIMIT 10;
+var user18 []relate_tables.User
+// db.Debug().Limit(3).Find(&user18) //SELECT * FROM `users` LIMIT 3
+db.Debug().Limit(5).Offset(3).Find(&user18) // SELECT * FROM `users` LIMIT 5 OFFSET 3
+p(user18)
 ```
 
 ## **Scan**
@@ -318,8 +358,19 @@ type Result struct {
         Id int64
     }
 var results []Result
-db.Select("id").Where("user_id in (?)", []string{"1", "2"}).Find(&dqmUserRole20).Scan(&results)
+db.Select("id").Where("user_id in (?)",[]string{"1","2"}).Find(&dqmUserRole20).Scan(&results)
 fmt.Println(results)
+
+type UserBak struct {
+    Name string
+    // Age int
+    Addr string
+}
+var user_bak []UserBak
+var user19 []relate_tables.User
+db.Find(&user19).Scan(&user_bak)
+p(user19)
+p(user_bak)
 ```
 
 ## Count
@@ -327,12 +378,18 @@ fmt.Println(results)
 获取模型的记录数
 
 ```go
+var user20 []relate_tables.User
+var count int64
+// db.Debug().Where("age", 30).Find(&user20).Count(&count) // SELECT count(1) FROM `users` WHERE `age` = 30
+db.Debug().Model(&user20).Where("age", 30).Count(&count)
+// p(user20)
+p(count)
+
+
 db.Where("name = ?", "hallen").Find(&users).Count(&count)
 // SELECT count(*) FROM users WHERE name = 'jinzhu'
-
 db.Model(&User{}).Where("name = ?", "jinzhu").Count(&count)
 // SELECT count(*) FROM users WHERE name = 'jinzhu'; (count)
-
 db.Table("deleted_users").Count(&count)
 // SELECT count(*) FROM deleted_users;
 ```
@@ -346,27 +403,41 @@ HAVING语句通常与GROUP BY语句联合使用，用来过滤由GROUP BY语句�
 HAVING语句的存在弥补了WHERE关键字不能与聚合函数联合使用的不足
 
 ```go
-    type result struct {
-      Date  time.Time
-      Total int
-    }
+type GroupData struct {
+    Name  string
+    Age   string
+    Addr  string
+    Count int
+}
+var group_data []GroupData
+var user21 []relate_tables.User
+// db.Debug().Model(&user21).Select("age, count(*) as count").Group("age").Find(&group_data)
+db.Model(&user21).Select("age, count(*) as count").Group("age").Having("age = ?", 30).Find(&group_data)   
 
-    db.Select("name, count(*)").Group("name").Find(&result)
 
-    // select name,count(*) FROM users GROUP BY `age`
+type result struct {
+    Date  time.Time
+    Total int
+}
 
-    db.Select("name, count(*)").Group("name").Having("add = ?","xxx").Find(&result)
+db.Select("name, count(*)").Group("name").Find(&result)
+
+// select name,count(*) FROM users GROUP BY `age`
+
+db.Select("name, count(*)").Group("name").Having("add = ?","xxx").Find(&result)
 
 
-  // select name,count(*) FROM users GROUP BY `age` 后面不能用where限制条件，只能使用having
+// select name,count(*) FROM users GROUP BY `age` 后面不能用where限制条件，只能使用having
 
- // select name,count(age) FROM users GROUP BY `age` HAVING addr='xxx'
+// select name,count(age) FROM users GROUP BY `age` HAVING addr='xxx'
 ```
 
 ## Distinct：暂无 
 
 ```go
-db.Distinct("name", "age").Order("name, age desc").Find(&results)
+var user22 []relate_tables.User
+db.Debug().Distinct("name, age").Order("name, age desc").Find(&user22)
+p("user22: ", user22)
 ```
 
 ## Join
@@ -376,9 +447,25 @@ left join ... on ..
 right join ... on ..
 
 ```go
-db.Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Scan(&result{})
+type UserJoins struct {
+    ID    int
+    Name  string
+    Age   int
+    Addr  string
+    PID   int
+    Pic   string
+    CPic  string
+    Phone string
+}
+var user_joins []UserJoins
+// var user23 []relate_tables.User
+
+// db.Debug().Model(&user23).Select("users.*, user_profiles.*").Joins("right join user_profiles on users.p_id = user_profiles.id").Scan(&user_joins)
+
+db.Debug().Table("users").Select("users.id, users.p_id, user_profiles.pic").Joins("right join user_profiles on users.p_id = user_profiles.id").Scan(&user_joins)
+
+fmt.Printf("%#v", user_joins)
+// p(user_joins)
 ```
 
 ##  
-
-# 

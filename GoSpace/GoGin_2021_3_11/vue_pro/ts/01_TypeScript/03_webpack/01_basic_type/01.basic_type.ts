@@ -108,10 +108,10 @@ console.log(getObj(new String))
 // 联合类型
 // 联合类型（Union Types）表示取值可以为多种类型中的一种
 // 需求1: 定义一个函数得到一个数字或字符串值的字符串形式值
-// function get_str(str: number|string): string {
-// return str.toString()
-// }
-// console.log(get_str('123'))
+function get_str(str: number | string): string {
+    return str.toString()
+}
+console.log(get_str('123'))
 
 // 类型断言
 // 需求2: 定义一个函数得到一个数字或字符串值的长度
