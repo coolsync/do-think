@@ -158,64 +158,105 @@
 你可以使用 `readonly` 关键字将属性设置为只读的。 只读属性必须在声明时或构造函数里被初始化。
 
 ```typescript
+// create cls
 class Person {
-  readonly name: string = 'abc'
-  constructor(name: string) {
-    this.name = name
-  }
+    // property
+    readonly name: string;
+    // constructor fn
+    constructor(name: string = 'bob') { // constructor params: readonly ok
+        this.name = name;
+    }
+    // method
+    say_hi() {
+        // this.name = 'kk';   // err: readonly
+        console.log(`name: ${this.name}`);
+    }
 }
+// get cls obj
+const p = new Person('jerry'); 
+console.log(p)
+console.log(p.name)
 
-let john = new Person('John')
-// john.name = 'peter' // error
+// p.name = 'paul'  // err: readonly
+
+// call obj method
+p.say_hi()
 ```
 
 ### [#](https://24kcs.github.io/vue3_study/chapter2/3_class.html#参数属性)参数属性
 
-在上面的例子中，我们必须在 `Person` 类里定义一个只读成员 `name` 和一个参数为 `name` 的构造函数，并且立刻将 `name` 的值赋给 `this.name`，这种情况经常会遇到。 参数属性可以方便地让我们在一个地方定义并初始化一个成员。 下面的例子是对之前 `Person` 类的修改版，使用了参数属性：
+constructor params readonly, public, private, protected  modifier
 
 ```typescript
-class Person2 {
-  constructor(readonly name: string) {
-  }
-}
+// create cls
+class Person {
+    // constructor fn
+    // constructor params has modifier, auto product name property.
+    constructor(readonly name: string = 'bob') {
+        this.name = name;
+    }
 
-const p = new Person2('jack')
+    // constructor(public name: string = 'bob') {
+    //     this.name = name;
+    // }
+
+    // constructor(private name: string = 'bob') {
+    //     this.name = name;
+    // }
+
+    // constructor(protected name: string = 'bob') {  // in base cls and son cls use
+    //     this.name = name;
+    // }
+}
+// get cls obj
+const p = new Person('jerry');
+
+// p.name = 'pual' // readonly err, public ok, private err, protected err
 console.log(p.name)
 ```
 
-注意看我们是如何舍弃参数 `name`，仅在构造函数里使用 `readonly name: string` 参数来创建和初始化 `name` 成员。 我们把声明和赋值合并至一处。
-
-参数属性通过给构造函数参数前面添加一个访问限定符来声明。使用 `private` 限定一个参数属性会声明并初始化一个私有成员；对于 `public` 和 `protected` 来说也是一样。
-
 ## [#](https://24kcs.github.io/vue3_study/chapter2/3_class.html#存取器)存取器
 
-`TypeScript` 支持通过 `getters/setters` 来截取对对象成员的访问。 它能帮助你有效的控制对对象成员的访问。
+`TypeScript` 支持通过 `getters/setters` 来截取对对象成员的访问， 帮助你有效的控制对对象成员的访问。
 
 下面来看如何把一个简单的类改写成使用 `get` 和 `set`。 首先，我们从一个没有使用存取器的例子开始。
 
 ```typescript
-class Person {
-  firstName: string = 'A'
-  lastName: string = 'B'
-  get fullName () {
-    return this.firstName + '-' + this.lastName
-  }
-  set fullName (value) {
-    const names = value.split('-')
-    this.firstName = names[0]
-    this.lastName = names[1]
-  }
-}
+// 存取器 支持通过 getters/setters 来截取对对象成员的访问, 帮助你有效的控制对对象成员的访问。
+(() => {
+    // create cls
+    class Person {
+        first_name: string;
+        last_name: string;
+        // full_name: string;
 
-const p = new Person()
-console.log(p.fullName)
+        constructor(first_name: string, last_name: string) {
+            // update property values
+            this.first_name = first_name;
+            this.last_name = last_name;
+        }
+        // get 
+        get full_name() {
+            console.log('in get ...');
+            return this.first_name + '_' + this.last_name;
+        }
+        // set 
+        set full_name(val) {
+            console.log('in set ...');
+            let names = val.split('_');
+            this.first_name = names[0];
+            this.last_name = names[1];
+        }
+    }
 
-p.firstName = 'C'
-p.lastName =  'D'
-console.log(p.fullName)
-
-p.fullName = 'E-F'
-console.log(p.firstName, p.lastName)
+    // instance obj
+    const p = new Person('dongfa', 'bubai');
+    
+    console.log(p.full_name);   // dongfa_bubai
+    p.full_name = 'bob_sim';
+    console.log(p.full_name);   // bob_sim
+    console.log(p.first_name);  // bob
+})()
 ```
 
 ## [#](https://24kcs.github.io/vue3_study/chapter2/3_class.html#静态属性)静态属性
@@ -227,14 +268,29 @@ console.log(p.firstName, p.lastName)
 静态属性, 是类对象的属性
 非静态属性, 是类的实例对象的属性
 */
-
+// def cls
 class Person {
-  name1: string = 'A'
-  static name2: string = 'B'
+    static name1: string;
+
+    constructor(public name: string) {
+        // this.name1 = name;  // can not assign val to static property
+    }
+
+    static say_hi() {
+        console.log('hello');
+    }
 }
 
-console.log(Person.name2)
-console.log(new Person().name1)
+// instance obj
+const p = new Person('bob');
+// console.log(p.name);    // can not by instance obj call static property
+// p.say_hi();  // can not by instance obj call static property
+
+console.log(p.name)
+
+// call static member
+console.log(Person.name1)
+Person.say_hi()
 ```
 
 ## [#](https://24kcs.github.io/vue3_study/chapter2/3_class.html#抽象类)抽象类
@@ -248,22 +304,27 @@ console.log(new Person().name1)
   可以包含未实现的抽象方法
 */
 
+// def abstract class
 abstract class Animal {
-
-  abstract cry ()
-
-  run () {
-    console.log('run()')
-  }
+    // def abstract property, pass
+    // def abstract method
+    abstract eat();
+    // def instance method
+    say_hi() {
+        console.log('hello, brother');
+    }
 }
 
+// def son cls
 class Dog extends Animal {
-  cry () {
-    console.log(' Dog cry()')
-  }
+    name: string;
+    eat() {
+        console.log('dog eat, haha');
+    }
 }
 
-const dog = new Dog()
-dog.cry()
-dog.run()
+// instance dog obj
+const dog: Dog = new Dog();
+dog.eat();
+dog.say_hi();
 ```

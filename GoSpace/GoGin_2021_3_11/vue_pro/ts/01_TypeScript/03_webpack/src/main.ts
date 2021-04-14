@@ -7,7 +7,16 @@
 // import './1_class'
 // import './2_inheritance'
 // import './3_polymorphism'
-import './4_修饰符'
+// import './4_modifier'
+// import './5_readonly_modifier'
+// import './6_acessceor'
+// import './7_static_member'
+// import './8_abstract_class'
+
+// import './1_def_fn'
+// import './2_option_default_params'
+import './3_rest_params'
+// import './4_fn_overloading'
 
 let htmlStr = `<div><span>'welcome'</span></div>`;
 const element: HTMLElement = document.querySelector('body') as HTMLElement
