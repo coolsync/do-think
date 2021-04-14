@@ -15,13 +15,8 @@
 
 // import './1_def_fn'
 // import './2_option_default_params'
-// import './3_rest_params'
+import './3_rest_params'
 // import './4_fn_overloading'
-
-// import './01_generic'
-// import './02_mul_generic_params_fn'
-import './03_generic_interface'
-
 
 let htmlStr = `<div><span>'welcome'</span></div>`;
 const element: HTMLElement = document.querySelector('body') as HTMLElement

@@ -23,19 +23,28 @@ console.log(arr1[0].toFixed(), arr2[0].split(''))
 ## [#](https://24kcs.github.io/vue3_study/chapter2/5_generic.html#使用函数泛型)使用函数泛型
 
 ```typescript
-function createArray2 <T> (value: T, count: number) {
-  const arr: Array<T> = []
-  for (let index = 0; index < count; index++) {
-    arr.push(value)
-  }
-  return arr
-}
-const arr3 = createArray2<number>(11, 3)
-console.log(arr3[0].toFixed())
-// console.log(arr3[0].split('')) // error
-const arr4 = createArray2<string>('aa', 3)
-console.log(arr4[0].split(''))
-// console.log(arr4[0].toFixed()) // error
+(()=> {
+    //根据指定的数量 `count` 和数据 `value` , 创建一个包含 `count` 个 `value` 的数组 
+
+    // fn declare
+    function getArr<T>(value:T, count:number): Array<T> {
+        const arr: Array<T> = []
+        for (let i = 0; i < count; i++) {
+            arr.push(value)
+        }
+
+        return arr
+    }
+
+    // call fn
+    let arr1 = getArr<number>(100.12345, 5);
+    let arr2 = getArr<string>('abcdefg', 5);
+
+    console.log(arr1)
+    console.log(arr2)
+    console.log(arr1[0].toFixed(2));
+    console.log(arr2[0].split(''));
+})()
 ```
 
 ## [#](https://24kcs.github.io/vue3_study/chapter2/5_generic.html#多个泛型参数的函数)多个泛型参数的函数
