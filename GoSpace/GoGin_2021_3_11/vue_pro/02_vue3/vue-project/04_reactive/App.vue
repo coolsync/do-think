@@ -2,8 +2,9 @@
   <h1>use reactive</h1>
   <h2>name: {{ user.name }}</h2>
   <h2>age: {{ user.age }}</h2>
+  <h2>gender: {{ user.gender }}</h2>
   <h2>wife: {{ user.wife }}</h2>
-  <button @click="update">update user data</button>
+  <button @click="updateUser">update user data</button>
 </template>
 
 <script lang='ts'>
@@ -36,18 +37,31 @@ export default defineComponent({
       },
     };
 
-    const user = reactive(obj); // obj 是 target 被代理对象， user 是 handler 代理对象
+    const user = reactive<any>(obj); // obj 是 target 被代理对象， user 是 handler 代理对象
 
-    const update = () => {
-      user.name+='======';
-      user.age += 2
-      user.wife.name += '+++'
-      user.wife.age += 2
-      user.wife.cars[0] = 'sanmaladi'
+    const updateUser = () => {
+      // user.name+='======';
+      // user.age += 2
+      // user.wife.name += '+++'
+      // user.wife.age += 2
+      // user.wife.cars[0] = 'sanmaladi'
+
+      // display data update, only by handler proxy obj modify 
+      // add property
+      user.gender = 'woman'
+
+      // del property
+      delete user.age
+ 
+      // modify obj propery data
+      user.wife.cars[1] = 'samaladi';
+
+      // add data to obj propery
+      user.wife.cars[3] = 'aotuo';
     };
     return {
       user,
-      update
+      updateUser
     };
   },
 });
