@@ -44,7 +44,67 @@ func DBInter2() {
 	db.Debug().Where("age > (?)", db.Table("users").Select("AVG(age)")).Find(&user7) // SELECT * FROM `users` WHERE age > (SELECT AVG(age) FROM `users`)
 	p("user7: ", user7)
 
-	// Create	a recode
-	var user8 relate_tables.User
-	p("user8: ", user8)
+	// Create
+
+	// Insert a obj
+	// user8 := relate_tables.User{
+	// 	Name: "sam",
+	// 	Age:  30,
+	// 	Addr: "xxxx",
+	// }
+	// db.Debug().Create(&user8) // INSERT INTO `users` (`name`,`age`,`addr`,`p_id`) VALUES ('sam',30,'xxxx',0)
+
+	// 批量插入
+	// user9 := []relate_tables.User {
+	// 	{
+	// 		Name: "jerry4",
+	// 		Age: 18,
+	// 		Addr: "xxxx",
+	// 	},
+	// 	{
+	// 		Name: "jerry5",
+	// 		Age: 20,
+	// 		Addr: "xxxx",
+	// 	},
+	// }
+	// db.Debug().Create(&user9)	// INSERT INTO `users` (`name`,`age`,`addr`,`p_id`) VALUES ('jerry4',18,'xxxx',0),('jerry5',20,'xxxx',0)
+
+	// Save
+	// user10 := relate_tables.User{
+	// 	Name: "sam",
+	// 	Age:  32,
+	// 	Addr: "xxxx",
+	// }
+	// db.Debug().Save(&user10) // INSERT INTO `users` (`name`,`age`,`addr`,`p_id`) VALUES ('sam',32,'xxxx',0)
+
+	// var user11 relate_tables.User
+	// db.Debug().Where("name", "sam").First(&user11)
+	// p(user11)
+	// user11.Name = "paul2"
+	// db.Debug().Save(&user11) // UPDATE `users` SET `name`='paul2',`age`=30,`addr`='xxxx',`p_id`=0 WHERE `id` = 18
+
+	// Update
+	// var user12 relate_tables.User
+	// db.Debug().Model(&user12).Where("name", "sam").Update("name", "paul3")	// UPDATE `users` SET `name`='paul3' WHERE `name` = 'sam' // all update
+	// p(user12)
+
+	var user13 relate_tables.User
+	db.Debug().Where("name", "mark3").Find(&user13).Update("name", "mark4") // UPDATE `users` SET `name`='mark4' WHERE `name` = 'mark3' AND `id` = 22
+
+	db.Debug().Where("name", "mark4").Find(&user13).Updates(relate_tables.User{
+		Name: "mark5",
+		Age:  30,
+	}) // UPDATE `users` SET `name`='mark5',`age`=30 WHERE `name` = 'mark4' AND `id` = 22
+
+	db.Debug().Where("name", "mark5").Find(&user13).Updates(map[string]interface{}{
+		"name": "mark6",
+		"age":  40,
+	}) // UPDATE `users` SET `age`=40,`name`='mark6' WHERE `name` = 'mark5' AND `id` = 22
+	p("user13: ", user13)
+
+	// Delete
+	var user14 relate_tables.User
+	db.Debug().Where("name", "mark6").Delete(&user14) // DELETE FROM `users` WHERE `name` = 'mark6'
+	p("user14: ", user14)
+
 }

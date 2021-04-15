@@ -181,33 +181,37 @@ user8 := relate_tables.User{
     Addr: "xxxx",
 }
 
-db.Create(&user8)
+db.Create(&user8) // INSERT INTO `users` (`name`,`age`,`addr`,`p_id`) VALUES ('sam',30,'xxxx',0)
 
 user.ID             // 返回插入数据的主键
 result.Error        // 返回 error
 result.RowsAffected // 返回插入记录的条数
 ```
 
-2.批量插入：暂不支持
+2.批量插入
 
 ```go
 // 2.批量插入
 user9 := []relate_tables.User {
     {
-        Name:"jerry2",
+        Name: "jerry4",
         Age: 18,
         Addr: "xxxx",
     },
     {
-        Name:"jerry3",
-        Age: 18,
+        Name: "jerry5",
+        Age: 20,
         Addr: "xxxx",
     },
 }
-db.Create(&user9)
+db.Debug().Create(&user9)	// INSERT INTO `users` (`name`,`age`,`addr`,`p_id`) VALUES ('jerry4',18,'xxxx',0),('jerry5',20,'xxxx',0)
 ```
 
-## save
+## Save 
+
+Save update value in database, if the value doesn't have primary key, will insert it
+
+默认会更新该对象的所有字段，即使你没有赋值。
 
 ```go
 user10 := relate_tables.User{
@@ -215,10 +219,10 @@ user10 := relate_tables.User{
     Age: 30,
     Addr: "xxx",
 }
-db.Save(&user10)
+db.Save(&user10) // INSERT INTO `users` (`name`,`age`,`addr`,`p_id`) VALUES ('sam',32,'xxxx',0)
 
 var user11 relate_tables.User
-db.Where("name", "mark").First(&user11)
+db.Where("name", "mark").First(&user11) // UPDATE `users` SET `name`='paul2',`age`=30,`addr`='xxxx',`p_id`=0 WHERE `id` = 18
 p(user11)
 user11.Name = "mark1"
 db.Save(&user11)
@@ -239,18 +243,30 @@ db.Save(&user)
 ## update
 
 ```go
+// all update
+var user12 relate_tables.User
+db.Debug().Model(&user12).Where("name", "sam").Update("name", "paul3")	// UPDATE `users` SET `name`='paul3' WHERE `name` = 'sam' 
+p(user12)
+
+// 先查询 后更新
 var user12 relate_tables.User
 db.Where("name = ?", "mark1").First(&user12)
 p(user12)
 db.Model(&user12).Update("name", "mark2")
 
 var user13 relate_tables.User
-db.Where("name", "mark2").Find(&user13).Update("name", "mark3")
-db.Where("name", "mark3").Find(&user13).Updates(relate_tables.User{Name: "mark4", Age: 40})
-db.Where("name", "mark4").Find(&user13).Updates(map[string]interface{}{
-    "name": "mark5",
-    "age": "30",
-})
+db.Debug().Where("name", "mark3").Find(&user13).Update("name", "mark4") // UPDATE `users` SET `name`='mark4' WHERE `name` = 'mark3' AND `id` = 22
+
+db.Debug().Where("name", "mark4").Find(&user13).Updates(relate_tables.User{
+    Name: "mark5",
+    Age:  30,
+}) // UPDATE `users` SET `name`='mark5',`age`=30 WHERE `name` = 'mark4' AND `id` = 22
+
+db.Debug().Where("name", "mark5").Find(&user13).Updates(map[string]interface{}{
+    "name": "mark6",
+    "age":  40,
+}) // UPDATE `users` SET `age`=40,`name`='mark6' WHERE `name` = 'mark5' AND `id` = 22
+p("user13: ", user13)
 
 
 // update也可以使用map：map[string]interface{}{"name": "hello", "age": 18}
@@ -266,19 +282,25 @@ db.Where("name", "jerry3").Delete(&user14)
 p("user14:", user14)	// user14: {0  0  0}
 
 // 批量删除
-db.Where("age = ?", 20).Delete(&User{})
+db.Where("email LIKE ?", "%jinzhu%").Delete(Email{})
+//// DELETE from emails where email LIKE "%jinhu%";
+
+db.Delete(Email{}, "email LIKE ?", "%jinzhu%")
+//// DELETE from emails where email LIKE "%jinhu%";
 ```
+
+
 
 ## Unscoped:软删除
 
 ```go
     // 也就是逻辑删除    
     // gorm.Model 将DeletedAt 字段设置为当前时间
-    // 需要再模型中指定
+    // 需要在模型中指定
 
     type User struct {
       ID      int
-      Deleted `gorm:"DeletedAt"`      // 如果设置了所有的删除都将是逻辑删除
+      Deleted `gorm:"DeletedAt"`      // 如果设置了 所有的删除 都将是逻辑删除
       Name    string
     }
 
@@ -298,26 +320,24 @@ db.Where("age = ?", 20).Delete(&User{})
 ## **Not**
 
 ```go
-var user model.User
-db.Not(User{Name: "hallen", Age: 18}).First(&user)
-
 var user15 []relate_tables.User
 db.Debug().Not("name", "bob").Find(&user15) // SELECT * FROM `users` WHERE `name` <> 'bob'
 p(user15)
 
-// SELECT * FROM `users`  WHERE (`users`.`name` <> 'hallen6') AND (`users`.`age` <> 19);
+var user model.User
+db.Not(User{Name: "hallen", Age: 18}).First(&user) // SELECT * FROM `users`  WHERE (`users`.`name` <> 'hallen6') AND (`users`.`age` <> 19);
 ```
 
 ## **Or**
 
 ```go
-var users []model.User
-db.Where("name = 'hallen'").Or(User{Name: "hallen2", Age: 18}).Find(&users)
-// SELECT * FROM users WHERE name = 'hallen' OR (name = 'jinzhu 2' AND age = 18);
-
 var user16 []relate_tables.User
 db.Debug().Where("name", "bob").Or("name", "paul").Find(&user16) //SELECT * FROM `users` WHERE `name` = 'bob' OR `name` = 'paul'
 p(user16)
+
+var users []model.User
+db.Where("name = 'hallen'").Or(User{Name: "hallen2", Age: 18}).Find(&users)
+// SELECT * FROM users WHERE name = 'hallen' OR (name = 'jinzhu 2' AND age = 18);
 ```
 
 ## **Order**
