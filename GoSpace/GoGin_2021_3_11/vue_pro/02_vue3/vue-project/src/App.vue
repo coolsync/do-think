@@ -1,56 +1,86 @@
 <template>
-  <h1>use reactive</h1>
-  <h2>name: {{ user.name }}</h2>
-  <h2>age: {{ user.age }}</h2>
-  <h2>wife: {{ user.wife }}</h2>
-  <button @click="update">update user data</button>
+  <h2>Computing attributes and monitoring</h2>
+  <fieldset>
+    <legend>姓名操作</legend>
+    first_name:
+    <input type="text" placeholder="firstName" v-model="user.firstName" /><br />
+    last_name:
+    <input type="text" placeholder="lastName" v-model="user.lastName" /><br />
+  </fieldset>
+  <fieldset>
+    <legend>Computing attributes and monitoring 演示</legend>
+    full_name1:
+    <input type="text" placeholder="fullName" v-model="fullName1" /><br />
+    full_name2:
+    <input type="text" placeholder="fullName" v-model="fullName2" /><br />
+    full_name3: <input type="text" placeholder="fullName" v-model="fullName3" /><br />
+  </fieldset>
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive } from "vue";
-
-/* 
-作用: 定义多个数据的响应式
-const proxy = reactive(obj): 接收一个普通对象然后返回该普通对象的响应式代理器对象
-响应式转换是“深层的”：会影响对象内部所有嵌套的属性
-内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部数据都是响应式的
-*/
+import { computed, defineComponent, reactive, ref, watch, watchEffect } from "vue";
 
 export default defineComponent({
   name: "App",
 
   setup() {
-    // class User {
-    //   name: string;
-    //   age: number;
-    //   wife: User;
-    // }
+    // def responsive obj
+    const user = reactive({
+      firstName: "dongfang",
+      lastName: "bubai",
+    });
 
-    let obj = {
-      name: "paul",
-      age: 30,
-      wife: {
-        name: "甜甜",
-        age: 18,
-        cars: ["bengci", "baoma", "aodi"],
+    // First fullName
+    // computed param only callback fn, Means get
+    const fullName1 = computed(() => {
+      // console.log(fullName1)
+      return user.firstName + "_" + user.lastName;
+    });
+    console.log(fullName1);
+
+    // Second fullName
+    // computed get set
+    const fullName2 = computed({
+      get() {
+        return user.firstName + "_" + user.lastName;
       },
-    };
+      set(val: string) {
+        // console.log("#####",val)
+        const names = val.split("_");
+        user.firstName = names[0];
+        user.lastName = names[1];
+      },
+    });
+    // Third fullName
+    // watch
+    const fullName3 = ref('');
+    // watch(
+    //   // user,() => {
+    //   //   // console.log(val)
+    //   //   fullName3.value = user.firstName + '_' + user.lastName
+    //   // },
+      
+    //   // fullName3, (val) => {
+    //   //   const names = val.split('_');
+    //   //   user.firstName = names[0];
+    //   //   user.lastName = names[1];
+    //   // },
 
-    const user = reactive(obj); // obj 是 target 被代理对象， user 是 handler 代理对象
+    //   user, ({firstName, lastName}) => {
+    //     fullName3.value = firstName + '_' + lastName
+    //   },{ immediate: true, deep: true },
+    // );
 
-    const update = () => {
-      user.name+='======';
-      user.age += 2
-      user.wife.name += '+++'
-      user.wife.age += 2
-      user.wife.cars[0] = 'sanmaladi'
-    };
+    watchEffect(() => {
+        fullName3.value = user.firstName + '_' + user.lastName
+      },
+    );
     return {
       user,
-      update
+      fullName1,
+      fullName2,
+      fullName3,
     };
   },
 });
 </script>
-
-

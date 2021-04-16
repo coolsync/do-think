@@ -3,7 +3,7 @@
   <h2>name: {{ user.name }}</h2>
   <h2>age: {{ user.age }}</h2>
   <h2>wife: {{ user.wife }}</h2>
-  <button @click="update">update user data</button>
+  <button @click="update_user">update user data</button>
 </template>
 
 <script lang='ts'>
@@ -26,7 +26,7 @@ export default defineComponent({
     //   wife: User;
     // }
 
-    let obj = {
+    const obj = {
       name: "paul",
       age: 30,
       wife: {
@@ -36,18 +36,22 @@ export default defineComponent({
       },
     };
 
-    const user = reactive(obj); // obj 是 target 被代理对象， user 是 handler 代理对象
+    const user = reactive<any>(obj); // obj 是 target 被代理对象， user 是 handler 代理对象
 
-    const update = () => {
-      user.name+='======';
-      user.age += 2
-      user.wife.name += '+++'
-      user.wife.age += 2
-      user.wife.cars[0] = 'sanmaladi'
+    const update_user = () => {
+      // user.name+='======';
+      // user.age += 2
+      // user.wife.name += '+++'
+      // user.wife.age += 2
+      // user.wife.cars[0] = 'sanmaladi'
+
+      // only operate proxy obj user, 才能 render page
+      user.name = 'mark'; // by user proxy obj modify target obj property value
+      delete user.age;
     };
     return {
       user,
-      update
+      update_user
     };
   },
 });
