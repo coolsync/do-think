@@ -6,8 +6,8 @@
 
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_1-setup)1) setup
 
-- 新的option, 所有的组合API函数都在此使用, 只在初始化时执行一次
-- 函数如果返回对象, 对象中的属性或方法, 模板中可以直接使用
+- 新的option, 所有的composition API function 都在此使用, 只在初始化时执行一次
+-  function 如果返回对象, 对象中的属性或方法, 模板中可以直接使用
 
 ```typescript
 <template>
@@ -20,7 +20,7 @@ import {defineComponent} from 'vue'
 
 export default defineComponent ({
   name: 'App',
-  // 组合式 API 第一个 use component
+  // composition 式 API 第一个 use component
   // setup(){
   //   const num = 10
   //   // console.log('run app')
@@ -36,12 +36,12 @@ export default defineComponent ({
 
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_2-ref)2) ref
 
-- 作用: 定义一个数据的响应式
+- 作用: 定义一个 data 的响应式
 - 语法: const xxx = ref(initValue):
-  - 创建一个包含响应式数据的引用(reference)对象
-  - js中操作数据: xxx.value
-  - 模板中操作数据: 不需要.value
-- 一般用来定义一个基本类型的响应式数据
+  - 创建一个包含响应式 data 的引用(reference)对象
+  - js中操作 data : xxx.value
+  - 模板中操作 data : 不需要.value
+- 一般用来定义一个基本类型的响应式 data 
 
 ```vue
 <template>
@@ -71,11 +71,11 @@ export default {
   /* 使用vue3的composition API */
   setup () {
 
-    // 定义响应式数据 ref对象
+    // 定义响应式 data  ref对象
     const count = ref(1)
     console.log(count)
 
-    // 更新响应式数据的函数
+    // 更新响应式 data 的 function 
     function update () {
       // alert('update')
       count.value = count.value + 1
@@ -92,10 +92,10 @@ export default {
 
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_3-reactive)3) reactive
 
-- 作用: 定义多个数据的响应式
+- 作用: 定义多个 data 的响应式
 - const proxy = reactive(obj): 接收一个普通对象然后返回该普通对象的响应式代理器对象
 - 响应式转换是“深层的”：会影响对象内部所有嵌套的属性
-- 内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部数据都是响应式的
+- 内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部 data 都是响应式的
 
 ```vue
 <template>
@@ -109,10 +109,10 @@ export default {
 <script>
 /* 
 reactive: 
-    作用: 定义多个数据的响应式
+    作用: 定义多个 data 的响应式
     const proxy = reactive(obj): 接收一个普通对象然后返回该普通对象的响应式代理器对象
     响应式转换是“深层的”：会影响对象内部所有嵌套的属性
-    内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部数据都是响应式的
+    内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部 data 都是响应式的
 */
 import {
   reactive,
@@ -120,7 +120,7 @@ import {
 export default {
   setup () {
     /* 
-    定义响应式数据对象
+    定义响应式 data 对象
     */
     const state = reactive({
       name: 'tom',
@@ -249,24 +249,192 @@ proxy.name = 'tom'
 
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_5-setup细节)5) setup细节
 
-- setup执行的时机
-  - 在beforeCreate之前执行(一次), 此时组件对象还没有创建
-  - this是undefined, 不能通过this来访问data/computed/methods / props
-  - 其实所有的composition API相关回调函数中也都不可以
-- setup的返回值
-  - 一般都返回一个对象: 为模板提供数据, 也就是模板中可以直接使用此对象中的所有属性/方法
-  - 返回对象中的属性会与data函数返回对象的属性合并成为组件对象的属性
-  - 返回对象中的方法会与methods中的方法合并成功组件对象的方法
-  - 如果有重名, setup优先
-  - 注意:
-  - 一般不要混合使用: methods中可以访问setup提供的属性和方法, 但在setup方法中不能访问data和methods
-  - setup不能是一个async函数: 因为返回值不再是return的对象, 而是promise, 模板看不到return对象中的属性数据
-- setup的参数
-  - setup(props, context) / setup(props, {attrs, slots, emit})
-  - props: 包含props配置声明且传入了的所有属性的对象
-  - attrs: 包含没有在props配置中声明的属性的对象, 相当于 this.$attrs
-  - slots: 包含所有传入的插槽内容的对象, 相当于 this.$slots
-  - emit: 用来分发自定义事件的函数, 相当于 this.$emit
+
+
+### Child Component:
+
+```vue
+<template>
+  <h2>Child Component</h2>
+  <h3>msg: {{ msg }}</h3>
+  <h3>count: {{ count }}</h3>
+  <!-- Get passing msg2 -->
+  <h3>msg2: {{ $attrs.msg2 }}</h3>
+  <h3>==================</h3>
+  <h3>m: {{ m }}</h3>
+  <h3>n: {{ n }}</h3>
+  <!-- Get App 分发的 fn -->
+  <button @click="update_num">update Child num</button>
+</template>
+
+<script lang='ts'>
+import { defineComponent, ref } from "vue";
+
+// setup 细节：
+// 1. setup 在beforeCreate之前执行(一次), 此时组件对象还没有创建, this = undefined, 不能使用
+// 2. this是undefined, 不能通过this来访问data/computed/methods / props
+// 3. 其实所有的composition API相关回调函数中都不能
+
+// setup的返回值:
+// 1. setup 一般返回一个对象: 为模板提供数据, 模板能 直接使用 setup对象所有属性/方法
+// 2. setup 返回对象的属性 与 data_Function 返回对象的属性 合并成 组件对象属性
+// 3. setup 返回对象的方法 与 methods 方法 合并成 组件对象方法
+// 4. 如果有重名, setup优先
+// 注意:
+// 5. 不要混合使用: methods 能访问 setup 属性和方法, setup 方法不能访问 data 和 methods
+// 6. setup不能是一个async Fn: 返回对象 不再是 return 对象, 而是promise, 模板看不到return对象中的属性数据
+
+// setup parameters:
+// 1. setup(props, context) / setup(props, {attrs, slots, emit})
+// 2. props: 包含props配置声明且传入了的所有属性的对象
+// 3. attrs: 包含没有在props配置中声明的属性的对象, 相当于 this.$attrs
+// 4. slots: 包含所有传入的插槽内容的对象, 相当于 this.$slots
+// 5. emit: 用来分发自定义事件的函数, 相当于 this.$emit
+
+export default defineComponent({
+  name: "Child",
+  props: ["msg"], // Get App_component passing_msg
+  emits: ["fn"], // 可选的, 声明了利于阅读, 而且对分发的事件数据进行校验
+
+  // Lifecycle hook, 在实例初始化之后，数据观测 (data observer) 和 event/watcher 事件配置之前被调用。
+  beforeCreate() {
+    console.log("beforeCreate run ... ");
+    // console.log(this) // 此时 this 能用
+  },
+
+  // return 6. async setup() { // setup不能是一个async
+  setup(prop, context) {
+    // setup parameters:
+    // console.log('prop: ', prop);    // Proxy { <target>: Proxy, <handler>: {…} }
+    // console.log('context: ',context);   // Object { attrs: Getter, slots: Getter, emit: Getter, expose: expose(exposed)
+
+    // console.log('prop.msg: ', prop.msg);    // prop.msg:  what are you no sai lei
+    console.log("context.attrs: ", context.attrs);
+    console.log(context.emit); // function emit(event, args)
+
+    const m = ref(2);
+    const n = ref(3);
+
+    function update_num() {
+        // m, n 不受 App Father component 的影响
+        m.value += 1;
+      n.value += 2;
+      
+      context.emit('fn', '++'); // 获取 App 分发自定义事件, 两个 comp 能同时控制 msg 的显示
+    }
+
+    // setup的返回值:
+    console.log("setup run ... ", this); // 此时 this 不能用
+    const showMsg1 = () => {
+      console.log("setup use showMsg1");
+    };
+
+    return {
+      showMsg1,
+      update_num,
+      m,
+      n,
+    };
+  },
+
+  // 实例被挂载后调用
+  mounted() {
+    console.log(this);
+  },
+
+  data() {
+    console.log("data run ... ");
+    const count = 10;
+    return {
+      count,
+    };
+  },
+
+  methods: {
+    showMsg2: function () {
+      console.log("methods use showMsg2");
+    },
+  },
+});
+// data, Type： Function 返回组件实例的 data 对象的 Function。
+
+// methods, Type: { [key: string]: Function }  methods 将被混入到组件实例中。
+// 可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为组件实例。
+</script>
+```
+
+
+
+### App Component:
+
+```vue
+<template>
+  <h2>App Component</h2>
+  <h3>msg: {{ msg }}</h3>
+  <button @click="msg += '++'">Update Data</button>
+  <hr />
+  <!-- msg 同步到 Child -->
+  <Child :msg="msg" msg2="cba" @fn="fn"/> 
+</template>
+
+<script lang='ts'>
+import { defineComponent, ref } from "vue";
+
+// 引入 Child component
+import Child from "./components/Child.vue";
+// use component
+
+export default defineComponent({
+
+
+  name: "App",
+
+  // register component
+  components: {
+    Child,
+  },
+
+  setup() {
+    const msg = ref("what are you no sai lei");
+
+    const fn = (content: string) => {
+      msg.value += content
+    }
+
+    return {
+      msg,
+      fn,
+    };
+  },
+});
+</script>
+```
+
+
+
+### setup执行的时机
+
+- 在beforeCreate之前执行(一次), 此时组件对象还没有创建
+- this是undefined, 不能通过this来访问data/computed/methods / props
+- 其实所有的composition API相关回调 function 中也都不可以
+
+### setup的返回值
+
+- 一般都返回一个对象: 为模板提供 data , 也就是模板中可以直接使用此对象中的所有属性/方法
+- 返回对象中的属性会与data function 返回对象的属性合并成为组件对象的属性
+- 返回对象中的方法会与methods中的方法合并成功组件对象的方法
+- 如果有重名, setup优先
+- 注意:
+- 一般不要混合使用: methods中可以访问setup提供的属性和方法, 但在setup方法中不能访问data和methods
+- setup不能是一个async function : 因为返回值不再是return的对象, 而是promise, 模板看不到return对象中的属性 data 
+
+### setup的参数
+
+- setup(props, context) / setup(props, {attrs, slots, emit})
+- props: 包含props配置声明且传入了的所有属性的对象
+- attrs: 包含没有在props配置中声明的属性的对象, 相当于 this.$attrs
+- slots: 包含所有传入的插槽内容的对象, 相当于 this.$slots
+- emit: 用来分发自定义事件的 function , 相当于 this.$emit
 
 ```vue
 <template>
@@ -329,7 +497,7 @@ export default defineComponent({
 
   props: ['msg'],
 
-  emits: ['fn'], // 可选的, 声明了更利于程序员阅读, 且可以对分发的事件数据进行校验
+  emits: ['fn'], // 可选的, 声明了更利于程序员阅读, 且可以对分发的事件 data 进行校验
 
   data () {
     console.log('data', this)
@@ -383,11 +551,70 @@ export default defineComponent({
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_6-reactive与ref-细节)6) reactive与ref-细节
 
 - 是Vue3的 composition API中2个最重要的响应式API
-- ref用来处理基本类型数据, reactive用来处理对象(递归深度响应式)
+- ref用来处理基本类型 data , reactive用来处理对象(递归深度响应式)
 - 如果用ref对象/数组, 内部会自动将对象/数组转换为reactive的代理对象
-- ref内部: 通过给value属性添加getter/setter来实现对数据的劫持
-- reactive内部: 通过使用Proxy来实现对对象内部所有数据的劫持, 并通过Reflect操作对象内部数据
-- ref的数据操作: 在js中要.value, 在模板中不需要(内部解析模板时会自动添加.value)
+- ref内部: 通过给value属性添加getter/setter来实现对 data 的劫持
+- reactive内部: 通过使用Proxy来实现对对象内部所有 data 的劫持, 并通过Reflect操作对象内部 data 
+- ref的 data 操作: 在js中要.value, 在模板中不需要(内部解析模板时会自动添加.value)
+
+
+
+```vue
+<template>
+  <h2>ref and reactive 细节</h2>
+  <h3>m1: {{ m1 }}</h3>
+  <h3>m2: {{ m2 }}</h3>
+  <h3>m3: {{ m3 }}</h3>
+  <button @click="update">update data</button>
+</template>
+
+<script lang='ts'>
+import { defineComponent, ref, reactive } from "vue";
+
+export default defineComponent({
+  name: "App",
+
+// Vue3的 composition API中2个最重要的响应式API (ref, reactive)
+// ref用来处理基本类型数据, reactive用来处理对象(递归深度响应式)
+// 如果用ref对象/数组, 内部会自动将对象/数组转换为reactive的代理对象
+// ref内部: 通过给value属性添加getter/setter来实现对数据的劫持
+// reactive内部: 通过使用Proxy来实现对对象内部所有数据的劫持, 并通过Reflect操作对象内部数据
+// ref的数据操作: 在js中要.value, 在模板中不需要(内部解析模板时会自动添加.value)
+
+  setup() {
+    const m1 = ref("abc");
+    const m2 = reactive({
+      name: "mark",
+      wife: {
+        name: "jerry",
+      },
+    });
+    const m3 = ref({
+      name: "mark",
+      wife: {
+        name: "jerry",
+      },
+    });
+
+    const update = () => {
+      m1.value += "==";
+      m2.wife.name += "==";
+      m3.value.wife.name += "==";
+      // ref store obj, 通过 reactive 处理后 成 Proxy_obj, 在通过 Reflect 处理 obj 内部 data 
+      console.log(m3.value);
+    };
+    return {
+      m1,
+      m2,
+      m3,
+      update,
+    };
+  },
+});
+</script>
+```
+
+
 
 ```vue
 <template>
@@ -421,7 +648,7 @@ export default {
       m2.y.z += '++'
 
       m3.value = {a1: 3, a2: {a3: 'abc---'}}
-      m3.value.a2.a3 += '==' // reactive对对象进行了深度数据劫持
+      m3.value.a2.a3 += '==' // reactive对对象进行了深度 data 劫持
       console.log(m3.value.a2)
     }
 
@@ -438,19 +665,19 @@ export default {
 
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_7-计算属性与监视)7) 计算属性与监视
 
-- computed函数:
+- computed function :
   - 与computed配置功能一致
   - 只有getter
   - 有getter和setter
-- watch函数
+- watch function 
   - 与watch配置功能一致
-  - 监视指定的一个或多个响应式数据, 一旦数据变化, 就自动执行监视回调
+  - 监视指定的一个或多个响应式 data , 一旦 data 变化, 就自动执行监视回调
   - 默认初始时不执行回调, 但可以通过配置immediate为true, 来指定初始时立即执行第一次
   - 通过配置deep为true, 来指定深度监视
-- watchEffect函数
-  - 不用直接指定要监视的数据, 回调函数中使用的哪些响应式数据就监视哪些响应式数据
-  - 默认初始时就会执行第一次, 从而可以收集需要监视的数据
-  - 监视数据发生变化时回调
+- watchEffect function 
+  - 不用直接指定要监视的 data , 回调 function 中使用的哪些响应式 data 就监视哪些响应式 data 
+  - 默认初始时就会执行第一次, 从而可以收集需要监视的 data 
+  - 监视 data 发生变化时回调
 
 ```vue
 <template>
@@ -466,19 +693,19 @@ export default {
 <script lang="ts">
 /*
 计算属性与监视
-1. computed函数: 
+1. computed function : 
   与computed配置功能一致
   只有getter
   有getter和setter
-2. watch函数
+2. watch function 
   与watch配置功能一致
-  监视指定的一个或多个响应式数据, 一旦数据变化, 就自动执行监视回调
+  监视指定的一个或多个响应式 data , 一旦 data 变化, 就自动执行监视回调
   默认初始时不执行回调, 但可以通过配置immediate为true, 来指定初始时立即执行第一次
   通过配置deep为true, 来指定深度监视
-3. watchEffect函数
-  不用直接指定要监视的数据, 回调函数中使用的哪些响应式数据就监视哪些响应式数据
-  默认初始时就会执行第一次, 从而可以收集需要监视的数据
-  监视数据发生变化时回调
+3. watchEffect function 
+  不用直接指定要监视的 data , 回调 function 中使用的哪些响应式 data 就监视哪些响应式 data 
+  默认初始时就会执行第一次, 从而可以收集需要监视的 data 
+  监视 data 发生变化时回调
 */
 
 import {
@@ -521,7 +748,7 @@ export default {
     const fullName3 = ref('')
 
     /* 
-    watchEffect: 监视所有回调中使用的数据
+    watchEffect: 监视所有回调中使用的 data 
     */
     /* 
     watchEffect(() => {
@@ -543,8 +770,8 @@ export default {
     })
 
     /* 
-    watch一个数据
-      默认在数据发生改变时执行回调
+    watch一个 data 
+      默认在 data 发生改变时执行回调
     */
     watch(fullName3, (value) => {
       console.log('watch')
@@ -554,13 +781,13 @@ export default {
     })
 
     /* 
-    watch多个数据: 
+    watch多个 data : 
       使用数组来指定
       如果是ref对象, 直接指定
-      如果是reactive对象中的属性,  必须通过函数来指定
+      如果是reactive对象中的属性,  必须通过 function 来指定
     */
     watch([() => user.firstName, () => user.lastName, fullName3], (values) => {
-      console.log('监视多个数据', values)
+      console.log('监视多个 data ', values)
     })
 
     return {
@@ -584,7 +811,7 @@ export default {
 
 ![lifecycle_3](https://vipkshttps3.wiz.cn/ks/note/view/49c30824-dcdf-4bd0-af2a-708f490b44a1/10311b3b-496c-41f1-8df3-c87572008080/index_files/1604629129585-tqn.png)
 
-**与 2.x 版本生命周期相对应的组合式 API**
+**与 2.x 版本生命周期相对应的composition 式 API**
 
 - `beforeCreate` -> 使用 `setup()`
 - `created` -> 使用 `setup()`
@@ -596,9 +823,9 @@ export default {
 - `destroyed` -> `onUnmounted`
 - `errorCaptured` -> `onErrorCaptured`
 
-**新增的钩子函数**
+**新增的钩子 function **
 
-组合式 API 还提供了以下调试钩子函数：
+composition 式 API 还提供了以下调试钩子 function ：
 
 - onRenderTracked
 - onRenderTriggered
@@ -720,9 +947,9 @@ export default {
 </script>
 ```
 
-## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_09-自定义hook函数)09) 自定义hook函数
+## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_09-自定义hook function )09) 自定义hook function 
 
-- 使用Vue3的组合API封装的可复用的功能函数
+- 使用Vue3的composition API封装的可复用的功能 function 
 
 - 自定义hook的作用类似于vue2中的mixin技术
 
@@ -738,11 +965,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 收集用户鼠标点击的页面坐标
 */
 export default function useMousePosition () {
-  // 初始化坐标数据
+  // 初始化坐标 data 
   const x = ref(-1)
   const y = ref(-1)
 
-  // 用于收集点击事件坐标的函数
+  // 用于收集点击事件坐标的 function 
   const updatePosition = (e: MouseEvent) => {
     x.value = e.pageX
     y.value = e.pageY
@@ -794,7 +1021,7 @@ export default {
 
 - 利用TS泛型强化类型检查
 
-- 需求2: 封装发ajax请求的hook函数
+- 需求2: 封装发ajax请求的hook function 
 
   hooks/useRequest.ts
 
@@ -852,14 +1079,14 @@ import {
 } from "vue"
 import useRequest from './hooks/useRequest'
 
-// 地址数据接口
+// 地址 data 接口
 interface AddressResult {
   id: number;
   name: string;
   distance: string;
 }
 
-// 产品数据接口
+// 产品 data 接口
 interface ProductResult {
   id: string;
   title: string;
@@ -892,7 +1119,7 @@ export default {
 
 把一个响应式对象转换成普通对象，该普通对象的每个 property 都是一个 ref
 
-应用: 当从合成函数返回响应式对象时，toRefs 非常有用，这样消费组件就可以在不丢失响应式的情况下对返回的对象进行分解使用
+应用: 当从合成 function 返回响应式对象时，toRefs 非常有用，这样消费组件就可以在不丢失响应式的情况下对返回的对象进行分解使用
 
 问题: reactive 对象取出的所有属性值都是非响应式的
 
@@ -914,7 +1141,7 @@ import { reactive, toRefs } from 'vue'
 /*
 toRefs:
   将响应式对象中所有属性包装为ref对象, 并返回包含这些ref对象的普通对象
-  应用: 当从合成函数返回响应式对象时，toRefs 非常有用，
+  应用: 当从合成 function 返回响应式对象时，toRefs 非常有用，
         这样消费组件就可以在不丢失响应式的情况下对返回的对象进行分解使用
 */
 export default {
@@ -963,7 +1190,7 @@ function useReatureX() {
 
 ## [#](https://24kcs.github.io/vue3_study/chapter4/01_Composition API_常用部分.html#_11-ref获取元素)11) ref获取元素
 
-利用ref函数获取组件中的标签元素
+利用ref function 获取组件中的标签元素
 
 功能需求: 让输入框自动获取焦点
 
@@ -977,7 +1204,7 @@ function useReatureX() {
 <script lang="ts">
 import { onMounted, ref } from 'vue'
 /* 
-ref获取元素: 利用ref函数获取组件中的标签元素
+ref获取元素: 利用ref function 获取组件中的标签元素
 功能需求: 让输入框自动获取焦点
 */
 export default {
