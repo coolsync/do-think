@@ -1,85 +1,53 @@
 <template>
-  <h2>Computing attributes and monitoring</h2>
-  <fieldset>
-    <legend>姓名操作</legend>
-    first_name:
-    <input type="text" placeholder="firstName" v-model="user.firstName" /><br />
-    last_name:
-    <input type="text" placeholder="lastName" v-model="user.lastName" /><br />
-  </fieldset>
-  <fieldset>
-    <legend>Computing attributes and monitoring 演示</legend>
-    full_name1:
-    <input type="text" placeholder="fullName" v-model="fullName1" /><br />
-    full_name2:
-    <input type="text" placeholder="fullName" v-model="fullName2" /><br />
-    full_name3: <input type="text" placeholder="fullName" v-model="fullName3" /><br />
-  </fieldset>
+  <h2>use toRefs</h2>
+  <!-- <h3>name: {{ state.name }}</h3>
+  <h3>age: {{ state.age }}</h3> -->
+
+  <h3>name: {{ name }}</h3>
+  <h3>age: {{ age }}</h3>
 </template>
 
 <script lang='ts'>
-import { computed, defineComponent, reactive, ref, watch, watchEffect } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
+
+// 把一个响应式对象转换成普通对象，该普通对象的每个 property 都是一个 ref
+// 应用: 当从合成函数返回响应式对象时，toRefs 非常有用，这样消费组件就可以在不丢失响应式的情况下对返回的对象进行分解使用
+// 问题: reactive 对象取出的所有属性值都是非响应式的
+// 解决: 利用 toRefs 可以将一个响应式 reactive 对象的所有原始属性转换为响应式的 ref 属性
+
+function useRefs() {
+  const state3 = reactive({
+    name: "mark",
+    age: 30,
+  });
+  return toRefs(state3);
+}
 
 export default defineComponent({
   name: "App",
-
   setup() {
-    // def responsive obj
-    const user = reactive({
-      firstName: "dongfang",
-      lastName: "bubai",
+    const state = reactive({
+      name: "mark",
+      age: 30,
     });
+    const state2 = toRefs(state);
 
-    // First fullName
-    // computed param only callback fn, Means get
-    const fullName1 = computed(() => {
-      // console.log(fullName1)
-      return user.firstName + "_" + user.lastName;
-    });
-    console.log(fullName1);
+    // out intro
+    const {name, age} = useRefs();
 
-    // Second fullName
-    // computed get set
-    const fullName2 = computed({
-      get() {
-        return user.firstName + "_" + user.lastName;
-      },
-      set(val: string) {
-        // console.log("#####",val)
-        const names = val.split("_");
-        user.firstName = names[0];
-        user.lastName = names[1];
-      },
-    });
-    // Third fullName
-    // watch
-    const fullName3 = ref('');
-    // watch(
-    //   // user,() => {
-    //   //   // console.log(val)
-    //   //   fullName3.value = user.firstName + '_' + user.lastName
-    //   // },
-      
-    //   // fullName3, (val) => {
-    //   //   const names = val.split('_');
-    //   //   user.firstName = names[0];
-    //   //   user.lastName = names[1];
-    //   // },
+    setInterval(() => {
+      // state.name += "=="
+      // state2.name.value += "=="
+      name.value += '++'
+      console.log("----------");
+    }, 1000);
 
-    //   user, ({firstName, lastName}) => {
-    //     fullName3.value = firstName + '_' + lastName
-    //   },{ immediate: true, deep: true },
-    // );
-
-    watchEffect(() => {
-        fullName3.value = user.firstName + '_' + user.lastName
-      },
-    );
     return {
-      user,
-      fullName1,
-      fullName2,
-      fullName3,
+      // state,
+      // ...state // {name, age}
+      // ...state2,
+      name,
+      age,
     };
   },
 });
