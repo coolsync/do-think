@@ -1,53 +1,48 @@
 <template>
-  <h2>use toRefs</h2>
-  <!-- <h3>name: {{ state.name }}</h3>
-  <h3>age: {{ state.age }}</h3> -->
-
-  <h3>name: {{ name }}</h3>
-  <h3>age: {{ age }}</h3>
+  <h2>toRaw 与 markRaw</h2>
+  <h3>state: {{ state }}</h3>
+  <button @click="testToRaw">test toRaw</button>
+  <button @click="testMarkRaw">test markRaw</button>
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, markRaw, reactive, toRaw } from "vue";
 
-// 把一个响应式对象转换成普通对象，该普通对象的每个 property 都是一个 ref
-// 应用: 当从合成函数返回响应式对象时，toRefs 非常有用，这样消费组件就可以在不丢失响应式的情况下对返回的对象进行分解使用
-// 问题: reactive 对象取出的所有属性值都是非响应式的
-// 解决: 利用 toRefs 可以将一个响应式 reactive 对象的所有原始属性转换为响应式的 ref 属性
-
-function useRefs() {
-  const state3 = reactive({
-    name: "mark",
-    age: 30,
-  });
-  return toRefs(state3);
+interface UserInfo {
+  name: string;
+  age: number;
+  likes?: string[];
 }
 
 export default defineComponent({
   name: "App",
+
   setup() {
-    const state = reactive({
+    const state = reactive<UserInfo>({
       name: "mark",
-      age: 30,
+      age: 25,
     });
-    const state2 = toRefs(state);
 
-    // out intro
-    const {name, age} = useRefs();
+    const testToRaw = () => {
+      const user = toRaw(state); // 这是一个还原方法，可用于临时读取，访问不会被代理/跟踪，写入时也不会触发界面更新
+      user.name += "++";
+      console.log(user.name);
+    };
 
-    setInterval(() => {
-      // state.name += "=="
-      // state2.name.value += "=="
-      name.value += '++'
-      console.log("----------");
-    }, 1000);
-
+    const testMarkRaw = () => {
+      // state.likes = ["chi", "he"];
+      const likes = ["chi", "he"];
+      state.likes = markRaw(likes); // 标记一个对象，使其永远不会转换为代理。返回对象本身 // likes数组就不再是响应式的了
+      setInterval(() => {
+        // console.log(state.likes) // obj
+        state.likes[0] += "++";
+        console.log("----");
+      }, 1000);
+    };
     return {
-      // state,
-      // ...state // {name, age}
-      // ...state2,
-      name,
-      age,
+      state,
+      testToRaw,
+      testMarkRaw,
     };
   },
 });
