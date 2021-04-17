@@ -107,4 +107,27 @@ func DBInter2() {
 	db.Debug().Where("name", "mark6").Delete(&user14) // DELETE FROM `users` WHERE `name` = 'mark6'
 	p("user14: ", user14)
 
+	// Not
+	var user15 []relate_tables.User
+	db.Debug().Not("name", "bob1").Find(&user15) // SELECT * FROM `users` WHERE `name` <> 'bob1'
+	p("user15: ", user15)
+
+	// Or
+	var user16 []relate_tables.User
+	db.Debug().Where("name", "bob1").Or("name", "paul").Find(&user16) // SELECT * FROM `users` WHERE `name` = 'bob1' OR `name` = 'paul'
+	p("user16: ", user16)
+
+	// Order
+	// desc: from big to small, asc(defualt) : from small to big.
+	var user17 []relate_tables.User
+	// db.Debug().Order("age desc").Find(&user17) //SELECT * FROM `users` ORDER BY age desc
+	db.Debug().Where("name LIKE ?", "b%").Order("id desc").Find(&user17) // SELECT * FROM `users` WHERE name LIKE 'b%' ORDER BY id desc
+	p("user17: ", user17)
+
+	// Limit,  Offset(2): from 2+1 start
+	var user18 []relate_tables.User
+	// db.Debug().Limit(3).Find(&user18)	// SELECT * FROM `users` LIMIT 3
+	db.Debug().Limit(5).Offset(2).Find(&user18) // SELECT * FROM `users` LIMIT 5 OFFSET 2,
+	p("user18: ", user18)
+
 }
