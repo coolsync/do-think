@@ -130,4 +130,20 @@ func DBInter2() {
 	db.Debug().Limit(5).Offset(2).Find(&user18) // SELECT * FROM `users` LIMIT 5 OFFSET 2,
 	p("user18: ", user18)
 
+	// Scan
+	type Results struct {
+		Name string
+		// Age int
+		Addr string
+	}
+	var results []Results
+	var user19 []relate_tables.User
+	db.Debug().Select("name, addr").Where("id in (?)",[]int{1,2}).Find(&user19).Scan(&results)
+	// db.Debug().Where("id in (?)", []int{1, 2}).Find(&user19).Scan(&results)
+
+	p("user19: ", user19)
+	p("results: ", results)
+
+	// SELECT `id` FROM `users` WHERE id in (1,2)
+	// SELECT * FROM `users` WHERE id in (1,2)
 }
