@@ -375,8 +375,8 @@ p(user18)
 
 ```go
 type Result struct {
-        Id int64
-    }
+    Id int64
+}
 var results []Result
 db.Select("id").Where("user_id in (?)",[]string{"1","2"}).Find(&dqmUserRole20).Scan(&results)
 fmt.Println(results)
