@@ -24,3 +24,11 @@ sh: vue-cli-service: command not found
 # 2 测试自定义shallowRef 出现问题
 
 嵌套对象可以访问
+
+
+
+
+
+# 3 Suspense(不确定的)
+
+异步访问 细节
