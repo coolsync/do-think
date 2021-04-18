@@ -89,19 +89,37 @@
         })
         // console.log(ref1.value.name)
         // ref1.value.name += '++'  // ok
-        ref1.value.car.color += '++' // ok
-        console.log(ref1.value.car.color)
+        // ref1.value.car.color += '++' // ok
+        // console.log(ref1.value.car.color)
 
         /* 测试自定义ref */
-        const ref2 = ref({
-            name: 'bob',
-            car: {
-                color: 'red',
-            }
-        })
-        // ref2.value.name += '++'  // ok
-        // ref2.value.car.color += '++' // ok
-        // console.log("ref2: ",ref2.value.car.color)
+        // const ref2 = ref({
+        //     name: 'bob',
+        //     car: {
+        //         color: 'red',
+        //     }
+        // })
+        // // ref2.value.name += '++'  // ok
+        // // ref2.value.car.color += '++' // ok
+        // // console.log("ref2: ",ref2.value.car.color)
+
+        // const ref3 = ref(0)
+        // const ref4 = ref({
+        //     a: 'abc',
+        //     b: [{ x: 1 }],
+        //     c: { x: [11] },
+        // })
+        // ref3.value++
+        // ref4.value.b[0].x++
+        // console.log(ref3, ref4)
+
+
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        console.log(isRef(ref({})))
+        console.log(isReactive(reactive({})))
+        console.log(isReadonly(readonly({})))
+        console.log(isProxy(reactive({})))
+        console.log(isProxy(readonly({})))
     </script>
 </body>
 

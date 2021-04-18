@@ -16,3 +16,11 @@ sh: vue-cli-service: command not found
 
 就会下载node_modules文件
 下载完成后，使用 npm run serve 运行项目
+
+
+
+
+
+# 2 测试自定义shallowRef 出现问题
+
+嵌套对象可以访问
