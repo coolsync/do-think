@@ -5,7 +5,12 @@ module.exports = {
   plugins: [
     [
       "import",
-      { libraryName: "ant-design-vue", libraryDirectory: "es", style: true }
-    ]
-  ]
+      {
+        libraryName: 'element-plus',
+        customStyleName: (name) => {
+          return `element-plus/lib/theme-chalk/${name}.css`;
+        },
+      },
+    ],
+  ],
 }
