@@ -1,20 +1,17 @@
 // import { createApp } from 'vue'
 // import { ElButton, ElSelect } from 'element-plus';
 // import App from './App.vue';
-import Router from './router'
-
+// import Router from './router'
 // // 如果要使用.scss样式文件，则需要引入base.scss文件
 // // import 'element-plus/packages/theme-chalk/src/base.scss'
-
 // const app = createApp(App)
 // // app.component(ElButton.name, ElButton);
 // // app.component(ElSelect.name, ElSelect);
-
-// app.use(Router)
 // /* or
 //  * app.use(ElButton)
 //  * app.use(ElSelect)
 //  */
+// app.use(Router)
 // app.use(ElButton).use(ElSelect)
 // app.mount('#app')
 
@@ -27,11 +24,16 @@ import Router from './router'
 // const app = createApp(App)
 // app.use(ElementPlus)
 // app.use(Router)
-
 // app.mount('#app')
+
+
 
 import { createApp } from 'vue'
 import App from './App.vue';
+import Router from './router';
+// import instance from './axios';  // file name and module name yizhi
+
+
 // 如果要使用.scss样式文件，则需要引入base.scss文件
 // import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -120,6 +122,7 @@ import {
   ElMessageBox,
   ElNotification,
 } from 'element-plus';
+
 
 const components = [
   ElAlert,
@@ -211,6 +214,7 @@ const plugins = [
 ]
 
 const app = createApp(App)
+// app.config.globalProperties.$axmsg = axios;
 
 components.forEach(component => {
   app.component(component.name, component)
@@ -220,7 +224,8 @@ plugins.forEach(plugin => {
   app.use(plugin)
 })
 
-app.use(Router)
-app.mount('#app')
 
+app.use(Router)
+
+app.mount('#app')
 

@@ -11,25 +11,29 @@
 <script lang='ts'>
 import { defineComponent } from "vue";
 import { ElButton } from "element-plus";
-import axios from "axios";
+import $ajax from "../axios";
+// import axios from "axios";
 export default defineComponent({
   name: "Index",
   components: {
     ElButton,
   },
 
+  methods: {},
+
   setup() {
-    const getAxios = ()=> {
-       axios
-      .get("http://localhost:9000/chapter11/api_axios")
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e.message || "未知错误");
-      });
-    }
-   
+    const getAxios = () => {
+      // axios
+      //  .get("http://localhost:9000/chapter11/api_axios")
+      $ajax
+        .get("/chapter11/api_axios")
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e.message || "未知错误");
+        });
+    };
 
     return {
       getAxios,
