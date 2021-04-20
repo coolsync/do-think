@@ -32,3 +32,15 @@ sh: vue-cli-service: command not found
 # 3 Suspense(不确定的)
 
 异步访问 细节
+
+
+
+
+
+# 4 [Failed to resolve loader: less-loader You may need to install it. Failed to resolve loader: less-loader](https://www.cnblogs.com/xqschool/p/14120297.html)
+
+
+
+```
+npm install less ``-``-``save``-``dev
+```

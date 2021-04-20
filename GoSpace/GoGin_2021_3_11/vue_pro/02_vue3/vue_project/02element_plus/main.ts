@@ -1,34 +1,29 @@
 // import { createApp } from 'vue'
 // import { ElButton, ElSelect } from 'element-plus';
 // import App from './App.vue';
-import Router from './router'
-
 // // 如果要使用.scss样式文件，则需要引入base.scss文件
 // // import 'element-plus/packages/theme-chalk/src/base.scss'
 
 // const app = createApp(App)
-// // app.component(ElButton.name, ElButton);
-// // app.component(ElSelect.name, ElSelect);
+// app.component(ElButton.name, ElButton);
+// app.component(ElSelect.name, ElSelect);
 
-// app.use(Router)
 // /* or
 //  * app.use(ElButton)
 //  * app.use(ElSelect)
 //  */
-// app.use(ElButton).use(ElSelect)
+
 // app.mount('#app')
 
 // import { createApp } from 'vue'
 // import ElementPlus from 'element-plus';
 // import 'element-plus/lib/theme-chalk/index.css';
 // import App from './App.vue';
-// import Router from './router'
 
 // const app = createApp(App)
 // app.use(ElementPlus)
-// app.use(Router)
-
 // app.mount('#app')
+
 
 import { createApp } from 'vue'
 import App from './App.vue';
@@ -219,8 +214,4 @@ components.forEach(component => {
 plugins.forEach(plugin => {
   app.use(plugin)
 })
-
-app.use(Router)
 app.mount('#app')
-
-
