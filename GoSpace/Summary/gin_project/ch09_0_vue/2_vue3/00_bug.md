@@ -44,3 +44,26 @@ sh: vue-cli-service: command not found
 ```
 npm install less ``-``-``save``-``dev
 ```
+
+
+
+# 5 axios 与 vue 3 global config
+
+
+
+
+
+
+
+# 6 v-for,  index, value input
+
+
+
+ ```html
+<span v-for="(i, v) in arrs" :key="i">
+
+	<span>{{v}}: {{i}}, </span> 
+
+</span>
+ ```
+
