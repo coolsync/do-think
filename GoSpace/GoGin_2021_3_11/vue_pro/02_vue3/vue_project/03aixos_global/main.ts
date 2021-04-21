@@ -225,9 +225,7 @@ plugins.forEach(plugin => {
 })
 
 
-app.config.globalProperties.$router = Router;
 app.use(Router)
-
 
 app.mount('#app')
 

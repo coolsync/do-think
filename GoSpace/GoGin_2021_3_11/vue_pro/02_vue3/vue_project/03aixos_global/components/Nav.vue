@@ -46,12 +46,27 @@
     <router-view />
   </div>
 </template>
-
 <script lang='ts'>
 import { defineComponent } from "vue";
+// import Home from "./components/Home.vue";
+// import {
+//   ElButton,
+//   ElSelect,
+//   ElMain,
+//   ElMenu,
+//   ElMenuItem,
+//   ElMenuItemGroup,
+// } from "element-plus";
 export default defineComponent({
   name: "Nav",
   components: {
+    // ElButton.name: Element,
+    // ElSelect,
+    // ElementPlus,
+    // ElMain,
+    // ElMenu,
+    // ElMenuItem,
+    // ElMenuItemGroup,
   },
   data() {
     return {
@@ -61,7 +76,7 @@ export default defineComponent({
   },
   methods: {
     handleSelect(key:any, keyPath:any) {
-      // console.log(key, keyPath);
+      console.log(key, keyPath);
     },
   },
 });
@@ -72,6 +87,7 @@ export default defineComponent({
     margin: 100px auto;
   } */
 .el-menu-demo {
+  /* margin: 100px auto; */
   display: flex;
   justify-content: center;
 }
