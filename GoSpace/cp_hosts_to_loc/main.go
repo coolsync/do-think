@@ -19,8 +19,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// fmt.Println(string(bs))
-
 	// write to hosts file
 	file_path := "./hosts"
 	if err = os.WriteFile(file_path, bs, 0644); err != nil {

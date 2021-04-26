@@ -30,7 +30,7 @@ func ApiAxios(ctx *gin.Context) {
 
 	// map slice
 	map_struct := map[string]models.User{
-		"user": models.User{
+		"user": {
 			ID: 4, Name: "paul4", Age: 19,
 		},
 	}
