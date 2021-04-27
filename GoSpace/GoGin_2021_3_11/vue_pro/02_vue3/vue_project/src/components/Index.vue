@@ -42,21 +42,17 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, getCurrentInstance, reactive } from "vue";
+import { defineComponent} from "vue";
 import { ElButton } from "element-plus";
-import $ajax from "../axios";
-import router from "@/router";
-// import $router from '../router'
-// import axios from "axios";
+import $axios from "../axios";
+// import router from "@/router";
+
 export default defineComponent({
   name: "Index",
   components: {
     ElButton,
   },
   data: () => {
-    // const code = ref(-1);
-    // const msg = ref("");
-    // const map_s = reactive({});
     return {
       code: "",
       msg: "",
@@ -76,10 +72,9 @@ export default defineComponent({
     getAxios() {
       // axios
       //  .get("http://localhost:9000/chapter11/api_axios")
-      $ajax
+      $axios
         .get("/chapter11/api_axios")
         .then((res) => {
-          // console.log(res.data);
           console.log(res.data.arrs_s);
           console.log(res.data.map_s);
           this.code = res.data.code;
@@ -100,7 +95,6 @@ export default defineComponent({
   },
 
   setup() {
-    //  const map_s = reactive({});
     return {};
   },
 });
