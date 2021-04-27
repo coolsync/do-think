@@ -1,4 +1,8 @@
 
+
+# Ad section
+
+
 ```bash
 Compiling open_hashmap v0.1.0 (/home/dart/DoThinking/RustMain/Essiential/day06_hashmap/open_hashmap)
 warning: variable does not need to be mutable
@@ -80,4 +84,16 @@ fn read_username_from_file() -> Result<String, io::Error> {
     }
 }
 ```
+
+
+
+# Server Section
+
+## 1 tcp
+
+
+
+chrome 无法显示page: 
+
+net::ERR_CONNECTION_REFUSED
 
