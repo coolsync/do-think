@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// const shortDuration = time.Millisecond * 5000
+// const shortDuration = time.Millisecond * 100
 const shortDuration = time.Second * 5
 
 func main() {
@@ -19,6 +19,6 @@ func main() {
 	case <-time.After(time.Second * 2):
 		fmt.Println("sleep so long")
 	case <-ctx.Done():
-		fmt.Println(ctx.Err())	// context deadline exceeded
+		fmt.Println(ctx.Err()) // context deadline exceeded
 	}
 }
