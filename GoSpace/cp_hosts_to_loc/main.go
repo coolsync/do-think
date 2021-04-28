@@ -1,13 +1,17 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func main() {
+	// Get url content
 	resp, err := http.Get("https://cdn.jsdelivr.net/gh/521xueweihan/GitHub520@main/hosts")
 	if err != nil {
 		log.Fatal(err)
@@ -19,10 +23,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// write to hosts file
-	file_path := "./hosts"
-	if err = os.WriteFile(file_path, bs, 0644); err != nil {
-		log.Fatal(err)
-	}
+	// read file 
 
+	fname := "./hosts"
+	f, err := os.OpenFile(fname, os.O_RDWR|os.O_APPEND, 0644)
+	if err != nil {
+		log.Fatal("f: ", err)
+	}
+	defer f.Close()
 }
