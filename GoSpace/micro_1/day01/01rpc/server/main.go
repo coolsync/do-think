@@ -1,11 +1,10 @@
 package main
 
 import (
-	"errors"
+	"day01/01rpc/design"
 	"fmt"
 	"log"
 	"net"
-	"net/rpc"
 	"net/rpc/jsonrpc"
 )
 
@@ -16,16 +15,19 @@ type World struct {
 // bind method to obj
 func (*World) HelloWorld(name string, resp *string) error {
 	*resp = name + " hello!"
-	// return nil	// {"id":0,"result":"李白 hello","error":null}
-	return errors.New("unknown err!") // {"id":0,"result":null,"error":"unknown err!"}, 结果返回给client 为nil
+	// *resp = "nihao !"
+	return nil // {"id":0,"result":"李白 hello","error":null}
+	// return errors.New("unknown err!") // {"id":0,"result":null,"error":"unknown err!"}, 结果返回给client 为nil
 }
 
 func main() {
 	// 1. 注册rpc, 绑定 对象方法
-	err := rpc.RegisterName("hello", new(World))
-	if err != nil {
-		log.Fatal("rpc.RegisterName: ", err)
-	}
+	// err := rpc.RegisterName("hello", new(World))
+	// if err != nil {
+	// 	log.Fatal("rpc.RegisterName: ", err)
+	// }
+
+	design.RegisterService(new(World))
 
 	// 2. set listener
 	liser, err := net.Listen("tcp", "127.0.0.1:8081")
