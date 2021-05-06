@@ -58,6 +58,7 @@ func (t *TailTask) init() {
 		// return
 	}
 
+	// 当goroutine run 的函数退出的时候，goroutine就结束了
 	go t.run() // 直接去采集日志发送到kafka
 
 	// return nil

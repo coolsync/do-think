@@ -100,9 +100,11 @@ https://ini.unknwon.io/
 
 
 
+tail pkg 
 
+---> from etcd pkg get path topic
 
-
+---> accoding topic send to kafka 
 
 # etcd
 

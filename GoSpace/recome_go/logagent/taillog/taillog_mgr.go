@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// 具体管理每一个 tail read log, write to kafka 进程处理
+// 具体管理每一个 tail read log file, write to kafka 进程处理
 
 // global task manager
 // var (
@@ -31,6 +31,9 @@ func Init(logEntry []*etcd.LogEntryConf) {
 	}
 
 	for _, logEntryObj := range logEntry {
+		//conf: *etcd.LogEntryConf
+		//logEntry.Path： 要收集的日志文件的路径
+		// 初始化的时候起了多少个tailtask 都要记下来，为了后续判断方便
 		tailObj := NewTailTask(logEntryObj.Path, logEntryObj.Topic)
 		mk := fmt.Sprintf("%s_%s", logEntryObj.Path, logEntryObj.Topic)
 		tskMgr.tskMap[mk] = tailObj
