@@ -7,6 +7,7 @@ import (
 	"logagent/etcd"
 	"logagent/kafka"
 	"logagent/taillog"
+	"logagent/utils"
 	"os"
 	"sync"
 	"time"
@@ -57,7 +58,16 @@ func main() {
 	fmt.Println("init etcd success.")
 
 	// 2.1 从etcd中获取日志收集项的配置信息
-	logEntryConf, err := etcd.GetConf(cfg.EtcdConf.Key)
+	// Get local ip
+	ipStr, err := utils.GetOutBoundIP()
+	if err != nil {
+		panic(err)
+	}
+
+	etcdConfKey := fmt.Sprintf(cfg.EtcdConf.Key, ipStr)
+
+	fmt.Println(etcdConfKey)
+	logEntryConf, err := etcd.GetConf(etcdConfKey)
 	if err != nil {
 		log.Fatalf("etcd.GetConf failed, err: %v\n", err)
 	}
@@ -75,7 +85,7 @@ func main() {
 	newConfChan := taillog.NewConfChan() // 从taillog包中获取对外暴露的通道
 	var wg sync.WaitGroup
 	wg.Add(1)
-	go etcd.WatchConf(cfg.EtcdConf.Key, newConfChan) // 哨兵发现最新的配置信息会通知上面的那个通道
+	go etcd.WatchConf(etcdConfKey, newConfChan) // 哨兵发现最新的配置信息会通知上面的那个通道
 	wg.Wait()
 
 	// // 3. 具体的业务

@@ -9,11 +9,13 @@ import (
 // 具体管理每一个 tail read log, write to kafka 进程处理
 
 // global task manager
-var (
-	tskMgr      *tailLogMgr
-	tskMap      map[string]*TailTask
-	newConfChan chan []*etcd.LogEntryConf
-)
+// var (
+// 	tskMgr      *tailLogMgr
+// 	tskMap      map[string]*TailTask
+// 	newConfChan chan []*etcd.LogEntryConf
+// )
+
+var tskMgr *tailLogMgr
 
 type tailLogMgr struct {
 	logEntry    []*etcd.LogEntryConf
@@ -34,7 +36,7 @@ func Init(logEntry []*etcd.LogEntryConf) {
 		tskMgr.tskMap[mk] = tailObj
 	}
 
-	go tskMgr.run()
+	go tskMgr.run() // 启动goroutine, 对应初始化的tskMgr, 可以run tskMgr中多个log文件read
 }
 
 // 监听自己的newConfChan，有了新的配置过来之后就做对应的处理

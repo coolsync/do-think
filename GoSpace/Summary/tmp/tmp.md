@@ -22,7 +22,7 @@ proto-gen-go
 
 
 
-kafka
+# kafka
 
 https://kafka.apache.org/quickstart
 
@@ -80,9 +80,14 @@ This is my second event
 
 
 ```bash
+1
 $ bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
 This is my first event
 This is my second event
+
+2
+$ bin/kafka-console-consumer.sh --topic web_log --from-beginning --bootstrap-server localhost:9092
+
 ```
 
 
