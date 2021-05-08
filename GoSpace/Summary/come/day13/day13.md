@@ -125,7 +125,7 @@ prometheus监控:采集性能指标数据,保存起来,使用grafana作展示
 
 
 
-
+![architecture](/home/dart/DoThinking/GoSpace/Summary/come/day13/day13.assets/architecture.png)
 
 ## 项目总结
 

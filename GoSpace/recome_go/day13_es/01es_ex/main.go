@@ -37,6 +37,6 @@ func main() {
 		// Handle error
 		panic(err)
 	}
-	fmt.Printf("Indexed users %q to index %q, type %q\n", put1.Id, put1.Index, put1.Type)
 	// 4. print info
+	fmt.Printf("Indexed users %q to index %q, type %q\n", put1.Id, put1.Index, put1.Type)
 }
