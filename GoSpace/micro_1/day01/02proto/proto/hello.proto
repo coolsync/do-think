@@ -29,3 +29,7 @@ enum Week {
     Monday = 0;
     Tuesday = 1;
 }
+
+service Hello {
+    rpc HelloWorld(Person) returns (Employee);
+}

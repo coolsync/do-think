@@ -40,7 +40,7 @@ func Init(addrs []string, maxSize int) (err error) {
 	return
 }
 
-// 给外部暴露的一个函数，该函数只把日志数据发送到一个内部的channel中
+// 给外部暴露的一个函数，作用： 只把日志数据发送到一个内部的channel中
 func SendToChan(topic, data string) {
 	msg := &logData{
 		topic: topic,
