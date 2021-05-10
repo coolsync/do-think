@@ -23,11 +23,11 @@
 
 # 今日内容
 
-## LogTransfer
+## 1. LogTransfer
 
 从kafka里面把日志取出来,写入ES,使用Kibana做可视化的展示
 
-### Elasticsearch
+## 2. Elasticsearch
 
 [ES介绍博客地址](https://www.liwenzhou.com/posts/Go/go_elasticsearch/)
 

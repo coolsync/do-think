@@ -1,6 +1,7 @@
 package chapter11
 
 import (
+	"fmt"
 	"ginproject/models"
 	"net/http"
 
@@ -8,9 +9,9 @@ import (
 )
 
 type Books struct {
-	ID int `json:"id"`
-	Name string `json:"name"`
-	Url string `json:"url"`
+	ID     int    `json:"id"`
+	Name   string `json:"name"`
+	Author string `json:"author"`
 }
 
 func ApiAxios(ctx *gin.Context) {
@@ -53,22 +54,47 @@ func ApiAxios(ctx *gin.Context) {
 }
 
 func GetBooks(ctx *gin.Context) {
-	books := []Books {
+	// books := []Books {
+	// 	{
+	// 		ID: 1, Name: "Go by Example 中文", Url: "https://books.studygolang.com/gobyexample/",
+	// 	},
+	// 	{
+	// 		ID: 2, Name: "Go RPC 开发指南", Url: "https://books.studygolang.com/go-rpc-programming-guide/",
+	// 	},
+	// 	{
+	// 		ID: 3, Name: "Go语言高级编程", Url: "https://books.studygolang.com/advanced-go-programming-book/",
+	// 	},
+	// 	{
+	// 		ID: 4, Name: "Mastering_Go_ZH_CN", Url: "https://books.studygolang.com/Mastering_Go_ZH_CN/",
+	// 	},
+	// }
+
+	books := []Books{
 		{
-			ID: 1, Name: "Go by Example 中文", Url: "https://books.studygolang.com/gobyexample/",
+			ID: 1, Name: "Go by Example 中文", Author: "bob",
 		},
 		{
-			ID: 2, Name: "Go RPC 开发指南", Url: "https://books.studygolang.com/go-rpc-programming-guide/",
+			ID: 2, Name: "Go RPC 开发指南", Author: "jerry",
 		},
 		{
-			ID: 3, Name: "Go语言高级编程", Url: "https://books.studygolang.com/advanced-go-programming-book/",
+			ID: 3, Name: "Go语言高级编程", Author: "mark",
 		},
 		{
-			ID: 4, Name: "Mastering_Go_ZH_CN", Url: "https://books.studygolang.com/Mastering_Go_ZH_CN/",
+			ID: 4, Name: "Mastering_Go_ZH_CN", Author: "pual",
 		},
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"books": books,
+	})
+}
+
+func GetBookDetail(ctx *gin.Context) {
+	book_id := ctx.Query("id")
+
+	fmt.Println("+++++++++++++++++book_id:", book_id)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"id": book_id,
 	})
 }
