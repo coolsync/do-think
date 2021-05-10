@@ -40,9 +40,49 @@
 1. network.host: 192.168.0.107
 2. cluster.initial_master_nodes: ["node-1"]
 
+### Run Er
+
+bootstrap check failure [1] of [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+
+
+
+
+
 ### Kibana
 
 详见[ES搭建指南](https://docs.qq.com/doc/DTmZxQUdHeFRXU2dP)
+
+Elasticsearch.yml:
+
+```yml
+#node.name: node-1
+node.name: node-1
+
+#
+#network.host: 192.168.0.1
+network.host: 192.168.0.107
+
+#cluster.initial_master_nodes: ["node-1", "node-2"]
+cluster.initial_master_nodes: ["node-1"]
+```
+
+
+
+kibana.yml
+
+```yml
+# The URLs of the Elasticsearch instances to use for all your queries.
+#elasticsearch.hosts: ["http://localhost:9200"]
+elasticsearch.hosts: ["http://192.168.0.107:9200"]
+
+
+# Specifies locale to be used for all localizable strings, dates and number formats.
+# Supported languages are the following: English - en , by default , Chinese - zh-CN .
+#i18n.locale: "en"
+i18n.locale: "zh-CN"
+```
+
+
 
 ### kafka消费
 
