@@ -29,6 +29,10 @@ func main() {
 	router.GET("/map", ch02.MapHandler)
 	router.GET("/map_struct", ch02.MapAndStruct)
 
+	router.GET("/param1/:name", ch02.Param1)
+	router.GET("/param2/*name", ch02.Param2)
+
+
 	// Listen port
 	router.Run(":8090")
 }

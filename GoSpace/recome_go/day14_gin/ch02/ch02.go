@@ -66,5 +66,25 @@ func MapAndStruct(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "ch02/map_struct.html", map_struct_data)
-
 }
+
+// Slice data render
+
+// 1. 带参数的路由：路径中直接加上参数值
+// 使用占位符: ，必须得指定这个路径
+func Param1(ctx *gin.Context) {
+
+	name := ctx.Param("name")
+
+	ctx.String(http.StatusOK, "hello, %s", name)
+}
+
+// 使用占位符*，可以不用匹配这个路径
+func Param2(ctx *gin.Context) {
+
+	name := ctx.Param("name")
+
+	ctx.String(http.StatusOK, "hello, %s", name)
+}
+
+// 二、带参数的路由：路径中使用参数名
