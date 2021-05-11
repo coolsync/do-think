@@ -1,0 +1,247 @@
+# Gorm
+
+
+
+抽取：
+
+实现接口：D:\go\workspace\src\gin-vue-admin\common\datasource
+
+base结构体：D:\go\workspace\src\gin-vue-admin\repository\BaseRepository.go
+
+集成结构体：D:\go\workspace\src\gin-vue-admin\repository\UserRepository.go
+
+
+
+# gorm介绍
+
+## 一、什么是orm？
+
+Object-Relationl Mapping，即对象关系映射，这里的Relationl指的是关系型数据库
+
+它的作用是在关系型数据库和对象之间作一个映射，这样，我们在具体的操作数据库的时候，就不需要再去和复杂的SQL语句打交道，只要像平时操作对象一样操作它就可以了 。
+
+## 二、gorm
+
+1.Golang写的，GitHub上活跃度很高的orm库
+
+2.特点：
+
+- 全功能ORM（几乎）
+- 关联（包含一个，包含多个，属于，多对多，多种包含）
+- Callbacks（创建/保存/更新/删除/查找之前/之后）
+- 预加载（急加载）
+- 事务
+- 复合主键
+- SQL Builder
+- 自动迁移
+- 日志
+- 可扩展，编写基于GORM回调的插件
+- 每个功能都有测试
+- 开发人员友好
+
+3.安装
+
+```
+go get github.com/jinzhu/gorm
+go get -u gorm.io/gorm
+```
+
+4.官方文档：
+
+http://gorm.book.jasperxu.com/
+
+https://gorm.io/docs/index.html
+
+
+
+# DDL操作
+
+对数据库，表，字段等的操作，这里指的DDl不包括数据库
+
+## 一、数据库
+
+1. 连接数据库
+
+```go
+package main
+
+import (
+	"fmt"
+	"gorm_project/models"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+)
+
+func main() {
+	/*
+			 // 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
+		  	dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+		  	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	*/
+    
+	dsn := "root:afvRdOxt%2px@tcp(localhost:3306)/gorm_project?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+
+// loc=Local：表示根据本地时区走
+// parseTime：处理time.Time
+```
+
+## 二、表
+
+./models/models.go
+
+```go
+package models
+
+type User struct {
+	Id   int
+	Name string
+	Age  uint8
+	Addr string
+	Pic  string
+	Phone string
+}
+```
+
+1.Create Table
+
+```go
+
+	// Create Table
+	db.Migrator().CreateTable(&User{})	// 使用模型名, 映射到 database, 表名后加 s
+	db.Table("user").Migrator().CreateTable(&User{})
+```
+
+2.Delete Table
+
+```go
+// Delete Table
+db.Migrator().DropTable(&User{})  // 使用模型名
+db.Migrator().DropTable("user") // 直接使用表名
+
+```
+
+3.Has Table ?
+
+```go
+// Has Table?
+	// b := db.Migrator().HasTable("users")  
+	b := db.Migrator().HasTable(&models.User{}) // 使用模型
+	fmt.Println(b)
+
+	b2 := db.Migrator().HasTable("user") // 使用表名
+	fmt.Println(b2)
+```
+
+## 三、列（不建议进行操作，直接在模型上指定迁移即可）
+
+1.修改列
+
+```
+// 修改模型`User`的description列的数据类型为`text`
+db.Model(&User{}).ModifyColumn("description", "text")
+```
+
+2.删除列
+
+```
+// 删除模型`User`的description列
+db.Model(&User{}).DropColumn("description")
+```
+
+3.添加外键
+
+```
+db.Model(&User{}).AddForeignKey("city_id", "cities(id)", "RESTRICT", "RESTRICT")
+
+// 第一个参数: 外键字段
+// 第二个参数 : 外键表(字段)
+// 第三个参数 : ONDELETE
+// 第四个参数 : ONUPDATE
+```
+
+4.索引
+
+```
+// 为`name`, `age`列添加索引`idx_user_name_age`
+db.Model(&User{}).AddIndex("idx_user_name_age", "name", "age")
+
+// 为多列添加唯一索引
+db.Model(&User{}).AddUniqueIndex("idx_user_name_age", "name", "age")
+```
+
+## 四、数据库迁移
+
+1.自动迁移
+
+自动迁移仅仅会创建表，添加缺少列和索引，并且不会改变现有列的类型或删除未使用的列以保护数据
+
+```go
+db.AutoMigrate(&User{})
+
+db.AutoMigrate(&User{}, &Product{}, &Order{})
+
+// 创建表时添加表后缀
+db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
+```
+
+
+
+# DML操作
+
+是对数据的操作
+
+## 一、增删改查
+
+1.Create
+
+```go
+db.Create(&models.User{Name:"bob", Age: 30, Addr: "xxx", Pic: "/static/upload/pic.jpg"})
+```
+
+2.Query
+
+```go
+var user models.User
+	db.First(&user, 1)	// 1 is id
+	db.First(&user, "name=?", "bob")
+	fmt.Println(user)
+```
+
+3.Update
+
+```go
+	db.First(&user, 2)
+	// 1
+	user.Name = "paul"
+	user.Age = 20
+	db.Save(&user)
+
+	// 2
+	db.Model(&user).Update("addr", "pual-xxxx")
+	db.Model(&user).Update("phone", "12345678")
+
+	// 3
+	db.Model(&user).Updates(models.User{Name: "jerry", Addr: "jerry-xxxx"})
+```
+
+4.Delete：先查再改
+
+```go
+var user User
+db.First(&user,1)  // 默认使用id字段
+
+db.Delete(&user)
+
+// Delete
+	// db.Delete(&user, 2)
+	db.Where("name", "bob").Delete(&user)
+```
+
