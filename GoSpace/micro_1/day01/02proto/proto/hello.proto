@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 // option go_package = ".;day01";
-option go_package = "./pb;pb";
+option go_package = "/pb;pb";
 // option go_package = ";pb";
 
 // define message body
@@ -31,5 +31,5 @@ enum Week {
 }
 
 service Hello {
-    rpc HelloWorld(Person) returns (Employee);
+    rpc Say(Person) returns (Employee);
 }

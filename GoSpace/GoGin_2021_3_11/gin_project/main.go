@@ -19,10 +19,11 @@ import (
 
 func main() {
 	router := gin.Default()
+
 	// router := gin.New()
 	// router.Use(gin.Logger(), gin.Recovery())
 
-	// // gin 自带 logger
+	// // Gin 自带 logger
 	// f, _ := os.Create("./gin_log")
 	// gin.DefaultWriter = io.MultiWriter(f)
 
@@ -31,7 +32,7 @@ func main() {
 	router.Use(chapter05.MiddleWare2())
 	// router.Use(chapter05.MiddleWare3)
 
-	// costom tmpl func
+	// Costom tmpl func
 	router.SetFuncMap(template.FuncMap{
 		"add":    chapter03.AddNum,
 		"substr": chapter03.SubStr,
@@ -50,7 +51,7 @@ func main() {
 	router.LoadHTMLGlob("template/**/*")
 	// router.LoadHTMLFiles("index.html, news.html")
 
-	// load static source
+	// Load static source
 	router.Static("/static", "static")
 
 	// router.Run(":9000")

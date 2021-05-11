@@ -94,6 +94,25 @@ protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
 
 
 
+## Err: protoc-gen-go-grpc: program not found or is not executable
+
+Solution: https://blog.csdn.net/qq_38639426/article/details/107669849
+
+使用grpc时，通过protoc工具编译protobuf时，遇到了下面的问题：
+
+protoc-gen-go-grpc: program not found or is not executable
+
+
+
+方法：  安装以下gRPC gen插件：
+
+go get -u google.golang.org/protobuf/cmd/protoc-gen-go
+go install google.golang.org/protobuf/cmd/protoc-gen-go
+go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+
+
+
 脚本执行：
 
 Makefile
