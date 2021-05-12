@@ -32,6 +32,32 @@ func main() {
 	router.GET("/param1/:name", ch02.Param1)
 	router.GET("/param2/*name", ch02.Param2)
 
+	router.GET("/query", ch02.GetQueryData)
+	router.GET("/query_arr", ch02.GetQueryArrData)
+	router.GET("/query_map", ch02.GetQueryMapData)
+
+	// PostForm
+	router.GET("/to_user_add", ch02.ToUserAdd)
+	router.POST("/do_user_add", ch02.DoUserAdd)
+
+	// DefaultPostForm, DefaultQuery, ctx.QueryArray, ctx.QueryMap
+	router.GET("/to_user_add2", ch02.ToUserAdd2)
+	router.POST("/do_user_add2", ch02.DoUserAdd2)
+
+	// Ajax Req
+	router.GET("/to_user_add3", ch02.ToUserAdd3)
+	router.POST("/do_user_add3", ch02.DoUserAdd3)
+
+	// Parameter Bind
+	router.GET("/to_user_add4", ch02.ToUserAdd4)
+	router.POST("/do_user_add4", ch02.DoUserAdd4)
+
+	// Upload File
+	router.GET("/to_upload1", ch02.ToUpload1)
+	router.POST("/do_upload1", ch02.DoUpload1)
+
+	router.GET("/to_upload2", ch02.ToUpload2)
+	router.POST("/do_upload2", ch02.DoUpload2)
 
 	// Listen port
 	router.Run(":8090")

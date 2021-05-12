@@ -1,16 +1,19 @@
 package ch02
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 type UserInfo struct {
-	ID   int
-	Name string
-	Age  int
-	Addr string
+	ID   int    `form:"id"`
+	Name string `form:"name"`
+	Age  int    `form:"age"`
+	Addr string `form:"addr"`
 }
 
 func User(ctx *gin.Context) {
@@ -87,4 +90,152 @@ func Param2(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "hello, %s", name)
 }
 
-// 二、带参数的路由：路径中使用参数名
+// 二、带参数的路由：路径中使用 param name
+func GetQueryData(ctx *gin.Context) {
+	id := ctx.Query("id")
+
+	name := ctx.DefaultQuery("name", "mark")
+
+	ctx.String(http.StatusOK, "hello, %s, %s", id, name)
+}
+
+func GetQueryArrData(ctx *gin.Context) {
+	ids := ctx.QueryArray("ids")
+
+	ctx.String(http.StatusOK, "hello, %v", ids)
+}
+
+func GetQueryMapData(ctx *gin.Context) {
+	user := ctx.QueryMap("user")
+
+	ctx.String(http.StatusOK, "hello, %v", user)
+}
+
+// go to user add page
+func ToUserAdd(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/user_add.html", nil)
+}
+
+// user add, post
+func DoUserAdd(ctx *gin.Context) {
+	username := ctx.PostForm("username")
+	passwd := ctx.PostForm("passwd")
+
+	fmt.Println(username, passwd)
+
+	ctx.String(http.StatusOK, "user add ok!")
+}
+
+// go to user add page
+func ToUserAdd2(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/user_add2.html", nil)
+}
+
+// user add, post
+func DoUserAdd2(ctx *gin.Context) {
+	username := ctx.PostForm("username")
+	passwd := ctx.PostForm("passwd")
+
+	age := ctx.DefaultPostForm("age", "18")
+
+	loves := ctx.PostFormArray("love")
+
+	user := ctx.PostFormMap("user")
+
+	fmt.Println(username)
+	fmt.Println(passwd)
+	fmt.Println(age)
+	fmt.Println(loves)
+	fmt.Println(user) // map[addr: ... , phone: ... ]
+
+	ctx.String(http.StatusOK, "user add ok!")
+}
+
+// Ajax interactive
+// go to ajax add user page
+func ToUserAdd3(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/user_add3.html", nil)
+}
+
+// user add, ajax post
+func DoUserAdd3(ctx *gin.Context) {
+	username := ctx.PostForm("username")
+	passwd := ctx.PostForm("passwd")
+
+	fmt.Println(username)
+	fmt.Println(passwd)
+
+	map_data := map[string]interface{}{
+		"code": 400,
+		"msg":  "FAIL",
+	}
+	if username == "" || passwd == "" {
+		ctx.JSON(http.StatusOK, map_data)
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "OK",
+		})
+	}
+}
+
+// Parameter Bind
+// go to user add page
+func ToUserAdd4(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/user_add4.html", nil)
+}
+
+// user add
+func DoUserAdd4(ctx *gin.Context) {
+	var user_info UserInfo
+
+	ctx.ShouldBind(&user_info)
+	// ctx.ShouldBindWith()
+
+	fmt.Println(user_info)
+
+	ctx.String(http.StatusOK, "user add ok!")
+}
+
+// Upload Single File
+func ToUpload1(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/upload_file1.html", nil)
+}
+
+func DoUpload1(ctx *gin.Context) {
+	file, _ := ctx.FormFile("file")
+
+	fmt.Println(file.Filename)
+
+	time_unix_int := time.Now().Unix()
+	time_unix_str := strconv.FormatInt(time_unix_int, 10)
+
+	dst_path := "upload/" + time_unix_str + "_" + file.Filename
+	ctx.SaveUploadedFile(file, dst_path)
+
+	ctx.String(http.StatusOK, "Upload File Ok!")
+}
+
+// Upload Multiple File
+func ToUpload2(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/upload_file2.html", nil)
+}
+
+func DoUpload2(ctx *gin.Context) {
+	// get form obj, operate mul file
+	form, _ := ctx.MultipartForm()
+	// get files
+	files := form.File["file"]
+	// for files, get file obj
+	// save file
+
+	for _, file := range files {
+		fmt.Println(file.Filename)
+		unix_int := time.Now().Unix()
+		time_unix_str := strconv.FormatInt(unix_int, 10)
+		dst_path := "upload/" + time_unix_str + "_" + file.Filename
+		ctx.SaveUploadedFile(file, dst_path)
+	}
+
+	ctx.String(http.StatusOK, "Upload File Ok!")
+}
