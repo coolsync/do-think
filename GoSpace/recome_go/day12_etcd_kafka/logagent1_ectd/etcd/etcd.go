@@ -37,7 +37,7 @@ func Init(addr string, timeout time.Duration) (err error) {
 	return
 }
 
-// 从ETCD中根据key获取配置项
+// Form etcd 根据key 获取配置项
 func GetConf(key string) (logEntryConf []*LogEntryConf, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
@@ -48,6 +48,7 @@ func GetConf(key string) (logEntryConf []*LogEntryConf, err error) {
 		return
 	}
 
+	//
 	for _, ev := range resp.Kvs {
 		err = json.Unmarshal(ev.Value, &logEntryConf)
 		if err != nil {
@@ -57,24 +58,3 @@ func GetConf(key string) (logEntryConf []*LogEntryConf, err error) {
 	}
 	return
 }
-
-// // 从ETCD中根据key获取配置项
-// func GetConf1(key string) (logEntryConf []*LogEntryConf, err error) {
-// 	// get
-// 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-// 	resp, err := cli.Get(ctx, key)
-// 	cancel()
-// 	if err != nil {
-// 		fmt.Printf("get from etcd failed, err:%v\n", err)
-// 		return
-// 	}
-// 	for _, ev := range resp.Kvs {
-// 		//fmt.Printf("%s:%s\n", ev.Key, ev.Value)
-// 		err = json.Unmarshal(ev.Value, &logEntryConf)
-// 		if err != nil {
-// 			fmt.Printf("unmarshal etcd value failed,err:%v\n", err)
-// 			return
-// 		}
-// 	}
-// 	return
-// }

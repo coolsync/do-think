@@ -9,7 +9,7 @@ import (
 // 专门往kafka写日志的模块
 
 var (
-	client sarama.SyncProducer // 声明一个全局的连接kafka的生产者client
+	client sarama.SyncProducer // 声明一个全局连接kafka的生产者client
 
 )
 

@@ -2,6 +2,7 @@ package taillog
 
 import (
 	"fmt"
+
 	"github.com/hpcloud/tail"
 )
 
@@ -9,7 +10,7 @@ import (
 
 var (
 	tailObj *tail.Tail
-	LogChan chan string
+	// LogChan chan string
 )
 
 func Init(fileName string) (err error) {
@@ -18,7 +19,7 @@ func Init(fileName string) (err error) {
 		Follow:    true,                                 // 是否跟随
 		Location:  &tail.SeekInfo{Offset: 0, Whence: 2}, // 从文件的哪个地方开始读
 		MustExist: false,                                // 文件不存在不报错
-		Poll:      true,
+		Poll:      true,                                 // Poll for file changes instead of using inotify
 	}
 	tailObj, err = tail.TailFile(fileName, config)
 	if err != nil {

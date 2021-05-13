@@ -62,7 +62,19 @@ func main() {
 	// Ajax Upload File
 	router.GET("/to_upload3", ch02.ToUpload3) // ajax single file upload
 	router.POST("/do_upload3", ch02.DoUpload3)
-	
+
+	router.GET("/to_upload4", ch02.ToUpload4) // ajax multiple file upload
+	router.POST("/do_upload4", ch02.DoUpload4)
+
+	// Output Other data format type
+	router.GET("/out_json", ch02.OutJson)
+	router.GET("/out_ascii_json", ch02.OutAsciiJSON)
+	router.GET("/out_jsonp", ch02.OutJSONP)
+	router.GET("/out_pure_json", ch02.OutPureJSON)
+	router.GET("/out_secure_json", ch02.OutSecureJSON)
+
+	router.GET("/out_yaml", ch02.OutYaml)
+	router.GET("/out_protobuf", ch02.OutProtoBuf)
 	// Listen port
 	router.Run(":8090")
 }
