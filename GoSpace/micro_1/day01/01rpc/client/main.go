@@ -8,7 +8,7 @@ import (
 )
 
 func main01() {
-	// rpc 连接 服务器
+	// rpc connect server
 	// conn, err := rpc.Dial("tcp", "localhost:8081")
 	conn, err := jsonrpc.Dial("tcp", "localhost:8081")
 
@@ -17,7 +17,7 @@ func main01() {
 	}
 	defer conn.Close()
 
-	// rpc 调用 远程方法
+	// rpc call 远程方法
 	var reply string // 传出值
 
 	err = conn.Call("hello.HelloWorld", "李白", &reply)
@@ -29,19 +29,17 @@ func main01() {
 }
 
 func main() {
-	// rpc 连接 服务器
-	myclient, err := design.InitClient("localhost:8081")
-	if err != nil {
-		log.Fatal("design.InitClient err: ", err)
-	}
+	// rpc connect server
+	cli := design.NewClient("localhost:8081")
 
-	// rpc 调用 远程方法
-	var reply string // 传出值
+	// rpc call remote method
+	var reply string // outGoing param, recv server return value
 
-	err = myclient.HelloWorld("haha", &reply)
+	// call method
+	err := cli.HelloWorld("haha", &reply)
 	if err != nil {
 		log.Fatal("myclient.HelloWorld err: ", err)
 	}
 
-	fmt.Println(reply, err)
+	fmt.Println("result: ", reply)
 }

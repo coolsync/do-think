@@ -53,12 +53,16 @@ func main() {
 	router.POST("/do_user_add4", ch02.DoUserAdd4)
 
 	// Upload File
-	router.GET("/to_upload1", ch02.ToUpload1)
+	router.GET("/to_upload1", ch02.ToUpload1) // single file upload
 	router.POST("/do_upload1", ch02.DoUpload1)
 
-	router.GET("/to_upload2", ch02.ToUpload2)
+	router.GET("/to_upload2", ch02.ToUpload2) // multiple file upload
 	router.POST("/do_upload2", ch02.DoUpload2)
 
+	// Ajax Upload File
+	router.GET("/to_upload3", ch02.ToUpload3) // ajax single file upload
+	router.POST("/do_upload3", ch02.DoUpload3)
+	
 	// Listen port
 	router.Run(":8090")
 }

@@ -239,3 +239,30 @@ func DoUpload2(ctx *gin.Context) {
 
 	ctx.String(http.StatusOK, "Upload File Ok!")
 }
+
+// Ajax Upload Single File
+func ToUpload3(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "ch02/upload_ajax1.html", nil)
+}
+
+func DoUpload3(ctx *gin.Context) {
+	name := ctx.PostForm("name")
+
+	fmt.Println(name)
+
+	file, _ := ctx.FormFile("file")
+
+	fmt.Println(file.Filename)
+
+	unix_int := time.Now().Unix()
+	time_unix_str := strconv.FormatInt(unix_int, 10)
+
+	dst_path := "upload/" + time_unix_str + "_" + file.Filename
+	ctx.SaveUploadedFile(file, dst_path)
+
+	// ctx.String(http.StatusOK, "Upload )
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "OK",
+	})
+}

@@ -1,0 +1,45 @@
+syntax = "proto3";  // set version num
+
+option go_package = "./userinfo"; //  设置输出目录 
+
+package userinfo; // 设置包名
+
+// Service Method
+service UserInfo {
+    // Method Name
+    rpc GetUserInfo (UserRequest) returns (UserResponse);
+}
+
+// Define request struct
+message UserRequest {
+    string name = 1;
+}
+
+// Define response struct
+message UserResponse {
+    int32 id = 1;
+    string name = 2;
+    int32 age = 3;
+    repeated string hobby = 4;
+    oneof data {
+        string fname = 5;
+        string lname = 6;
+    }
+}
+
+// oneof
+// type isUserResponse_Data interface {
+// 	isUserResponse_Data()
+// }
+
+// type UserResponse_Fname struct {
+// 	Fname string `protobuf:"bytes,5,opt,name=fname,proto3,oneof"`
+// }
+
+// type UserResponse_Lname struct {
+// 	Lname string `protobuf:"bytes,6,opt,name=lname,proto3,oneof"`
+// }
+
+// func (*UserResponse_Fname) isUserResponse_Data() {}
+
+// func (*UserResponse_Lname) isUserResponse_Data() {}
