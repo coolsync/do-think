@@ -1,23 +1,25 @@
-# 获取请求参数
+# Get request parameters
 
-## 一、带参数的路由：路径中直接加上参数值
+## 一、Route with parameters: add parameter values directly to the path
+
+带参数的路由：路径中直接加上参数值
 
 e.g.      http://127.0.0.1:8080/user/hallen
 
-1.第一种情况：使用占位符: ，必须得指定这个路径
+1 .	The first case: use a placeholder **`:`** , you must specify this path
 
 - 路由：engine.GET("/user/:name",Index)
 - 如：[http://127.0.0.1:8080/user/hallen](http://127.0.0.1:8080/user/zhiliao)，这里必须指定name这个路径，不然会找不到
 - 获取方式：context.Param("name")
 
-2.第二种情况：使用占位符*，可以不用匹配这个路径
+2 .   第二种情况：使用占位符 *，可以不用匹配这个路径
 
 - 路由：engine.GET("/user/*name",Index)
 - 这里可以指定name这个路径，也可以不用指定
 - 如：下面两种都可以访问
-  - [http://127.0.0.1:8080/user/hallen](http://127.0.0.1:8080/user/zhiliao)，
-  - [http://127.0.0.1:8080/user](http://127.0.0.1:8080/user/zhiliao)，
-- 获取方式：context.Param("name")
+  - [http://127.0.0.1:8080/user/bob](http://127.0.0.1:8080/user/bob)，	---> /bob
+  - [http://127.0.0.1:8080/user](http://127.0.0.1:8080/user),   	---> /
+- 获取方式：ctx.Param("name")
 
 区别：参数前面是使用冒号还是使用通配符，冒号的比如指定路径，通配符的可以不用
 
@@ -34,7 +36,9 @@ func Index(c *gin.Context)  {
 engine.GET("/user/:name",Index)
 ```
 
-## 二、带参数的路由：路径中使用参数名
+## 二、Route with parameters: use the parameter name in the path
+
+带参数的路由：路径中使用参数名
 
 1.context.Query
 
@@ -76,11 +80,11 @@ engine.GET("/user/:name",Index)
 
 
 
-# 获取post请求数据
+# Get POST request data
 
 注意：是post请求
 
-## 一、获取表单提交的数据
+## 一、Get the data submitted by the form
 
 1.context.PostForm("username")  获取表单中的name属性对应的值
 
@@ -155,7 +159,9 @@ map_name := context.PostFormMap("username")
 注意：name要以map的格式定义，指定key，用户输入value，
 ```
 
-## 二、ajax交互
+
+
+## 二、Ajax interaction
 
 前端使用ajax提交，后端和form表单的获取方式一样，唯一的区别就是返回的是json
 

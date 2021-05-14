@@ -1,4 +1,4 @@
-# 参数绑定
+# Parameter binding
 
 它能够基于请求自动提取JSON、form表单和QueryString类型的数据，并把值绑定到指定的结构体对象
 

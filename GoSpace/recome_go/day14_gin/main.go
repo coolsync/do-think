@@ -3,6 +3,8 @@ package main
 import (
 	"gin2/ch01"
 	"gin2/ch02"
+	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -73,8 +75,26 @@ func main() {
 	router.GET("/out_pure_json", ch02.OutPureJSON)
 	router.GET("/out_secure_json", ch02.OutSecureJSON)
 
+	router.GET("/out_xml", ch02.OutXML)
 	router.GET("/out_yaml", ch02.OutYaml)
-	router.GET("/out_protobuf", ch02.OutProtoBuf)
+	router.GET("/out_protobuf", ch02.OutProto)
+
+	// Redirect
+	router.GET("/redirect_a", ch02.RedirectA)
+	router.GET("/redirect_b", ch02.RedirectB)
+
 	// Listen port
-	router.Run(":8090")
+	// router.Run(":8090")
+	
+	// Custom HTTP configuration
+	// http.ListenAndServe(":8090", router)
+
+	s := &http.Server{
+		Addr:           ":8090",
+		Handler:        router,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20, // 1 * 2^20
+	}
+	s.ListenAndServe()
 }

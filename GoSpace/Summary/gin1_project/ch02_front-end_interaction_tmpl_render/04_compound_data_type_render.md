@@ -1,6 +1,6 @@
-# 其他数据类型渲染
+# Rendering of other data types
 
-## 一、结构体
+## 一、Struct
 
 ```
 后端：
@@ -20,7 +20,7 @@ func Hello(context *gin.Context)  {
 {{.Name}}
 ```
 
-## 二、数组
+## 二、Array
 
 ```
 后端：
@@ -45,7 +45,7 @@ func Hello(context *gin.Context)  {
     如果只有一个值，就是数组的元素值
 ```
 
-## 三、结构体数组
+## 三、Array+struct
 
 ```
 后端
@@ -84,7 +84,7 @@ func Hello(context *gin.Context)  {
 {{.age}}
 ```
 
-## 五、结构体+map
+## 五、Struct+map
 
 ```
 后端：
@@ -107,6 +107,6 @@ func Hello(context *gin.Context)  {
 {{.user.Name}}
 ```
 
-## 六、切片
+## 六、Slice
 
 和数组类似，唯一的区别是不用指定长度了，长度是可变的

@@ -1,4 +1,4 @@
-## 静态文件的使用
+# Use of static files
 
 ## 一、指定静态文件路径
 
@@ -18,7 +18,7 @@ engine.StaticFS("/static", http.Dir("static"))
 
 
 
-backup:
+## backup:
 
 ```go
 http.FileServer()	?

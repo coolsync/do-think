@@ -1,8 +1,8 @@
-# 文件上传
+# File Upload
 
-## 一、form表单上传文件
+## 一、Form upload file
 
-1.单文件
+1.Single file upload
 
 ```go
 前端：
@@ -36,7 +36,7 @@ file_path := "upload/" + time_unix_str + file.Filename   // 设置保存文件�
 context.SaveUploadedFile(file, file_path)  // 保存文件
 ```
 
-2.多文件上传
+2.Multiple file upload
 
 ```go
 前端：
@@ -68,11 +68,11 @@ func Upload2(context *gin.Context)  {
 注意：form.File["file"]   这里是中括号，不是小括号
 ```
 
-二、ajax方式上传文件
+二、Ajax upload file
 
 后端代码和form表单方式一样的
 
-1.单文件
+1.Single file upload
 
 ```js
 前端：
@@ -130,7 +130,9 @@ contentType: false 不使用默认的application/x-www-form-urlencoded这种cont
 - 分界符：目的是防止上传文件中出现分界符导致服务器无法正确识别文件起始位置
 - ajax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符
 
-2.多文件
+
+
+2.Multiple file upload
 
 name名称不相同就是个单文件上传
 

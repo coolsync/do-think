@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	pb "day17/1grpc/user"
+	pb "day17/01grpc/user"
 	"log"
 	"os"
 	"time"

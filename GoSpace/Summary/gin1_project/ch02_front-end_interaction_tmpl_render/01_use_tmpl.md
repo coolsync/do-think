@@ -42,14 +42,14 @@ panic: html/template: pattern matches no files: `templates/*`
 三级：engine.LoadHTMLGlob("templates/**/**/*")
 ```
 
-2.指定html文件， 并在project下创建 templates/user/index.html 
+2.Specify html file， 并在project下创建 templates/user/index.html 
 
 ```
 // 除了第一级的templates路径不需要指定，后面的路径都要指定
-e.g.：context.HTML(http.StatusOK,"user/index.html","zhiliao")
+e.g.：context.HTML(http.StatusOK,"user/index.html","mark")
 ```
 
-3.in html file,
+3.In html file,
 
 ```html
 必须使用

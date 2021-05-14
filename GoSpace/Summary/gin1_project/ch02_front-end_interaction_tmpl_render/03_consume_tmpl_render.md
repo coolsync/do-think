@@ -1,8 +1,8 @@
-## 自定义模板渲染器
+## Custom template renderer
 
 ## 一、使用"html/template"
 
-要指定所有的html路径，不推荐
+要指定所有的html路径，不推荐 Not recommended
 
 ```go
 router := gin.Default()

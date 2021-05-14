@@ -69,6 +69,22 @@ func OutSecureJSON(ctx *gin.Context) {
 	// while(1);["bob","mark","paul"], not parse json data
 }
 
+func OutXML(ctx *gin.Context) {
+	ctx.XML(http.StatusOK, gin.H{
+		"code": 200,
+		"tag":  "<br>",
+		"msg":  "提交成功",
+		"html": "<b>Hello, world!</b>",
+	})
+
+	// <map>
+	// <code>200</code>
+	// <tag><br></tag>
+	// <msg>提交成功</msg>
+	// <html><b>Hello, world!</b></html>
+	// </map>
+}
+
 func OutYaml(ctx *gin.Context) {
 	ctx.YAML(http.StatusOK, gin.H{
 		"code": 200,
@@ -78,14 +94,14 @@ func OutYaml(ctx *gin.Context) {
 	})
 }
 
-func OutProtoBuf(ctx *gin.Context) {
-	// The specific definition of protobuf is written in the testdata/protoexample file.
+func OutProto(ctx *gin.Context) {
+	// The specific definition of protobuf is written in the proto file.
 	data := &user.UserResponse{
 		Id:   1,
 		Name: "paul",
 		Age:  18,
 	}
 	// Note that data becomes binary data in the response
-	// Will output protoexample.Test protobuf serialized data
+	// output user.UserResponse protobuf serialized data
 	ctx.ProtoBuf(http.StatusOK, data)
 }
