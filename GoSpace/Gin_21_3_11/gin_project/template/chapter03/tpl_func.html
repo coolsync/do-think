@@ -1,0 +1,100 @@
+{{define "chapter03/tpl_func.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    The Template Functions <br>
+
+    {{print "paul"}} <br>
+    {{printf "name: %s, age: %d" "paul" 30}} <br>
+
+    {{println "paul"}}
+    <br>
+
+    {{"bob" | printf "%s"}}
+    <br>
+    {{"bob" | len}}
+    <br>
+
+    {{printf "name: %s, addr: %s" "bob" (printf "%s-%s" "江苏" "南京")}}
+    <br>
+
+    {{and .name .age}}
+    <br>
+    {{and .addr .name}}
+    <br>
+
+    {{or .name .age}}
+    <br>
+    {{or .addr .age }}
+
+    <br>
+    {{index .slice_data 0}}
+    <br>
+    {{index .slice_data 1}}
+
+    <br>
+    {{index .map_d "name"}}
+    <br>
+    {{index .map_d "age"}}
+
+    <br>
+    {{index "hallo" 1}}
+    <br>
+    {{"hallo" | len}}
+    <br>
+    {{len "hallo"}}
+
+    <br>
+    {{not .name}}
+    {{not .xxx}}
+
+    <br>
+    {{urlquery "http://www.bing.com"}}
+
+    <br>
+    {{eq 18 19}}
+    {{ne 18 19}}
+    {{lt 18 19}}
+    {{le 18 19}}
+    {{gt 18 19}}
+    {{ge 19 19}}
+
+    <br>
+    {{eq 18 19 20 21 18}}
+
+    <br>
+    {{.now_time}}
+    <br>
+    {{.now_time.Format "2006-01-02 15:04:05"}}
+
+    <br>
+    {{html `<a href="http://www.bing.com">bing</a>`}}
+    <br>
+    {{"<a href='http://www.bing.com'>bing</a>"}}
+
+    <br>
+    <!-- js escode -->
+    {{js "<script>111</script>"}}
+
+    <br>
+    {{add 1 2}}
+    <br>
+    {{add 5 6}}
+
+    <br>
+    {{substr "query" 5}}
+
+    <br>
+    {{safe `<a href="http://www.bing.com">bing</a>`}}
+</body>
+
+</html>
+{{end}}

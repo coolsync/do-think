@@ -1,0 +1,83 @@
+package relate_tables
+
+// belongs to
+// `User` belongs to `Company`, `CompanyID` is the foreign key
+// Belongs To
+// belongs to 会与另一个模型建立了一对一的连接。 这种模型的每一个实例都“属于”另一个模型的一个实例。
+// 例如，您的应用包含 user 和 company，并且每个 user 都可以分配给一个 company
+
+// // 1
+// type User struct {
+// 	gorm.Model
+// 	Name         string
+// 	CompanyRefer int
+// 	Company      Company `gorm:"foreignKey:CompanyRefer"`
+// }
+
+// type Company struct {
+// 	ID   int
+// 	Name string
+// }
+
+// // 2
+// type User struct {
+// 	ID   int
+// 	Name string
+// 	Age  string
+// 	Addr string
+// }
+
+// type UserProfile struct {
+// 	ID    int
+// 	Pic   string
+// 	CPic  string
+// 	Phone string
+// 	// User  User // relate // 关联关系
+// 	User User `gorm:"foreignKey:UID;references:ID"` // relate // 关联关系
+// 	UID  int
+// }
+
+// invalid field found for struct gorm_project/models/relate_tables.UserProfile's field User, need to define a valid foreign key for relations or it need to implement the Valuer/Scanner interface
+
+// Error 3780: Referencing column 'uid' and referenced column 'id' in foreign key constraint 'fk_user_profiles_user' are incompatible.
+
+// Has One
+// has one 与另一个模型建立一对一的关联，但它和一对一关系有些许不同。 这种关联表明一个模型的每个实例都包含或拥有另一个模型的一个实例。
+type User struct {
+	ID   int
+	Name string
+	Age  int
+	Addr string
+	UserProfile UserProfile `gorm:"foreignKey:PID;references:ID"`
+	PID int
+}
+
+type UserProfile struct {
+	ID    int
+	Pic   string
+	CPic  string
+	Phone string
+	// User  User // relate // 关联关系
+	// User User `gorm:"foreignKey:PID;references:ID"` // relate // 关联关系
+	// UID int	// foreign key
+}
+
+// type User struct {
+// 	ID   int
+// 	Name string
+// 	Age  string
+// 	Addr string
+// 	PID  int
+// }
+
+// type UserProfile struct {
+// 	ID    int
+// 	Pic   string
+// 	CPic  string
+// 	Phone string
+// 	// User  User // relate // 关联关系
+// 	User User `gorm:"foreignKey:PID;references:ID"` // relate // 关联关系
+// }
+
+// Error 1826: Duplicate foreign key constraint name 'fk_user_profiles_user'
+// Error 1824: Failed to open the referenced table 'user_profiles'

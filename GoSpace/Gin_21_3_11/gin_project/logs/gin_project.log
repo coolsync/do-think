@@ -1,0 +1,12 @@
+time="2021-04-09T15:50:05+08:00" level=info msg="this is info"
+time="2021-04-09T15:50:05+08:00" level=warning msg="this is warn"
+time="2021-04-09T15:50:05+08:00" level=info msg=info name=xx
+time="2021-04-09T15:50:05+08:00" level=info msg=info id=18 name=haha
+time="2021-04-09 19:15:47" level=info msg="this is info"
+time="2021-04-09 19:15:47" level=warning msg="this is warn"
+time="2021-04-09 19:15:47" level=info msg=info name=xx
+time="2021-04-09 19:15:47" level=info msg=info id=18 name=haha
+{"level":"info","msg":"this is info","time":"2021-04-09 19:17:42"}
+{"level":"warning","msg":"this is warn","time":"2021-04-09 19:17:42"}
+{"level":"info","msg":"info","name":"xx","time":"2021-04-09 19:17:42"}
+{"id":18,"level":"info","msg":"info","name":"haha","time":"2021-04-09 19:17:42"}

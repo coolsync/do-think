@@ -1,0 +1,56 @@
+{{define "chapter02/ajax_upload4.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    ajax single file upload page<br>
+    <form>
+        <input type="file" class="file"><br>
+        <input type="file" class="file"><br>
+        <input type="text" id="name"><br>
+
+        <input type="button" value="submit" id="btn_upload">
+    </form>
+
+    <script>
+        let btn_upload = document.querySelector("#btn_upload");
+
+        btn_upload.onclick = function() {
+            let form_data = new FormData;
+            
+            let name = document.querySelector("#name").value;
+            let files_tag = $('.file');
+
+            for (let i = 0; i < files_tag.length; i++) {
+                // console.log(files_tag[i].files[0])
+                form_data.append('file', files_tag[i].files[0])
+            }
+
+            form_data.append("name", name);
+            
+            $.ajax({
+                url: '/do_ajax_upload4',
+                type: 'POST',
+                data: form_data,
+                processData: false, // not string upload
+                contentType: false,
+                success: function(data) {
+                    alert(data["code"]);
+                    alert(data["msg"]);
+                    window.location.href = "http://www.qq.com";
+                },
+                fail: function(data) {
+
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+{{end}}

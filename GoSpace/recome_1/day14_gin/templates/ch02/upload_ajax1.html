@@ -1,0 +1,56 @@
+{{define "ch02/upload_ajax1.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h2>Aajx Upload Single File Page</h2>
+
+    <form>
+        <input type="file" name="file" id="file"><br>
+        name: <input type="text" name="name" id="name"><br>
+        <input type="button" value="submit" id="btn_upload">
+    </form>
+
+    <script>
+        let btn = document.querySelector('#btn_upload');
+
+        btn.addEventListener('click', function (evt) {
+            // get file
+            let file = $('#file')[0].files[0];
+            // get name value
+            let name = document.querySelector('#name').value;
+
+            let form_data = new FormData();
+            form_data.append('name', name)
+            form_data.append('file', file)
+
+            $.ajax({
+                url: '/do_upload3',
+                type: 'POST',
+                data: form_data,
+                contentType: false,
+                processData: false,
+
+                success(data) {
+                    alert(data['code']);
+                    alert(data['msg']);
+                },
+
+                fail(data) {
+
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
+{{end}}
