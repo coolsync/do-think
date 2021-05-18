@@ -4,6 +4,7 @@ import (
 	"gin2/ch01"
 	"gin2/ch02"
 	"gin2/ch03"
+	"gin2/ch04"
 	"html/template"
 	"net/http"
 	"time"
@@ -17,7 +18,9 @@ func main() {
 
 	// Set consume tpl func
 	router.SetFuncMap(template.FuncMap{
-		"add_num": ch03.AddNum,
+		"add_num":   ch03.AddNum,
+		"str_len":   ch03.SubStr,
+		"safe_html": ch03.SafeHTML,
 	})
 
 	// Use tmpl Regular, specify 多级目录
@@ -94,12 +97,20 @@ func main() {
 	// tpl syntax
 	router.GET("/tpl_syntax1", ch03.TplSyntax1)
 	router.GET("/tpl_syntax2", ch03.TplSyntax2)
-
 	// tpl func
 	router.GET("/tpl_func1", ch03.TplFunc1)
 	router.GET("/tpl_func2", ch03.TplFunc2)
 	router.GET("/consume_tpl_func", ch03.ConsumeTplFunc)
 
+	// Ch04
+	router.GET("/to_bind_form", ch04.ToBindForm)
+	router.POST("/do_bind_form", ch04.DoBindForm)
+
+	router.GET("/to_bind_json", ch04.ToBindJson)
+	router.POST("/do_bind_json", ch04.DoBindJson)
+
+	router.GET("/bind_query", ch04.GetQueryData)
+	router.GET("/bind_uri/:name/:age/:addr", ch04.BindUri)
 	// Listen port
 	// router.Run(":8090")
 

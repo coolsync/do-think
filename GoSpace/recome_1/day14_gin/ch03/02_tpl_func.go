@@ -1,6 +1,7 @@
 package ch03
 
 import (
+	"html/template"
 	"net/http"
 	"time"
 
@@ -41,7 +42,29 @@ func ConsumeTplFunc(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "ch03/05.consume_tpl_func.html", nil)
 }
 
+// Custom template function
+
+// router.SetFuncMap(template.FuncMap{
+// 	"add_num":   ch03.AddNum,
+// 	"str_len":   ch03.SubStr,
+// 	"safe_html": ch03.SafeHTML,
+// })
+
 // define func
 func AddNum(n1, n2 int) int {
 	return n1 + n2
+}
+
+func SubStr(str string, n int) string {
+	str_len := len(str)
+
+	if str_len <= n {
+		return str
+	}
+
+	return str[:n] + "..."
+}
+
+func SafeHTML(s string) template.HTML {
+	return template.HTML(s)
 }
