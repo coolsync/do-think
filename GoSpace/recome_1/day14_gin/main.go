@@ -111,6 +111,10 @@ func main() {
 
 	router.GET("/bind_query", ch04.GetQueryData)
 	router.GET("/bind_uri/:name/:age/:addr", ch04.BindUri)
+
+	router.GET("/to_valid", ch04.ToValidData)
+	router.POST("/do_valid", ch04.DoValidData)
+
 	// Listen port
 	// router.Run(":8090")
 
