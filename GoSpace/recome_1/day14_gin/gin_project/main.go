@@ -128,6 +128,7 @@ func main() {
 	router.GET("/to_beego_validator", ch04.ToBeegoValidator)
 	router.POST("/do_beego_validator", ch04.DoBeegoValidator)
 
+
 	// Listen port
 	// router.Run(":8090")
 
