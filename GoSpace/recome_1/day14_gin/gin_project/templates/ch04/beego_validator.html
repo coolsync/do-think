@@ -1,0 +1,25 @@
+{{define "ch04/beego_validator.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Data Verification</h2>
+    <form action="/do_beego_validator" method="POST">
+        name: <input type="text" name="name" id=""> <br>
+        age: <input type="text" name="age" id=""> <br>
+        email: <input type="text" name="email" id=""> <br>
+        phone: <input type="text" name="phone" id=""> <br>
+        ip: <input type="text" name="ip" id=""> <br>
+        <input type="submit" value="submit">
+    </form>
+</body>
+
+</html>
+{{end}}

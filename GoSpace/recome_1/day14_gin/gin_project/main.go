@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 )
 
 func main() {
@@ -22,6 +24,11 @@ func main() {
 		"str_len":   ch03.SubStr,
 		"safe_html": ch03.SafeHTML,
 	})
+
+	// Custom validator
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("len6_valid", ch04.Len6Validator) //
+	}
 
 	// Use tmpl Regular, specify 多级目录
 	router.LoadHTMLGlob("templates/**/*")
@@ -103,6 +110,7 @@ func main() {
 	router.GET("/consume_tpl_func", ch03.ConsumeTplFunc)
 
 	// Ch04
+	// Data Binding
 	router.GET("/to_bind_form", ch04.ToBindForm)
 	router.POST("/do_bind_form", ch04.DoBindForm)
 
@@ -112,8 +120,13 @@ func main() {
 	router.GET("/bind_query", ch04.GetQueryData)
 	router.GET("/bind_uri/:name/:age/:addr", ch04.BindUri)
 
+	// Validator
 	router.GET("/to_valid", ch04.ToValidData)
 	router.POST("/do_valid", ch04.DoValidData)
+
+	// Beego Validator
+	router.GET("/to_beego_validator", ch04.ToBeegoValidator)
+	router.POST("/do_beego_validator", ch04.DoBeegoValidator)
 
 	// Listen port
 	// router.Run(":8090")
