@@ -30,7 +30,7 @@ func DoValidData(ctx *gin.Context) {
 	err := ctx.ShouldBind(&article)
 	if err != nil {
 		fmt.Println(err)
-		ctx.String(http.StatusNotFound, "get article failed: %v\n", article)
+		ctx.String(http.StatusBadRequest, "bad req: %v\n", article)
 		return
 	}
 	ctx.String(http.StatusOK, "Ok: %v\n", article)
