@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gin2/controller/ch03"
-	"gin2/controller/ch04"
+	"gin2/controllers/ch03"
+	"gin2/controllers/ch04"
 	"gin2/routers"
 	"html/template"
 	"net/http"
@@ -16,6 +16,13 @@ import (
 func main() {
 	// Create router
 	router := gin.Default()
+	// router := gin.New()
+	// router.Use(gin.Logger(), gin.Recovery()) // built middleware
+
+	// router.Use(ch05.MiddleWare1) // global middle ware
+	// router.Use(ch05.MiddleWare2())
+	// router.Use(ch05.MiddleWare3)
+	// router.Use(ch05.MiddleWare1, ch05.MiddleWare2(), ch05.MiddleWare3)
 
 	// Set consume tpl func
 	router.SetFuncMap(template.FuncMap{

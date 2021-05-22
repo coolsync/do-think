@@ -1,11 +1,17 @@
 package ch02
 
-import "github.com/gin-gonic/gin"
+import (
+	"gin2/controllers/ch05"
+
+	"github.com/gin-gonic/gin"
+)
 
 func Routers(ch02_routers *gin.RouterGroup) {
 	// Ch02 Tmpls Render
 	ch02_routers.GET("/user", User)
-	ch02_routers.GET("/user_info", UserInfoStruct)
+
+	ch02_routers.GET("/user_info", ch05.MiddleWare3, UserInfoStruct) // Partial use of middleware
+	
 	ch02_routers.GET("/arr", ArrayHandler)
 	ch02_routers.GET("/arr_struct", ArrayAndStruct)
 	ch02_routers.GET("/map", MapHandler)
