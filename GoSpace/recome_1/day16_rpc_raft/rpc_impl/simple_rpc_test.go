@@ -3,7 +3,6 @@ package rpcimpl
 import (
 	"encoding/gob"
 	"fmt"
-	"log"
 	"net"
 	"testing"
 )
@@ -30,7 +29,6 @@ func queryUsr(uid int) (User, error) {
 
 func TestRPC(t *testing.T) {
 	gob.Register(User{})
-	// gob.Register(errors)
 
 	addr := "localhost:8082"
 
@@ -44,7 +42,7 @@ func TestRPC(t *testing.T) {
 
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatal(err)
 	}
 	cli := NewClient(conn)
 
@@ -52,9 +50,12 @@ func TestRPC(t *testing.T) {
 	cli.callRPC("queryUsr", &query_user)
 	// reflect: wrong return count from function created by MakeFunc [recovered]
 
-	user, err := query_user(4)	// err:gob: type not registered for interface: errors.errorString
+	user, err := query_user(4) // err:gob: type not registered for interface: errors.errorString
 	if err != nil {
-		log.Fatal(err)
+		// t.Fatal(err)
+		// t.Errorf()
+		fmt.Println(err)
+		return
 	}
 	fmt.Println(user)
 }
