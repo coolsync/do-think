@@ -13,24 +13,22 @@ type RPCData struct {
 
 // encode rpc data
 func encode(rpc_ata *RPCData) ([]byte, error) {
-	// 字节slice obj
-	var buf bytes.Buffer
+	var buf bytes.Buffer // Simple byte buffer for marshaling data.
 
-	// 创建 字节slice 编码器
+	// 创建 []byte 编码器
 	bufEnc := gob.NewEncoder(&buf)
 
 	// struct rpc_ata 编码到 buf
 	if err := bufEnc.Encode(&rpc_ata); err != nil {
 		return nil, err
 	}
-
-	// 获取 buf obj 上 字节slice
+	// 获取 buf 上 字节slice
 	return buf.Bytes(), nil
 }
 
 // decode rpc data
 func decode(b []byte) (*RPCData, error) {
-	buf := bytes.NewBuffer(b)
+	buf := bytes.NewBuffer(b)	// NewBuffer creates and initializes a new Buffer using b as its initial contents
 
 	bufDec := gob.NewDecoder(buf)
 
@@ -42,3 +40,4 @@ func decode(b []byte) (*RPCData, error) {
 
 	return rpc_data, nil
 }
+

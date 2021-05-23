@@ -2,7 +2,6 @@ package rpcimpl
 
 import (
 	"encoding/gob"
-	"fmt"
 	"testing"
 )
 
@@ -23,12 +22,14 @@ func TestCodec(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	fmt.Println(string(b))
+	// fmt.Println(string(b))
 
-	rpc_data, err := decode(b)
+	// rpc_data, err := decode(b)
+	_, err = decode(b)
+
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	fmt.Println(rpc_data)
+	// fmt.Println(rpc_data)
 }
