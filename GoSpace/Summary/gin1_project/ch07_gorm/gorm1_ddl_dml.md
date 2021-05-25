@@ -42,8 +42,8 @@ Object-Relationl Mapping，即对象关系映射，这里的Relationl指的是�
 3.安装
 
 ```
-go get github.com/jinzhu/gorm
 go get -u gorm.io/gorm
+go get -u gorm.io/driver/mysql
 ```
 
 4.官方文档：
@@ -113,10 +113,9 @@ type User struct {
 1.Create Table
 
 ```go
-
-	// Create Table
-	db.Migrator().CreateTable(&User{})	// 使用模型名, 映射到 database, 表名后加 s
-	db.Table("user").Migrator().CreateTable(&User{})
+// Create Table
+db.Migrator().CreateTable(&User{})	// 使用模型名, 映射到 database, 表名后加 s
+db.Table("user").Migrator().CreateTable(&User{})
 ```
 
 2.Delete Table
@@ -210,26 +209,26 @@ db.Create(&models.User{Name:"bob", Age: 30, Addr: "xxx", Pic: "/static/upload/pi
 
 ```go
 var user models.User
-	db.First(&user, 1)	// 1 is id
-	db.First(&user, "name=?", "bob")
-	fmt.Println(user)
+db.First(&user, 1)	// 1 is id
+db.First(&user, "name=?", "bob")
+fmt.Println(user)
 ```
 
 3.Update
 
 ```go
-	db.First(&user, 2)
-	// 1
-	user.Name = "paul"
-	user.Age = 20
-	db.Save(&user)
+db.First(&user, 2)
+// 1
+user.Name = "paul"
+user.Age = 20
+db.Save(&user)
 
-	// 2
-	db.Model(&user).Update("addr", "pual-xxxx")
-	db.Model(&user).Update("phone", "12345678")
+// 2
+db.Model(&user).Update("addr", "pual-xxxx")
+db.Model(&user).Update("phone", "12345678")
 
-	// 3
-	db.Model(&user).Updates(models.User{Name: "jerry", Addr: "jerry-xxxx"})
+// 3
+db.Model(&user).Updates(models.User{Name: "jerry", Addr: "jerry-xxxx"})
 ```
 
 4.Delete：先查再改
@@ -241,7 +240,7 @@ db.First(&user,1)  // 默认使用id字段
 db.Delete(&user)
 
 // Delete
-	// db.Delete(&user, 2)
-	db.Where("name", "bob").Delete(&user)
+// db.Delete(&user, 2)
+db.Where("name", "bob").Delete(&user)
 ```
 
