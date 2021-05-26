@@ -1,4 +1,4 @@
-package dmloperate
+package dml
 
 import (
 	dbsource "comegorm/db_source"

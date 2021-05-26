@@ -1,7 +1,5 @@
 package models
 
-import "time"
-
 type User struct {
 	Id    int
 	Name  string
@@ -12,12 +10,12 @@ type User struct {
 }
 
 type UserInfo struct {
-	Id            int
-	Name          string
-	DBACreateTime time.Time
+	Id   int    `gorm:"primary_key"`
+	Name string `gorm:"index"`
+	Age  int
 }
 
-type DBXXXUserInfo struct { // dbxxx_user_infos
-	Id   int
-	Name string
-}
+// type DBXXXUserInfo struct { // dbxxx_user_infos
+// 	Id   int
+// 	Name string
+// }

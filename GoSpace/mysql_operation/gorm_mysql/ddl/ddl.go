@@ -1,4 +1,4 @@
-package ddloperate
+package ddl
 
 import (
 	dbsource "comegorm/db_source"
@@ -8,7 +8,7 @@ import (
 
 var db = dbsource.Db
 
-func DDLOperation() {
+func TableHandler1() {
 	// Create table for `User`
 	db.Migrator().CreateTable(&models.User{})
 
