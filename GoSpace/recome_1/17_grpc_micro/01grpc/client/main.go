@@ -32,7 +32,7 @@ func main() {
 		name = os.Args[1]
 	}
 
-	// create context, pass to client method
+	// create context, pass into client method
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 

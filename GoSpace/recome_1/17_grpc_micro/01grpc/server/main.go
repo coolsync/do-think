@@ -42,6 +42,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("server side, failed to listen: %v", err)
 	}
+
 	// 2 instance grpc server
 	s := grpc.NewServer()
 
