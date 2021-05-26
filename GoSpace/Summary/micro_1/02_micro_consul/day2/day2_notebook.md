@@ -115,7 +115,7 @@ query os lib:
 
     ```shell
     # 在终端中，键入：
-    consul agent -server -bootstrap-expect 1 -data-dir /tmp/consul -node=n1 -bind=192.168.6.108 -ui -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0
+    consul agent -server -bootstrap-expect 1 -data-dir /tmp/consul -node=n1 -bind=192.168.0.108 -ui -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0
     
     #看到提示：
     ==> Consul agent running!
@@ -153,7 +153,7 @@ query os lib:
 4. 重新启动 consul 
 
     ```shell
-    consul agent -server -bootstrap-expect 1 -data-dir /tmp/consul -node=n1 -bind=192.168.6.108 -ui -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0
+    consul agent -server -bootstrap-expect 1 -data-dir /tmp/consul -node=n1 -bind=192.168.0.108 -ui -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0
     ```
 
 5.  查询 服务
@@ -172,6 +172,65 @@ query os lib:
 
 
 
+
+
+```shell
+$ cat web.json 
+{
+    "service":{
+	"name": "bj38",
+	"tags": ["hello","helloworld"],
+	"port": 8800
+    }
+}
+```
+
+psotman: http://192.168.0.108:8500/v1/catalog/service/bj38
+
+```json
+[
+    {
+        "ID": "1eb292aa-ce22-ba18-c4b6-66c1661b4df9",
+        "Node": "n1",
+        "Address": "192.168.0.108",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.0.108",
+            "lan_ipv4": "192.168.0.108",
+            "wan": "192.168.0.108",
+            "wan_ipv4": "192.168.0.108"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "",
+        "ServiceID": "bj38",
+        "ServiceName": "bj38",
+        "ServiceTags": [
+            "hello",
+            "helloworld"
+        ],
+        "ServiceAddress": "",
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 8800,
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 25,
+        "ModifyIndex": 25
+    }
+]
+```
+
+
+
 ### 健康检查
 
 1.  sudo vim /etc/consul.d/web.json  打开配置文件
@@ -185,6 +244,50 @@ query os lib:
    
     - 不健康！没有服务bj38 给 consul 实时回复！
 5. 除了 http 实现健康检查外，还可以使用 “脚本”、“tcp”、“ttl” 方式进行健康检查。
+
+
+
+```json
+
+$ cat bj38.json :
+
+{
+	"service": {
+    "name": "bj38",
+    "tags": ["extract", "verify", "compare", "idcard"],
+    "address": "192.168.0.108",
+    "port": 8800,
+    "check": {
+        "id": "bj38 api",
+        "name": "HTTP API on port 8800 health check",
+        "http": "http://192.168.0.108:8800",
+        "interval": "5s",
+        "timeout": "1s"
+        }
+   }
+}
+```
+
+
+
+```json
+$ cat web.json 
+{
+	"service": {
+    "name": "web",
+    "tags": ["extract", "verify", "compare", "idcard"],
+    "address": "192.168.0.108",
+    "port": 8801,
+    "check": {
+        "id": "web api",
+        "name": "HTTP API on port 8801 health check",
+        "http": "http://192.168.0.108:8801",
+        "interval": "5s",
+        "timeout": "1s"
+        }
+   }
+}
+```
 
 
 
