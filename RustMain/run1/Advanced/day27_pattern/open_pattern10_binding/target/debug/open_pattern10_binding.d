@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day27_pattern/open_pattern10_binding/target/debug/open_pattern10_binding: /home/dart/DoThinking/RustMain/Advanced/day27_pattern/open_pattern10_binding/src/main.rs

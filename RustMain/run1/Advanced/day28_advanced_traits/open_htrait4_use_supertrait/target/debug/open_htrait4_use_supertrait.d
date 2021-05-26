@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait4_use_supertrait/target/debug/open_htrait4_use_supertrait: /home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait4_use_supertrait/src/main.rs

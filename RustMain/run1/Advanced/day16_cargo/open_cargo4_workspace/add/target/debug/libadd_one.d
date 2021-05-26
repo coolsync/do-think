@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day16_cargo/open_cargo4_workspace/add/target/debug/libadd_one.rlib: /home/dart/DoThinking/RustMain/Advanced/day16_cargo/open_cargo4_workspace/add/add-one/src/lib.rs

@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait2_operator_overloading/target/debug/open_htrait2_operator_overloading: /home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait2_operator_overloading/src/main.rs

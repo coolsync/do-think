@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day29_advanced_type/open_advanced_type1_aliases/target/debug/open_advanced_type1_aliases: /home/dart/DoThinking/RustMain/Advanced/day29_advanced_type/open_advanced_type1_aliases/src/main.rs

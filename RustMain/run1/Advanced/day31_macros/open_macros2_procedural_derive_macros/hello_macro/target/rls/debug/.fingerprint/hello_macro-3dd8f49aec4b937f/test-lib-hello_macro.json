@@ -1,0 +1,1 @@
+{"rustc":18250536222580762119,"features":"[]","target":14122720134662746926,"profile":12844305253125231438,"path":10872709659218687626,"deps":[[9692702605780909708,"syn",false,7052832521709363438]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/hello_macro-3dd8f49aec4b937f/dep-test-lib-hello_macro"}}],"rustflags":[],"metadata":11907927413744700257,"config":0}

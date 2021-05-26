@@ -1,0 +1,1 @@
+D:\DoThinking\RustMain\day09_test\open_test\mylib\target\debug\libmylib.rlib: D:\DoThinking\RustMain\day09_test\open_test\mylib\src\animal.rs D:\DoThinking\RustMain\day09_test\open_test\mylib\src\lib.rs

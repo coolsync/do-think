@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day26_pattern/open_pattern6_destructuring_tuple_struct/target/debug/open_pattern6_destructuring_tuple_struct: /home/dart/DoThinking/RustMain/Advanced/day26_pattern/open_pattern6_destructuring_tuple_struct/src/main.rs
