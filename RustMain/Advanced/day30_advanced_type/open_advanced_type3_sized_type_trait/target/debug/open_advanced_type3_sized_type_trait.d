@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day30_advanced_type/open_advanced_type3_sized_type_trait/target/debug/open_advanced_type3_sized_type_trait: /home/dart/DoThinking/RustMain/Advanced/day30_advanced_type/open_advanced_type3_sized_type_trait/src/main.rs

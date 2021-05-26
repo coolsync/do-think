@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day28_unsafe/open_unsafe5_static_variables/target/debug/open_unsafe5_static_variables: /home/dart/DoThinking/RustMain/Advanced/day28_unsafe/open_unsafe5_static_variables/src/main.rs

@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait5_new_type/target/debug/open_htrait5_new_type: /home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait5_new_type/src/main.rs

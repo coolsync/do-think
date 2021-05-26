@@ -1,8 +1,0 @@
-[workspace]
-
-members = [
-    "adder",
-    "add-one",
-    "adder2",
-    "add-two",
-]

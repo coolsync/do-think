@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day27_unsafe/open_unsafe1_raw_pointer/target/debug/open_unsafe1_raw_pointer: /home/dart/DoThinking/RustMain/Advanced/day27_unsafe/open_unsafe1_raw_pointer/src/main.rs
