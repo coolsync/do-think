@@ -549,6 +549,16 @@ func main()  {
 
 
 
+小结：
+
+grpc server side, register consul service found
+
+grpc client side,  get consul health service,  ip + port, 再通过grpc get server send msg
+
+use consul_client.Agent().ServiceDeregister 
+
+
+
 ## go-micro 安装
 
 - 在线安装：  参考讲义。
