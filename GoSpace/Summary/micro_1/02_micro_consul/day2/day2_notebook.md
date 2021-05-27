@@ -309,7 +309,7 @@ $ go get -u -v github.com/hashicorp/consul
     3. 启动服务
 4.  启动client
     1. 获取consul 对象。
-    2. 使用consul对象，从consul 上获取健康的 服务。
+    2. 使用consul对象，从consul 上获取健康的服务。
     3. 再访问服务 （grpc远程调用）
 
 
@@ -353,6 +353,14 @@ $ go get -u -v github.com/hashicorp/consul
     ```
 
     protoc --go_out=plugins=grpc:./ *.proto
+
+    protoc --go_out=. --go-grpc_out=. proto/*.proto
+
+    generate:
+
+    user/user_grpc.pb.go
+
+    user/user.pb.go
 
 - 服务端
 
@@ -432,7 +440,40 @@ $ go get -u -v github.com/hashicorp/consul
     
     ```
 
-    
+
+Problem:
+
+1
+
+golang import module出现 module ******* @latest found(v1.6.4), but does not contain package ******问题解决
+
+xiangy0809 2020-08-07 09:40:44  4360  收藏 1
+文章标签： golang git github
+版权
+这种情况下一般是因为版本号不对的问题导致，比如上面报错goconvey版本不对，可以在go.mod文件中将require goconvey的部分删除掉，然后再重新更新go mod tidy试一下
+
+
+
+```go
+ google.golang.org/grpc/naming: module google.golang.org/grpc@latest found (v1.38.0), but does not contain package google.golang.org/grpc/naming
+```
+
+
+
+modify go.mod
+
+```go
+google.golang.org/grpc v1.38.0
+google.golang.org/grpc v1.27.0
+```
+
+2 注意包名问题：
+
+"github.com/hashicorp/vault/api"
+
+应为:	 "consulApi "github.com/hashicorp/consul/api"
+
+
 
 - 客户端
 
