@@ -24,6 +24,13 @@ fn main() {
     // spaces = spaces.len();
     // println!("spaces: {}", spaces);
 
+    // tuple
+    let tup:(i32, f64, i8) = (50, 6.4, 8);
+    println!("tup: {:?}", &tup);
+    // array
+    let a = [3;5];
+    println!("a = {:?}", a);
+
     println!("Hello, world!");
 
 
