@@ -562,6 +562,24 @@ use consul_client.Agent().ServiceDeregister
 ## go-micro 安装
 
 - 在线安装：  参考讲义。
+
+  ```shell
+  #安装go-micro
+  go get -u -v github.com/micro/go-micro
+  #安装工具集
+  go get -u -v github.com/micro/micro
+  #安装protobuf插件
+  go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+  go get -u github.com/micro/protoc-gen-micro
+  
+  
+  go get -u github.com/micro/micro/v3
+  go get -u github.com/asim/go-micro/v3
+  go get -u github.com/micro/micro/v3/protoc-gen-micro
+  ```
+
+  
+
 - docker 镜像安装： 参考讲义。
 - 测试：micro 命令！
 
@@ -593,16 +611,151 @@ use consul_client.Agent().ServiceDeregister
 
 
 
-#### 查看创建的项目
 
-1. makefile 编译 proto 
+
+problem:
+
+1
+
+```go
+$ go get -u -v github.com/asim/go-micro
+go: downloading github.com/asim/go-micro v1.18.0
+go get: github.com/asim/go-micro@v0.23.0 updating to
+	github.com/asim/go-micro@v1.18.0: parsing go.mod:
+	module declares its path as: github.com/micro/go-micro
+	        but was required as: github.com/asim/go-micro
+```
+
+
+
+https://blog.csdn.net/liuqun0319/article/details/104054313
+
+go mod module declares its path as: gtihub.com/xxx-xx but was required as:xx-xx
+
+https://github.com/golang/lint/issues/474
+
+https://blog.csdn.net/qq_22193519/article/details/116810575
+
+http://www.sunnyos.com/article-show-99.html
+
+end: direct update to v3
+
+
+
+2 panic: qtls.ConnectionState not compatible with tls.ConnectionState
+
+出现这种错误，是版本兼容问题
+两种方法：
+
+1. 将go的版本降下来，看别人的博客有的是说需要降到1.12有的说是1.15以下都可以，我没有尝试。
+2. 第二种将micro的版本升级：
+
+```bash
+go get github.com/micro/micro/v3
+```
+
+
+
+### create command
+
+micro -h :
+
+```bash
+NAME:
+   micro - A framework for cloud native development
+
+   Use `micro [command] --help` to see command specific help.
+
+USAGE:
+   micro [global options] command [command options] [arguments...]
+
+VERSION:
+   v3.0.0
+
+COMMANDS:
+   auth      Manage authentication, accounts and rules
+   call      Call a service e.g micro call greeter Say.Hello '{"name": "John"}'
+   cli       Run the interactive CLI
+   config    Manage configuration values
+   env       Get/set micro cli environment
+   gen       Generate a micro related dependencies e.g protobuf
+   init      Generate a profile for micro plugins
+   kill      Kill a service: micro kill [source]
+   login     Interactive login flow.
+   logout    Logout.
+   logs      Get logs for a service e.g. micro logs helloworld
+   network   Manage the micro service network
+   new       Create a service template
+   run       Run a service: micro run [source]
+   server    Run the micro server
+   service   Run a micro service
+   services  List services in the registry
+   signup    Signup to the Micro Platform
+   stats     Query the stats of specified service(s), e.g micro stats srv1 srv2 srv3
+   status    Get the status of services
+   store     Commands for accessing the store
+   stream    Create a service stream e.g. micro stream foo Bar.Baz '{"key": "value"}'
+   update    Update a service: micro update [source]
+   user      Print the current logged in user
+   help, h   Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   -c value                   Set the config file: Defaults to ~/.micro/config.json [$MICRO_CONFIG_FILE]
+   --env value, -e value      Set the environment to operate in [$MICRO_ENV]
+   --profile value            Set the micro server profile: e.g. local or kubernetes [$MICRO_PROFILE]
+   --namespace value          Namespace the service is operating in (default: "micro") [$MICRO_NAMESPACE]
+   --auth_address value       Comma-separated list of auth addresses [$MICRO_AUTH_ADDRESS]
+   --auth_id value            Account ID used for client authentication [$MICRO_AUTH_ID]
+   --auth_secret value        Account secret used for client authentication [$MICRO_AUTH_SECRET]
+   --auth_public_key value    Public key for JWT auth (base64 encoded PEM) [$MICRO_AUTH_PUBLIC_KEY]
+   --auth_private_key value   Private key for JWT auth (base64 encoded PEM) [$MICRO_AUTH_PRIVATE_KEY]
+   --registry_address value   Comma-separated list of registry addresses [$MICRO_REGISTRY_ADDRESS]
+   --registry_tls_ca value    Certificate authority for TLS with registry [$MICRO_REGISTRY_TLS_CA]
+   --registry_tls_cert value  Client cert for TLS with registry [$MICRO_REGISTRY_TLS_CERT]
+   --registry_tls_key value   Client key for TLS with registry [$MICRO_REGISTRY_TLS_KEY]
+   --broker_address value     Comma-separated list of broker addresses [$MICRO_BROKER_ADDRESS]
+   --events_tls_ca value      Certificate authority for TLS with events [$MICRO_EVENTS_TLS_CA]
+   --events_tls_cert value    Client cert for TLS with events [$MICRO_EVENTS_TLS_CERT]
+   --events_tls_key value     Client key for TLS with events [$MICRO_EVENTS_TLS_KEY]
+   --broker_tls_ca value      Certificate authority for TLS with broker [$MICRO_BROKER_TLS_CA]
+   --broker_tls_cert value    Client cert for TLS with broker [$MICRO_BROKER_TLS_CERT]
+   --broker_tls_key value     Client key for TLS with broker [$MICRO_BROKER_TLS_KEY]
+   --store_address value      Comma-separated list of store addresses [$MICRO_STORE_ADDRESS]
+   --proxy_address value      Proxy requests via the HTTP address specified [$MICRO_PROXY]
+   --report_usage             Report usage statistics (default: true) [$MICRO_REPORT_USAGE]
+   --service_name value       Name of the micro service [$MICRO_SERVICE_NAME]
+   --service_version value    Version of the micro service [$MICRO_SERVICE_VERSION]
+   --service_address value    Address to run the service on [$MICRO_SERVICE_ADDRESS]
+   --prompt_update            Provide an update prompt when a new binary is available. Enabled for release binaries only. (default: true) [$MICRO_PROMPT_UPDATE]
+   --config_secret_key value  Key to use when encoding/decoding secret config values. Will be generated and saved to file if not provided. [$MICRO_CONFIG_SECRET_KEY]
+   --help, -h                 show help (default: false)
+   --version, -v              print the version (default: false)
+
+```
+
+
+
+
+
+
+
+### 查看创建的项目
+
+1. makefile 编译 proto
+
+    make proto
+    protoc --proto_path=. --micro_out=. --go_out=:. proto/bj38.proto
+
+    
+
 2. 查看 make proto生 成 的 文件：
-    1. xxx.pb.go
-    2. xxx.micro.go
-        - RegisterBj38Handler()【168行】服务端用 ———— 对应 grpc  RegisterXXXService() 
-        - NewBj38Service()【47行】客户端用 —— 对应 grpc NewXXXClient() —— 对应自己封装的 IintXXX
 
-3. 查看 main.go
+1. xxx.pb.go
+2. xxx.micro.go
+    - RegisterBj38Handler()【168行】服务端用 ———— 对应 grpc  RegisterXXXService() 
+    - NewBj38Service()【47行】客户端用 —— 对应 grpc NewXXXClient() —— 对应自己封装的 IintXXX
+
+1. 查看 main.go
 
     ```go
     func main() {
@@ -632,7 +785,7 @@ use consul_client.Agent().ServiceDeregister
 
     
 
-4. 查看 handler/ xxx.go 文件
+2. 查看 handler/ xxx.go 文件
 
     包含 与 Interface 严格对应的 3 个函数实现！！
 
