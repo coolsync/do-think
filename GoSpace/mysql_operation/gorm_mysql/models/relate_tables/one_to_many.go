@@ -1,4 +1,4 @@
-package relatedtables
+package relatetables
 
 import "gorm.io/gorm"
 

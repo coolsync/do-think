@@ -1,4 +1,4 @@
-package relatedtables
+package relatetables
 
 // Belong To 包含
 type User1 struct {

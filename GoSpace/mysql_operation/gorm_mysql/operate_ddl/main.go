@@ -1,14 +1,19 @@
-package ddl
+package main
 
 import (
-	dbsource "comegorm/db_source"
 	"comegorm/models"
 	"fmt"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var db = dbsource.Db
-
-func TableHandler1() {
+func main() {
+	dsn := "root:afvRdOxt%2px@tcp(localhost:3306)/gorm_mysql?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
 	// Create table for `User`
 	db.Migrator().CreateTable(&models.User{})
 

@@ -1,17 +1,20 @@
 package main
 
 import (
-	dbsource "comegorm/db_source"
-	relatedtables "comegorm/models/related_tables"
+	relatetables "comegorm/models/relate_tables"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var db = dbsource.Db
-
 func main() {
-	// db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&models.User{})
+	dsn := "root:afvRdOxt%2px@tcp(localhost:3306)/gorm_mysql?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
 
-	// ddloperate.DDLOperation()
-	// dml.DMLHandler1()
+	// db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&models.User{})
 
 	// db.AutoMigrate(&models.User{}, &models.GormModel{}, &models.UserInfo{})
 
@@ -25,6 +28,5 @@ func main() {
 	// db.AutoMigrate(&relatedtables.UserInfo{}, &relatedtables.CreditCard{})
 
 	// many to many
-	db.AutoMigrate(&relatedtables.Article{}, &relatedtables.Tag{})
-
+	db.AutoMigrate(&relatetables.Article{}, &relatetables.Tag{})
 }

@@ -1,15 +1,20 @@
-package dml
+package main
 
 import (
-	dbsource "comegorm/db_source"
 	"comegorm/models"
 	"fmt"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var db = dbsource.Db
 
 func DMLHandler1() {
-
+	dsn := "root:afvRdOxt%2px@tcp(localhost:3306)/gorm_mysql?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
 	// Create
 	// db.Create(&models.User{Name: "bob", Age: 30, Addr: "xxx", Pic: "/static/upload/pic.jpg"})
 
