@@ -59,7 +59,7 @@ fn main() {
         active,
     };
 
-    // 5 from other struct create instance
+    // 5 from other struct create instance	
     let user2 = User {
         name: String::from("alice"),
         ..user1

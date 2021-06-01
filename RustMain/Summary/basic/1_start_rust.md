@@ -210,9 +210,9 @@ fn another_function(x: i32, y: i32){   // parameters
 
 2  heap and stack
 
-   编译时 data type space  fixed, allocation to stack
+  compile time data type space  fixed, allocation to stack
 
-   编译时 data type space not fixed, allocation to heap
+  compile time, data type space not fixed, allocation to heap
 
 3  scope 作用域
 
@@ -220,7 +220,7 @@ fn another_function(x: i32, y: i32){   // parameters
 
 5  move
 
-6 clone
+6  clone
 
 7  stack data copy
 
