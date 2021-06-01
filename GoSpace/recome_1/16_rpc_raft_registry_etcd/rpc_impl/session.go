@@ -20,11 +20,11 @@ func NewSession(conn net.Conn) *Session {
 func (s *Session) Write(data []byte) error {
 	buf := make([]byte, 4+len(data))
 
-	// record header
+	// record data len to header
 	binary.BigEndian.PutUint32(buf[:4], uint32(len(data)))
 
 	// copy data to header tail
-	_ = copy(buf[4:], data)	// copy return copy bytes count
+	_ = copy(buf[4:], data) // copy return copy bytes count
 
 	_, err := s.conn.Write(buf)
 	if err != nil {
@@ -38,11 +38,11 @@ func (s *Session) Write(data []byte) error {
 func (s *Session) Read() ([]byte, error) {
 	// from conn read header data
 	header := make([]byte, 4)
-	_, err := io.ReadFull(s.conn, header)
+	_, err := io.ReadFull(s.conn, header) // read 4 bytes to header
 	if err != nil {
 		return nil, err
 	}
-	// read header data length
+	// get header data length
 	dataLen := binary.BigEndian.Uint32(header)
 
 	data := make([]byte, dataLen)
