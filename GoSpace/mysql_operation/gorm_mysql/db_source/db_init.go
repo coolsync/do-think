@@ -1,7 +1,6 @@
 package dbsource
 
 import (
-	"comegorm/models"
 	"fmt"
 	"log"
 	"time"
@@ -22,7 +21,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	Db.AutoMigrate(&models.User{})
+	// Db.AutoMigrate(&models.User{})
 
 	// MySQl 驱动程序提供了 一些高级配置 可以在初始化过程中使用，例如：
 	// db, err := gorm.Open(mysql.New(mysql.Config{

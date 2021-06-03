@@ -46,7 +46,7 @@ func main() {
 	// 2 instance grpc server
 	s := grpc.NewServer()
 
-	// 3 on grpc server, resgister need remote method
+	// 3 on grpc server, resgister remote method
 	pb.RegisterUserInfoServer(s, &server{})
 
 	// 4 run service
