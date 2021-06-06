@@ -78,7 +78,7 @@ use mylib::factory::*;
 
 fn main() {
     mylib::factory::produce_refrigerator::produce_re(); // 绝对路径
-    produce_refrigerator::produce_re(); // 使用 use， 推荐做法, path 到 调用的 上一级
+    produce_refrigerator::produce_re(); // 使用 use， 推荐做法, path定位到 调用的上一级
     // produce_re();
 
     produce_washing_machines::produce_washing();
