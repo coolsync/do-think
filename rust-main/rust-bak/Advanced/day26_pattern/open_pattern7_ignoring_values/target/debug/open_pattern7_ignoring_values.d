@@ -1,0 +1,1 @@
+/home/dart/DoThinking/RustMain/Advanced/day26_pattern/open_pattern7_ignoring_values/target/debug/open_pattern7_ignoring_values: /home/dart/DoThinking/RustMain/Advanced/day26_pattern/open_pattern7_ignoring_values/src/main.rs

@@ -1,0 +1,14 @@
+Rust里面没有继承的概念，可以通过tait来进行行为共享
+trait A {
+	fn sum();
+}
+
+
+struct XXX {
+}
+
+impl A for XXX {
+	fn sum() {
+		//todo
+	}
+}
