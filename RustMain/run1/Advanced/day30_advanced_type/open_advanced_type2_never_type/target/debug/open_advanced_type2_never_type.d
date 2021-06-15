@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day30_advanced_type/open_advanced_type2_never_type/target/debug/open_advanced_type2_never_type: /home/dart/DoThinking/RustMain/Advanced/day30_advanced_type/open_advanced_type2_never_type/src/main.rs

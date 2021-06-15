@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-option go_package = ".;protomicro";
-
-message HelloProtobuf {
-    string name = 1;
-    int32 age = 2;
-    string addr = 3;
-}

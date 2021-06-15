@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/run/10Generic_types_Traits_Lifetimes/generic_types/target/debug/generic_types: /home/dart/DoThinking/RustMain/run/10Generic_types_Traits_Lifetimes/generic_types/src/main.rs

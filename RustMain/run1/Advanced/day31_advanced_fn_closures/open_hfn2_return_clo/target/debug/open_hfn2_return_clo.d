@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day31_advanced_fn_closures/open_hfn2_return_clo/target/debug/open_hfn2_return_clo: /home/dart/DoThinking/RustMain/Advanced/day31_advanced_fn_closures/open_hfn2_return_clo/src/main.rs

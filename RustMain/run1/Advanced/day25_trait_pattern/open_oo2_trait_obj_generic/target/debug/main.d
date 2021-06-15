@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day25/open_oo2_trait_obj/target/debug/main: /home/dart/DoThinking/RustMain/Advanced/day25/open_oo2_trait_obj/gui/src/lib.rs /home/dart/DoThinking/RustMain/Advanced/day25/open_oo2_trait_obj/main/src/main.rs

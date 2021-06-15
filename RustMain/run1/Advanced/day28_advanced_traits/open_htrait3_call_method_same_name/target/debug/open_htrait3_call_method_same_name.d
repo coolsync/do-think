@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait3_call_method_same_name/target/debug/open_htrait3_call_method_same_name: /home/dart/DoThinking/RustMain/Advanced/day28_advanced_traits/open_htrait3_call_method_same_name/src/main.rs

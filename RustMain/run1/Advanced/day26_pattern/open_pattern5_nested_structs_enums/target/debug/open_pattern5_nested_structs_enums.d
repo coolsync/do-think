@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/Advanced/day26_pattern/open_pattern5_nested_structs_enums/target/debug/open_pattern5_nested_structs_enums: /home/dart/DoThinking/RustMain/Advanced/day26_pattern/open_pattern5_nested_structs_enums/src/main.rs
