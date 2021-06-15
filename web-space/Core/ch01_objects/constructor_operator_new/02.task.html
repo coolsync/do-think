@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let obj = {};
+
+        // function A() {
+        //     return obj
+        // }
+
+        // function B() {
+        //     return obj
+        // }
+
+        // console.log(new A() == new B())
+    
+        // function Calculator() {
+            
+            
+        // }
+        
+        // let calPrototype = {
+        //     read() {
+        //         this.a = Number(prompt("please first num "))
+        //         this.b = Number(prompt("please sed num "))
+        //     },
+        //     sum() {
+        //         console.log(this.a + this.b);
+        //     },
+        //     mul() {
+        //         console.log(this.a * this.b);
+        //     }
+        // }
+
+        // Calculator.prototype = calPrototype;
+
+        // let calculator = new Calculator();
+
+        // calculator.read();
+
+        // // console.log(calculator)
+
+        class Calculator {
+            read() {
+                this.a = +prompt("please first num ")
+                this.b = +prompt("please sed num")
+            };
+            sum() {
+                console.log(this.a + this.b);
+            };
+            mul() {
+                console.log(this.a * this.b);
+            };
+        }
+
+        let cal = new Calculator()
+
+        cal.read();
+
+        console.log(cal.sum())
+        console.log(cal.mul())
+
+    </script>
+</body>
+</html>

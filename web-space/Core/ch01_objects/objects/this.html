@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let mage = {
+            name: 'bob',
+            age: 36,
+            like: function () {
+                console.log(this);
+                console.log(this.name + "打篮球");
+            }
+        }
+
+        let fn = mage.like;
+
+        let fn1 = function () {
+            console.log(this);
+            console.log(this.name + "打篮球");
+        }
+
+        // console.log(fn === window.fn)
+    </script>
+</body>
+
+</html>

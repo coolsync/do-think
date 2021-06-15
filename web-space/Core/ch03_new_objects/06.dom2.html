@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1" class="div100">1</div>
+    <div id="div2" class="div100">2</div>
+    <div id="div3" class="div200">3</div>
+    <div id="div4" class="div200">4</div>
+
+    <section>
+        <input type="text" name="username" id="username" placeholder="">
+        <input type="password" name="passwd" id="passwd">
+        <input type="radio" name="sex" id="women"> women
+        <input type="radio" name="sex" id="man"> man
+        <input type="button" value="btn">
+    </section>
+
+    <script>
+        // let divs = document.querySelectorAll('div');
+        
+        let div100 = document.querySelectorAll('.div100');
+
+        let w =document.querySelector('#women')
+
+        // let divs2 = document.getElementsByTagName('div')
+
+        // console.log(divs2)
+
+        let divs = document.getElementsByClassName('div100');
+
+        let input = document.getElementsByName('sex');
+        
+    </script>
+</body>
+</html>
