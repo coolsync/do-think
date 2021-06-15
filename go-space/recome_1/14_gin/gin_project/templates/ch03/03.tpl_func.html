@@ -1,0 +1,109 @@
+{{define "ch03/03.tpl_func.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Template Function</h2>
+
+    <h3>1、print</h3>
+    <p>{{print "mark"}}</p>
+    <p>{{printf "name: %s, age: %d" "mark" 30}}</p>
+    <p>
+        {{println "mark"}}
+        xxx
+    </p>
+    <hr>
+
+
+    <h3>2、管道符</h3>
+    <p>
+        {{"mark" | printf "%s"}}
+    </p>
+    <p>
+        {{"mark" | len}}
+    </p>
+    <hr>
+
+    <h3>3、括号 优先级</h3>
+    <p>
+        {{printf "nums is %s, %d" (printf "%d, %d" 1 2) 3}}
+    </p>
+    <p>
+        {{printf "name:%s,addr:%s" "mark" (printf "%s-%s" "guangdong" "西城区")}}
+    </p>
+    <hr>
+
+    <h3>4、and</h3>
+    <p>
+        {{and .name .age}}
+    </p>
+    <p>
+        {{and .age .name}}
+    </p>
+    <p>
+        {{and .name .addr}}
+    </p>
+    <hr>
+
+    <h3>5、or</h3>
+    <p>
+        {{or .name .age}}
+    </p>
+    <p>
+        {{or .addr .age}}
+    </p>
+    <hr>
+
+    <h3>6、call(看自定义模板函数)</h3>
+    <hr>
+
+    <h3>7、index</h3>
+
+        {{index .map_data "name"}}
+        <br>
+        {{index .map_data "age"}}
+        <br>
+        {{index .sli 1}} == sli[1]
+        <br>
+        {{index "mark" 1}}
+    <hr>
+
+    <h3>8、len</h3>
+        {{.sli | len}}
+        <br>
+        {{"mark" | len}}
+        <br>
+        {{len "mark"}}
+    <hr>
+
+    <h3>九、not</h3>
+    {{not .name}} == false
+    <hr>
+
+    <h3>十、urlquery</h3>
+    {{urlquery "http://www.bing.com"}}
+    <hr>
+
+    <h3>十一、eq / ne / lt / le / gt / ge</h3>
+    {{eq 18 19}} == false <br>
+    {{ne 18 19}} == true <br>
+    {{lt 18 19}} == true <br>
+    {{le 18 19}} == true <br>
+    {{gt 18 19}} == false <br>
+    {{ge 18 19}} == false <br>
+
+    {{eq 18 10 11 12 18}} == true <br>
+    {{eq 18 10 11 12 13}} == false <br>
+
+    <hr>
+</body>
+
+</html>
+{{end}}

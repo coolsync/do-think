@@ -1,0 +1,6 @@
+code: 200
+html: <b>Hello, world!</b>
+tag: <br>
+user:
+  age: 18
+  name: pual

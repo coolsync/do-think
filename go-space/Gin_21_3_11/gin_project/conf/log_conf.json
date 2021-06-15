@@ -1,0 +1,4 @@
+{
+    "log_dir": "logs/gin_project.log",
+    "log_level": "info"
+}
