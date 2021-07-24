@@ -486,7 +486,7 @@ println!("{},{}", r1, r2);
     
 let r3 = &mut s1;
 println!("{}", r3);
-    // println!("s1 = {}", s1);
+   // println!("s1 = {}", s1);
 ```
 
 
