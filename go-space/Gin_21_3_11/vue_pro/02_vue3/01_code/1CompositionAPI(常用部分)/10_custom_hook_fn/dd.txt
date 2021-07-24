@@ -1,9 +1,0 @@
-1. 在hooks上创建useRequest.ts
-2. 在useRequest.ts里引入axios库
-3. 创建 加载状态 loading ref
-   错误信息 errMsg ref
-   显示result ref
-4. 使用 axios 发送response 数据以及错误信息
-5. 在 App comp 里 引入 useRequest.ts
-6. 在 tmpl 里，显示 对象，array info
-7. use interface 用于 generic, get result value length
