@@ -1,1 +1,0 @@
-/home/dart/do-think/rust-main/rust-start/10Generic_types_Traits_Lifetimes/lifetime1_func/target/debug/lifetime1: /home/dart/do-think/rust-main/rust-start/10Generic_types_Traits_Lifetimes/lifetime1_func/src/main.rs

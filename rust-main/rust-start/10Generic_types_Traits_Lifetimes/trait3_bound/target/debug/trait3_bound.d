@@ -1,1 +1,0 @@
-/home/dart/DoThinking/RustMain/run/10Generic_types_Traits_Lifetimes/trait3_bound/target/debug/trait3_bound: /home/dart/DoThinking/RustMain/run/10Generic_types_Traits_Lifetimes/trait3_bound/src/main.rs
